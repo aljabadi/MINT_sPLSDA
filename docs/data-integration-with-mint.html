@@ -766,8 +766,9 @@ Figure 2.16: MINT sPLS-DA components for each individual protocol coloured by ce
 </div>
 <div id="session-information" class="section level2">
 <h2><span class="header-section-number">2.11</span> Session Information</h2>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="co">## session information to build this vignette</span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">writeLines</span>(<span class="kw">capture.output</span>(<span class="kw">sessionInfo</span>()), <span class="st">&quot;sessionInfo.md&quot;</span>)</a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="co">## session information to build this vignette</span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>## R version 3.5.0 (2018-04-23)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS  10.14
@@ -780,7 +781,7 @@ Figure 2.16: MINT sPLS-DA components for each individual protocol coloured by ce
 ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
 ## 
 ## attached base packages:
-##  [1] grid      parallel  stats4    stats     graphics  grDevices utils    
+##  [1] grid      stats4    parallel  stats     graphics  grDevices utils    
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
@@ -801,38 +802,36 @@ Figure 2.16: MINT sPLS-DA components for each individual protocol coloured by ce
 ##  [3] edgeR_3.23.7              tidyr_0.8.2              
 ##  [5] viridisLite_0.3.0         DelayedMatrixStats_1.3.11
 ##  [7] ellipse_0.4.1             assertthat_0.2.0         
-##  [9] statmod_1.4.30            highr_0.7                
-## [11] vipor_0.4.5               GenomeInfoDbData_1.2.0   
-## [13] yaml_2.2.0                pillar_1.3.0             
-## [15] backports_1.1.2           glue_1.3.0               
-## [17] limma_3.37.10             digest_0.6.18            
-## [19] RColorBrewer_1.1-2        XVector_0.21.4           
-## [21] colorspace_1.3-2          htmltools_0.3.6          
-## [23] Matrix_1.2-15             plyr_1.8.4               
-## [25] pkgconfig_2.0.2           bookdown_0.7             
-## [27] zlibbioc_1.27.0           purrr_0.2.5              
-## [29] corpcor_1.6.9             scales_1.0.0             
-## [31] HDF5Array_1.9.19          RSpectra_0.13-1          
-## [33] withr_2.1.2               lazyeval_0.2.1           
-## [35] magrittr_1.5              crayon_1.3.4             
-## [37] evaluate_0.12             beeswarm_0.2.3           
-## [39] tools_3.5.0               formatR_1.5              
-## [41] stringr_1.3.1             Rhdf5lib_1.3.3           
-## [43] munsell_0.5.0             locfit_1.5-9.1           
-## [45] lambda.r_1.2.3            bindrcpp_0.2.2           
-## [47] compiler_3.5.0            rlang_0.3.0.1            
-## [49] rhdf5_2.25.11             RCurl_1.95-4.11          
-## [51] BiocNeighbors_0.99.22     rstudioapi_0.8           
-## [53] igraph_1.2.2              labeling_0.3             
-## [55] bitops_1.0-6              rmarkdown_1.10           
-## [57] gtable_0.2.0              codetools_0.2-15         
-## [59] rARPACK_0.11-0            reshape2_1.4.3           
-## [61] R6_2.3.0                  gridExtra_2.3            
-## [63] dplyr_0.7.8               bindr_0.1.1              
-## [65] rprojroot_1.3-2           futile.options_1.0.1     
-## [67] ggbeeswarm_0.6.0          stringi_1.2.4            
-## [69] Rcpp_1.0.0                tidyselect_0.2.5         
-## [71] xfun_0.4</code></pre>
+##  [9] statmod_1.4.30            vipor_0.4.5              
+## [11] GenomeInfoDbData_1.2.0    yaml_2.2.0               
+## [13] pillar_1.3.0              backports_1.1.2          
+## [15] glue_1.3.0                limma_3.37.10            
+## [17] digest_0.6.18             RColorBrewer_1.1-2       
+## [19] XVector_0.21.4            colorspace_1.3-2         
+## [21] htmltools_0.3.6           Matrix_1.2-15            
+## [23] plyr_1.8.4                pkgconfig_2.0.2          
+## [25] bookdown_0.7              zlibbioc_1.27.0          
+## [27] purrr_0.2.5               corpcor_1.6.9            
+## [29] scales_1.0.0              HDF5Array_1.9.19         
+## [31] RSpectra_0.13-1           withr_2.1.2              
+## [33] lazyeval_0.2.1            magrittr_1.5             
+## [35] crayon_1.3.4              evaluate_0.12            
+## [37] beeswarm_0.2.3            tools_3.5.0              
+## [39] formatR_1.5               stringr_1.3.1            
+## [41] Rhdf5lib_1.3.3            munsell_0.5.0            
+## [43] locfit_1.5-9.1            lambda.r_1.2.3           
+## [45] bindrcpp_0.2.2            compiler_3.5.0           
+## [47] rlang_0.3.0.1             rhdf5_2.25.11            
+## [49] RCurl_1.95-4.11           BiocNeighbors_0.99.22    
+## [51] rstudioapi_0.8            igraph_1.2.2             
+## [53] bitops_1.0-6              rmarkdown_1.10           
+## [55] gtable_0.2.0              rARPACK_0.11-0           
+## [57] reshape2_1.4.3            R6_2.3.0                 
+## [59] gridExtra_2.3             dplyr_0.7.8              
+## [61] bindr_0.1.1               rprojroot_1.3-2          
+## [63] futile.options_1.0.1      ggbeeswarm_0.6.0         
+## [65] stringi_1.2.4             Rcpp_1.0.0               
+## [67] tidyselect_0.2.5          xfun_0.4</code></pre>
 </div>
 <div id="troubleshoots" class="section level2">
 <h2><span class="header-section-number">2.12</span> Troubleshoots</h2>
