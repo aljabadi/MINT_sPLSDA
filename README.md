@@ -63,15 +63,15 @@ locale:
 [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
 
 attached base packages:
-[1] grid      stats4    parallel  stats     graphics  grDevices utils    
-[8] datasets  methods   base     
+ [1] grid      stats4    parallel  stats     graphics  grDevices utils    
+ [8] datasets  methods   base     
 
 other attached packages:
-[1] tibble_1.4.2                VennDiagram_1.6.20         
-[3] futile.logger_1.4.3         scater_1.9.24              
-[5] scran_1.9.39                mixOmics_6.4.6             
-[7] ggplot2_3.1.0               lattice_0.20-38            
-[9] MASS_7.3-51.1               SingleCellExperiment_1.3.12
+ [1] tibble_1.4.2                VennDiagram_1.6.20         
+ [3] futile.logger_1.4.3         scater_1.9.24              
+ [5] scran_1.9.39                mixOmics_6.4.6             
+ [7] ggplot2_3.1.0               lattice_0.20-38            
+ [9] MASS_7.3-51.1               SingleCellExperiment_1.3.12
 [11] SummarizedExperiment_1.11.6 DelayedArray_0.7.49        
 [13] BiocParallel_1.15.15        matrixStats_0.54.0         
 [15] Biobase_2.41.2              GenomicRanges_1.33.14      
@@ -80,11 +80,11 @@ other attached packages:
 [21] knitr_1.20                 
 
 loaded via a namespace (and not attached):
-[1] viridis_0.5.1             dynamicTreeCut_1.63-1    
-[3] edgeR_3.23.7              tidyr_0.8.2              
-[5] viridisLite_0.3.0         DelayedMatrixStats_1.3.11
-[7] ellipse_0.4.1             assertthat_0.2.0         
-[9] statmod_1.4.30            vipor_0.4.5              
+ [1] viridis_0.5.1             dynamicTreeCut_1.63-1    
+ [3] edgeR_3.23.7              tidyr_0.8.2              
+ [5] viridisLite_0.3.0         DelayedMatrixStats_1.3.11
+ [7] ellipse_0.4.1             assertthat_0.2.0         
+ [9] statmod_1.4.30            vipor_0.4.5              
 [11] GenomeInfoDbData_1.2.0    yaml_2.2.0               
 [13] pillar_1.3.0              backports_1.1.2          
 [15] glue_1.3.0                limma_3.37.10            
