@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>MINT_Data_Integration.utf8</title>
+  <meta name="description" content="Single Cell Data Integration Using MINT">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="MINT_Data_Integration.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Single Cell Data Integration Using MINT" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="MINT_Data_Integration.utf8" />
+  
+  <meta name="twitter:description" content="Single Cell Data Integration Using MINT" />
+  
+
+
+
+<meta name="date" content="2018-11-14">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="identifying-gene-signature-using-mint.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Single-Cell Data Integration with MINT</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> How to Reproduce this Vignette</a></li>
+<li class="chapter" data-level="2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html"><i class="fa fa-check"></i><b>2</b> Data Integration with MINT</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#prerequisites"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#why-mint"><i class="fa fa-check"></i><b>2.2</b> Why MINT?</a></li>
+<li class="chapter" data-level="2.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#when-not-to-use-mint"><i class="fa fa-check"></i><b>2.3</b> When Not to Use MINT?</a></li>
+<li class="chapter" data-level="2.4" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#r-scripts"><i class="fa fa-check"></i><b>2.4</b> R scripts</a></li>
+<li class="chapter" data-level="2.5" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#libraries"><i class="fa fa-check"></i><b>2.5</b> Libraries</a></li>
+<li class="chapter" data-level="2.6" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#data"><i class="fa fa-check"></i><b>2.6</b> Data</a></li>
+<li class="chapter" data-level="2.7" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#loading-the-data"><i class="fa fa-check"></i><b>2.7</b> Loading the Data</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#quality-control"><i class="fa fa-check"></i><b>2.7.1</b> Quality Control</a></li>
+<li class="chapter" data-level="2.7.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#overview"><i class="fa fa-check"></i><b>2.7.2</b> Overview</a></li>
+<li class="chapter" data-level="2.7.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#normalisation"><i class="fa fa-check"></i><b>2.7.3</b> Normalisation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#pca-unsupervised-analysis"><i class="fa fa-check"></i><b>2.8</b> PCA: Unsupervised Analysis</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#pca-on-each-protocol-individually"><i class="fa fa-check"></i><b>2.8.1</b> PCA on Each Protocol Individually</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#pca-on-the-combined-dataset"><i class="fa fa-check"></i><b>2.9</b> PCA on the Combined Dataset</a></li>
+<li class="chapter" data-level="2.10" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#mint-to-combine-the-datasets"><i class="fa fa-check"></i><b>2.10</b> MINT to Combine the Datasets</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#method"><i class="fa fa-check"></i><b>2.10.1</b> Method</a></li>
+<li class="chapter" data-level="2.10.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#optimum-number-of-components"><i class="fa fa-check"></i><b>2.10.2</b> Optimum Number of Components</a></li>
+<li class="chapter" data-level="2.10.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#sparse-mint-pls-da"><i class="fa fa-check"></i><b>2.10.3</b> Sparse MINT PLS-DA</a></li>
+<li class="chapter" data-level="2.10.4" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#choice-of-parameters"><i class="fa fa-check"></i><b>2.10.4</b> Choice of Parameters</a></li>
+<li class="chapter" data-level="2.10.5" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#performance-assessment"><i class="fa fa-check"></i><b>2.10.5</b> Performance Assessment</a></li>
+<li class="chapter" data-level="2.10.6" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#roc-curves"><i class="fa fa-check"></i><b>2.10.6</b> ROC Curves</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#session-information"><i class="fa fa-check"></i><b>2.11</b> Session Information</a></li>
+<li class="chapter" data-level="2.12" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#troubleshoots"><i class="fa fa-check"></i><b>2.12</b> Troubleshoots</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#bioconductor"><i class="fa fa-check"></i><b>2.12.1</b> Bioconductor</a></li>
+<li class="chapter" data-level="2.12.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#mixomics"><i class="fa fa-check"></i><b>2.12.2</b> mixOmics</a></li>
+<li class="chapter" data-level="2.12.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#mac-os"><i class="fa fa-check"></i><b>2.12.3</b> mac OS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html"><i class="fa fa-check"></i><b>3</b> Identifying Gene Signature using MINT</a><ul>
+<li class="chapter" data-level="3.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#identifying-molecular-signatures-using-mint-splsda"><i class="fa fa-check"></i><b>3.1</b> Identifying Molecular Signatures using MINT sPLSDA</a></li>
+<li class="chapter" data-level="3.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#r-scripts-1"><i class="fa fa-check"></i><b>3.2</b> R Scripts</a></li>
+<li class="chapter" data-level="3.3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#libraries-1"><i class="fa fa-check"></i><b>3.3</b> Libraries</a></li>
+<li class="chapter" data-level="3.4" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#data-1"><i class="fa fa-check"></i><b>3.4</b> Data</a></li>
+<li class="chapter" data-level="3.5" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#pls-da-on-each-protocol-individually"><i class="fa fa-check"></i><b>3.5</b> PLS-DA on Each Protocol Individually</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#the-method"><i class="fa fa-check"></i><b>3.5.1</b> The Method</a></li>
+<li class="chapter" data-level="3.5.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#plsda"><i class="fa fa-check"></i><b>3.5.2</b> PLSDA</a></li>
+<li class="chapter" data-level="3.5.3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#sparse-plsda-splsda-for-each-protocol"><i class="fa fa-check"></i><b>3.5.3</b> Sparse PLSDA (sPLSDA) For Each Protocol</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#compare-with-mint-combined"><i class="fa fa-check"></i><b>3.6</b> Compare with MINT-Combined</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#loading-plots"><i class="fa fa-check"></i><b>3.6.1</b> Loading Plots</a></li>
+<li class="chapter" data-level="3.6.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#signature-comparison"><i class="fa fa-check"></i><b>3.6.2</b> Signature Comparison</a></li>
+<li class="chapter" data-level="3.6.3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#variable-plots"><i class="fa fa-check"></i><b>3.6.3</b> Variable Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#signature-comparison-with-bulk-assay"><i class="fa fa-check"></i><b>3.7</b> Signature Comparison with Bulk Assay</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#cell-mixtures-data"><i class="fa fa-check"></i><b>3.7.1</b> Cell Mixtures Data</a></li>
+<li class="chapter" data-level="3.7.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#de-genes-vs-mint-signature"><i class="fa fa-check"></i><b>3.7.2</b> DE Genes vs MINT signature</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#session-information-1"><i class="fa fa-check"></i><b>3.8</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/AJABADI/MINT_sPLSDA" target="blank">See on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><div class="line-block">Single-Cell Data Integration using MINT</div></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+
+<div id="refs" class="references">
+<div>
+<p>Jolliffe, I. T. 1986. <em>Principal Component Analysis and Factor Analysis</em>. <a href=" https://doi.org/10.1007/978-1-4757-1904-8_7">https://doi.org/10.1007/978-1-4757-1904-8_7</a>.</p>
+</div>
+<div>
+<p>Le Cao, Kim-Anh, Florian Rohart, Ignacio Gonzalez, Sebastien Dejean with key contributors Benoit Gautier, Francois Bartolo, contributions from Pierre Monget, Jeff Coquery, FangZou Yao, and Benoit Liquet. 2018. <em>MixOmics: Omics Data Integration Project</em>. <a href="http://www.mixOmics.org">http://www.mixOmics.org</a>.</p>
+</div>
+<div>
+<p>Lun, Aaron T. L., Karsten Bach, and John C. Marionib. 2016. <em>Pooling Across Cells to Normalize Single-Cell Rna Sequencing Data with Many Zero Counts</em>. <em>Genome Biology 17.1</em>. <a href="https://doi.org/10.1186/s13059-016-0947-7">https://doi.org/10.1186/s13059-016-0947-7</a>.</p>
+</div>
+<div>
+<p>Rohart, Florian, Aida Eslami, Nicholas Matigian, Stéphanie Bougeard, and Kim-Anh Lê Cao. 2017. <em>MINT: A Multivariate Integrative Method to Identify Reproducible Molecular Signatures Across Independent Experiments and Platforms</em>. <a href="https://doi.org/10.1186/s12859-017-1553-8">https://doi.org/10.1186/s12859-017-1553-8</a>.</p>
+</div>
+<div>
+<p>Tian, Luyi, and Shian Su. 2018. <em>ScPipe: Pipeline for Single Cell Rna-Seq Data Analysis</em>. <a href="https://github.com/LuyiTian/scPipe">https://github.com/LuyiTian/scPipe</a>.</p>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="identifying-gene-signature-using-mint.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["MINT_Data_Integration.pdf", "MINT_Data_Integration.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
