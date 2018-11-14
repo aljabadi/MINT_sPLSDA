@@ -1,0 +1,40 @@
+--- 
+title: |
+  | Single-Cell Data Integration using MINT
+author: |
+  | Al J Abadi, Dr Kim-Anh Lê Cao
+  |
+  | Melbourne Integrative Genomics
+  | The University of Melbourne
+date: "`r Sys.Date()`"
+bibliography:
+- packages.bib
+- citations.bib
+description: Single Cell Data Integration Using MINT
+documentclass: book
+link-citations: yes
+site: bookdown::bookdown_site
+biblio-style: apalike
+---
+
+# How to Reproduce this Vignette
+
+You need the 'bookdown' package to reproduce this book. It is recommended to clone the repository, open the .Rproj file and load the Rmd files and create a 'gitbook' from the 'build' pane.
+
+Alternatively, you can run the standalone vignettes from the *vignettes-standalone* folder.
+
+```{r 1-installBookdown, eval=TRUE}
+## install only if not installed
+if (!requireNamespace('bookdown', quietly = TRUE)){
+  paste('Trying to install Bookdown')
+  install.packages('bookdown')
+}
+```
+
+```{r include=FALSE}
+## automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'mixOmics','bookdown', 'scran', 'scPipe', 'SingleCellExperiment'
+), 'packages.bib')
+```
+
