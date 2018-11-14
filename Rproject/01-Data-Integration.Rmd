@@ -635,6 +635,7 @@ purl('01-Data-Integration.Rmd',output =
 ## Session Information
 
 ```{r}
+writeLines(capture.output(sessionInfo()), "sessionInfo.md")
 ## session information to build this vignette
 sessionInfo()
 ```
