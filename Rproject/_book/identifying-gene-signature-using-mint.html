@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>MINT_Data_Integration.utf8</title>
+  <meta name="description" content="Single Cell Data Integration Using MINT">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="MINT_Data_Integration.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Single Cell Data Integration Using MINT" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="MINT_Data_Integration.utf8" />
+  
+  <meta name="twitter:description" content="Single Cell Data Integration Using MINT" />
+  
+
+
+
+<meta name="date" content="2018-11-14">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="data-integration-with-mint.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Single-Cell Data Integration with MINT</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> How to Reproduce this Vignette</a></li>
+<li class="chapter" data-level="2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html"><i class="fa fa-check"></i><b>2</b> Data Integration with MINT</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#prerequisites"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#why-mint"><i class="fa fa-check"></i><b>2.2</b> Why MINT?</a></li>
+<li class="chapter" data-level="2.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#when-not-to-use-mint"><i class="fa fa-check"></i><b>2.3</b> When Not to Use MINT?</a></li>
+<li class="chapter" data-level="2.4" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#r-scripts"><i class="fa fa-check"></i><b>2.4</b> R scripts</a></li>
+<li class="chapter" data-level="2.5" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#libraries"><i class="fa fa-check"></i><b>2.5</b> Libraries</a></li>
+<li class="chapter" data-level="2.6" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#data"><i class="fa fa-check"></i><b>2.6</b> Data</a></li>
+<li class="chapter" data-level="2.7" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#loading-the-data"><i class="fa fa-check"></i><b>2.7</b> Loading the Data</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#quality-control"><i class="fa fa-check"></i><b>2.7.1</b> Quality Control</a></li>
+<li class="chapter" data-level="2.7.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#overview"><i class="fa fa-check"></i><b>2.7.2</b> Overview</a></li>
+<li class="chapter" data-level="2.7.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#normalisation"><i class="fa fa-check"></i><b>2.7.3</b> Normalisation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#pca-unsupervised-analysis"><i class="fa fa-check"></i><b>2.8</b> PCA: Unsupervised Analysis</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#pca-on-each-protocol-individually"><i class="fa fa-check"></i><b>2.8.1</b> PCA on Each Protocol Individually</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#pca-on-the-combined-dataset"><i class="fa fa-check"></i><b>2.9</b> PCA on the Combined Dataset</a></li>
+<li class="chapter" data-level="2.10" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#mint-to-combine-the-datasets"><i class="fa fa-check"></i><b>2.10</b> MINT to Combine the Datasets</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#method"><i class="fa fa-check"></i><b>2.10.1</b> Method</a></li>
+<li class="chapter" data-level="2.10.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#optimum-number-of-components"><i class="fa fa-check"></i><b>2.10.2</b> Optimum Number of Components</a></li>
+<li class="chapter" data-level="2.10.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#sparse-mint-pls-da"><i class="fa fa-check"></i><b>2.10.3</b> Sparse MINT PLS-DA</a></li>
+<li class="chapter" data-level="2.10.4" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#choice-of-parameters"><i class="fa fa-check"></i><b>2.10.4</b> Choice of Parameters</a></li>
+<li class="chapter" data-level="2.10.5" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#performance-assessment"><i class="fa fa-check"></i><b>2.10.5</b> Performance Assessment</a></li>
+<li class="chapter" data-level="2.10.6" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#roc-curves"><i class="fa fa-check"></i><b>2.10.6</b> ROC Curves</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#session-information"><i class="fa fa-check"></i><b>2.11</b> Session Information</a></li>
+<li class="chapter" data-level="2.12" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#troubleshoots"><i class="fa fa-check"></i><b>2.12</b> Troubleshoots</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#bioconductor"><i class="fa fa-check"></i><b>2.12.1</b> Bioconductor</a></li>
+<li class="chapter" data-level="2.12.2" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#mixomics"><i class="fa fa-check"></i><b>2.12.2</b> mixOmics</a></li>
+<li class="chapter" data-level="2.12.3" data-path="data-integration-with-mint.html"><a href="data-integration-with-mint.html#mac-os"><i class="fa fa-check"></i><b>2.12.3</b> mac OS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html"><i class="fa fa-check"></i><b>3</b> Identifying Gene Signature using MINT</a><ul>
+<li class="chapter" data-level="3.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#identifying-molecular-signatures-using-mint-splsda"><i class="fa fa-check"></i><b>3.1</b> Identifying Molecular Signatures using MINT sPLSDA</a></li>
+<li class="chapter" data-level="3.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#r-scripts-1"><i class="fa fa-check"></i><b>3.2</b> R Scripts</a></li>
+<li class="chapter" data-level="3.3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#libraries-1"><i class="fa fa-check"></i><b>3.3</b> Libraries</a></li>
+<li class="chapter" data-level="3.4" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#data-1"><i class="fa fa-check"></i><b>3.4</b> Data</a></li>
+<li class="chapter" data-level="3.5" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#pls-da-on-each-protocol-individually"><i class="fa fa-check"></i><b>3.5</b> PLS-DA on Each Protocol Individually</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#the-method"><i class="fa fa-check"></i><b>3.5.1</b> The Method</a></li>
+<li class="chapter" data-level="3.5.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#plsda"><i class="fa fa-check"></i><b>3.5.2</b> PLSDA</a></li>
+<li class="chapter" data-level="3.5.3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#sparse-plsda-splsda-for-each-protocol"><i class="fa fa-check"></i><b>3.5.3</b> Sparse PLSDA (sPLSDA) For Each Protocol</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#compare-with-mint-combined"><i class="fa fa-check"></i><b>3.6</b> Compare with MINT-Combined</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#loading-plots"><i class="fa fa-check"></i><b>3.6.1</b> Loading Plots</a></li>
+<li class="chapter" data-level="3.6.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#signature-comparison"><i class="fa fa-check"></i><b>3.6.2</b> Signature Comparison</a></li>
+<li class="chapter" data-level="3.6.3" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#variable-plots"><i class="fa fa-check"></i><b>3.6.3</b> Variable Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#signature-comparison-with-bulk-assay"><i class="fa fa-check"></i><b>3.7</b> Signature Comparison with Bulk Assay</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#cell-mixtures-data"><i class="fa fa-check"></i><b>3.7.1</b> Cell Mixtures Data</a></li>
+<li class="chapter" data-level="3.7.2" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#de-genes-vs-mint-signature"><i class="fa fa-check"></i><b>3.7.2</b> DE Genes vs MINT signature</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="identifying-gene-signature-using-mint.html"><a href="identifying-gene-signature-using-mint.html#session-information-1"><i class="fa fa-check"></i><b>3.8</b> Session Information</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/AJABADI/MINT_sPLSDA" target="blank">See on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><div class="line-block">Single-Cell Data Integration using MINT</div></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="identifying-gene-signature-using-mint" class="section level1">
+<h1><span class="header-section-number">Section 3</span> Identifying Gene Signature using MINT</h1>
+<div id="identifying-molecular-signatures-using-mint-splsda" class="section level2">
+<h2><span class="header-section-number">3.1</span> Identifying Molecular Signatures using MINT sPLSDA</h2>
+<p>This section follows up on the Data Integration vignette. The aim here is to find the gene signature characterising the cell lines using the MINT sPLS-DA model and also to make relevant comparisons.</p>
+<p>The following topics are covered in details in the previous vignette and thus will not be expanded:</p>
+<ul>
+<li>The instructions on installation of the required packages</li>
+<li>Data normalisation method using <em>scran</em> package</li>
+</ul>
+</div>
+<div id="r-scripts-1" class="section level2">
+<h2><span class="header-section-number">3.2</span> R Scripts</h2>
+<p>The R scripts are available at <a href="https://github.com/AJABADI/MINT_sPLSDA/blob/master/02-Signature.R">this link</a>.</p>
+</div>
+<div id="libraries-1" class="section level2">
+<h2><span class="header-section-number">3.3</span> Libraries</h2>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co">## load the required libraries</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="kw">library</span>(SingleCellExperiment)</a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="kw">library</span>(mixOmics)</a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="kw">library</span>(scran)</a>
+<a class="sourceLine" id="cb46-5" data-line-number="5"><span class="kw">library</span>(scater)</a>
+<a class="sourceLine" id="cb46-6" data-line-number="6"><span class="kw">library</span>(knitr)</a>
+<a class="sourceLine" id="cb46-7" data-line-number="7"><span class="kw">library</span>(VennDiagram)</a>
+<a class="sourceLine" id="cb46-8" data-line-number="8"><span class="kw">library</span>(tibble)</a></code></pre></div>
+</div>
+<div id="data-1" class="section level2">
+<h2><span class="header-section-number">3.4</span> Data</h2>
+<p>The data need to be loaded only if the vignette files are being run separately (and not as a book). The raw and normalised data are loaded from the Data Integration vignette. You can load them directly from github:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co">## load from github</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="co">## raw</span></a>
+<a class="sourceLine" id="cb47-3" data-line-number="3">RawURL=<span class="st">&#39;https://tinyurl.com/sincell-with-class-RData-LuyiT&#39;</span></a>
+<a class="sourceLine" id="cb47-4" data-line-number="4"><span class="kw">load</span>(<span class="kw">url</span>(RawURL))</a></code></pre></div>
+<p>Alternatively, you can download and load directly into R environment:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co">## or load from local directory, change to your own</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="kw">load</span>(io<span class="op">$</span>local.sincell)</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co">## normalise the QC&#39;ed count matrices</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">sc10x.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce10x_qc) <span class="co">## deconvolute using size factors</span></a>
+<a class="sourceLine" id="cb49-3" data-line-number="3">sc10x.norm =<span class="st">  </span><span class="kw">normalize</span>(sc10x.norm) <span class="co">## normalise expression values</span></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4"><span class="co">## DROP-seq</span></a>
+<a class="sourceLine" id="cb49-5" data-line-number="5">scdrop.norm =<span class="st"> </span><span class="kw">computeSumFactors</span>(scedrop_qc_qc)</a>
+<a class="sourceLine" id="cb49-6" data-line-number="6">scdrop.norm =<span class="st"> </span><span class="kw">normalize</span>(scdrop.norm)</a>
+<a class="sourceLine" id="cb49-7" data-line-number="7"><span class="co">## CEL-seq2</span></a>
+<a class="sourceLine" id="cb49-8" data-line-number="8">sccel.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce4_qc)</a>
+<a class="sourceLine" id="cb49-9" data-line-number="9">sccel.norm =<span class="st">  </span><span class="kw">normalize</span>(sccel.norm)</a></code></pre></div>
+</div>
+<div id="pls-da-on-each-protocol-individually" class="section level2">
+<h2><span class="header-section-number">3.5</span> PLS-DA on Each Protocol Individually</h2>
+<p>Previously, we combined the datasets using MINT sPLS-DA. We then performed variable selection using optimum number of variables for each MINT PLS-DA component to tune the model parameters using key predictors. In this vignette, we will also carry out (s)PLS-DA on each individual dataset (from every protocol) to compare the signatures from individual and combined studies. Next, we will compare the signatures against differentially expressed genes from a univariate analysis from CellBench study.</p>
+<div id="the-method" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> The Method</h3>
+<p>As mentioned in previous vignette, PLS-DA finds the molecular signature that drives the association of cells to their cell lines. Here we use mixOmics’ <em>plsda</em> function to find the PLSDA components in each dataset, refer to the documentation for details.</p>
+</div>
+<div id="plsda" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> PLSDA</h3>
+<p>Since our aim is to find the signature from each dataset and compare, we need to find the data corresponding to common genes across all datasets:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="co">## find the intersect of the genes</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2">list.intersect =<span class="st"> </span><span class="kw">Reduce</span>(intersect, <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="co">## the rownames of the original (un-transposed) count matrix will output the genes</span></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(sc10x.norm)),</a>
+<a class="sourceLine" id="cb50-5" data-line-number="5">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(sccel.norm)),</a>
+<a class="sourceLine" id="cb50-6" data-line-number="6">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(scdrop.norm))</a>
+<a class="sourceLine" id="cb50-7" data-line-number="7">))</a></code></pre></div>
+<p>Initially, we apply the function to the 10X data and perform cross validation:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co">## extract the normalised count matrix from the SCE object (transposed)</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">normalised<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(sc10x.norm))</a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="co">## keep the common genes only for comparability</span></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4">normalised<span class="fl">.10</span>x =<span class="st"> </span>normalised<span class="fl">.10</span>x[,list.intersect]</a>
+<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="co">## form a factor variable of cell lines</span></a>
+<a class="sourceLine" id="cb51-6" data-line-number="6">Y<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">as.factor</span>(sc10x.norm[list.intersect,]<span class="op">$</span>cell_line)</a>
+<a class="sourceLine" id="cb51-7" data-line-number="7"><span class="co">## PLS-DA on the dataset with 5 components</span></a>
+<a class="sourceLine" id="cb51-8" data-line-number="8">plsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb51-9" data-line-number="9"><span class="co">## perform cross validation and find the classification error rates</span></a>
+<a class="sourceLine" id="cb51-10" data-line-number="10">start =<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb51-11" data-line-number="11">perf.plsda<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">perf</span>(plsda<span class="fl">.10</span>x.res, <span class="dt">progressBar=</span><span class="ot">FALSE</span> )</a>
+<a class="sourceLine" id="cb51-12" data-line-number="12">run.time =<span class="st"> </span><span class="kw">Sys.time</span>()<span class="op">-</span>start</a></code></pre></div>
+<p>The run took less than 2 mins. We can now plot the error rate profile:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co">## optimal number of components</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="kw">plot</span>(perf.plsda<span class="fl">.10</span>x, <span class="dt">col =</span> <span class="kw">color.mixo</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>))</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-perfPlot10x"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-perfPlot10x-1.png" alt=" The classification error rate for different number of PLSDA components of 10X dataset." width="55%" />
+<p class="caption">
+Figure 3.1:  The classification error rate for different number of PLSDA components of 10X dataset.
+</p>
+</div>
+<p>Similar to the combined dataset, <em>ncomp</em>=2 leads to optimum error rate. We now apply <em>plsda</em> to the other 2 datasets:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co">## extract the normalised count matrix from the SCE object (transposed)</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="co">## CEL-seq2</span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3">normalised.cel =<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(sccel.norm))</a>
+<a class="sourceLine" id="cb53-4" data-line-number="4">normalised.cel =<span class="st"> </span>normalised.cel[,list.intersect]</a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="co">## Drop-seq</span></a>
+<a class="sourceLine" id="cb53-6" data-line-number="6">normalised.drop=<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(scdrop.norm))</a>
+<a class="sourceLine" id="cb53-7" data-line-number="7">normalised.drop =<span class="st"> </span>normalised.drop[,list.intersect]</a>
+<a class="sourceLine" id="cb53-8" data-line-number="8"><span class="co">## factor variable of cell lines</span></a>
+<a class="sourceLine" id="cb53-9" data-line-number="9">Y.cel =<span class="st"> </span><span class="kw">as.factor</span>(sccel.norm[list.intersect,]<span class="op">$</span>cell_line)</a>
+<a class="sourceLine" id="cb53-10" data-line-number="10">Y.drop =<span class="st"> </span><span class="kw">as.factor</span>(scdrop.norm[list.intersect,]<span class="op">$</span>cell_line)</a>
+<a class="sourceLine" id="cb53-11" data-line-number="11"><span class="co">## PLS-DA on each dataset with 2 components</span></a>
+<a class="sourceLine" id="cb53-12" data-line-number="12">plsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb53-13" data-line-number="13">plsda.cel.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised.cel, <span class="dt">Y =</span> Y.cel, <span class="dt">ncomp =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb53-14" data-line-number="14">plsda.drop.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised.drop, <span class="dt">Y =</span> Y.drop, <span class="dt">ncomp =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p>We plot the plsda plots for the 10X and CEL-seq2 data:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co">## mint.plsda plot for 10X</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">plotIndiv</span>(plsda<span class="fl">.10</span>x.res,</a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">          <span class="dt">legend  =</span> <span class="ot">TRUE</span>, <span class="dt">title     =</span> <span class="st">&#39;PLSDA 10X&#39;</span>, </a>
+<a class="sourceLine" id="cb54-4" data-line-number="4">          <span class="dt">ellipse =</span> <span class="ot">TRUE</span>, <span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb54-5" data-line-number="5">          <span class="dt">X.label =</span> <span class="st">&#39;PLSDA component 1&#39;</span>, </a>
+<a class="sourceLine" id="cb54-6" data-line-number="6">          <span class="dt">Y.label =</span> <span class="st">&#39;PLSDA component 2&#39;</span>, <span class="dt">pch=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-MINTplots"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-MINTplots-1.png" alt="PLSDA plot for the 10x dataset." width="65%" />
+<p class="caption">
+Figure 3.2: PLSDA plot for the 10x dataset.
+</p>
+</div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co">## mint.plsda plot for CEL-seq2</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="kw">plotIndiv</span>(plsda.cel.res,</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3">          <span class="dt">legend  =</span> <span class="ot">TRUE</span>, <span class="dt">title     =</span> <span class="st">&#39;PLSDA CEL-seq2&#39;</span>, </a>
+<a class="sourceLine" id="cb55-4" data-line-number="4">          <span class="dt">ellipse =</span> <span class="ot">TRUE</span>, <span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb55-5" data-line-number="5">          <span class="dt">X.label =</span> <span class="st">&#39;PLSDA component 1&#39;</span>, </a>
+<a class="sourceLine" id="cb55-6" data-line-number="6">          <span class="dt">Y.label =</span> <span class="st">&#39;PLSDA component 2&#39;</span>, <span class="dt">pch=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-MINTplots2"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-MINTplots2-1.png" alt="PLSDA plot for the CEL-seq2 dataset." width="65%" />
+<p class="caption">
+Figure 3.3: PLSDA plot for the CEL-seq2 dataset.
+</p>
+</div>
+<p>The PLSDA figures show clustering by cell line, while the CEL-seq2 data are more scattered compared to 10X. In interpreting the relations, it is important to note that the apparent change of clusters is simply the result of an inversion on second PLSDA component and does not imply disparity per se.</p>
+</div>
+<div id="sparse-plsda-splsda-for-each-protocol" class="section level3">
+<h3><span class="header-section-number">3.5.3</span> Sparse PLSDA (sPLSDA) For Each Protocol</h3>
+<p>For consistency and better comparison, we will use same number of optimum components as MINT for the sparse PLS-DA on each protocol:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co">## run sparse PLSDA on individual studies with MINT tuned parameters</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2">keepX =<span class="st"> </span><span class="kw">c</span>(<span class="dv">35</span>,<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb56-3" data-line-number="3">splsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
+<a class="sourceLine" id="cb56-4" data-line-number="4">                              <span class="dt">keepX =</span> keepX)</a>
+<a class="sourceLine" id="cb56-5" data-line-number="5">splsda.cel.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised.cel, <span class="dt">Y =</span> Y.cel, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
+<a class="sourceLine" id="cb56-6" data-line-number="6">                              <span class="dt">keepX =</span> keepX)</a>
+<a class="sourceLine" id="cb56-7" data-line-number="7">splsda.drop.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised.drop, <span class="dt">Y =</span> Y.drop, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
+<a class="sourceLine" id="cb56-8" data-line-number="8">                              <span class="dt">keepX =</span> keepX)</a></code></pre></div>
+<p>And visualise the output to see how the clusters change with variable selection:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co">## splsda plots with tuned number of variables for each sPLSDA component</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="co">## 10X</span></a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="kw">plotIndiv</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">group =</span> Y<span class="fl">.10</span>x,</a>
+<a class="sourceLine" id="cb57-4" data-line-number="4">          <span class="dt">legend  =</span> <span class="ot">TRUE</span>, <span class="dt">title     =</span> <span class="st">&#39;sPLSDA - 10X&#39;</span>,</a>
+<a class="sourceLine" id="cb57-5" data-line-number="5">          <span class="dt">ellipse =</span> <span class="ot">FALSE</span>,<span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb57-6" data-line-number="6">          <span class="dt">pch=</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb57-7" data-line-number="7">          <span class="dt">X.label =</span> <span class="st">&#39;sPLSDA component 1&#39;</span>,</a>
+<a class="sourceLine" id="cb57-8" data-line-number="8">          <span class="dt">Y.label =</span> <span class="st">&#39;sPLSDA component 2&#39;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-splsdaPlots1"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-splsdaPlots1-1.png" alt=" The sPLSDA plots of the 10X dataset." width="65%" />
+<p class="caption">
+Figure 3.4:  The sPLSDA plots of the 10X dataset.
+</p>
+</div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co">## CEL-seq2</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="kw">plotIndiv</span>(splsda.cel.res, <span class="dt">group =</span> Y.cel,</a>
+<a class="sourceLine" id="cb58-3" data-line-number="3">          <span class="dt">legend  =</span> <span class="ot">TRUE</span>, <span class="dt">title     =</span> <span class="st">&#39;sPLSDA - CEL-seq2&#39;</span>,</a>
+<a class="sourceLine" id="cb58-4" data-line-number="4">          <span class="dt">ellipse =</span> <span class="ot">FALSE</span>,<span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">          <span class="dt">pch=</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb58-6" data-line-number="6">          <span class="dt">X.label =</span> <span class="st">&#39;sPLSDA component 1&#39;</span>,</a>
+<a class="sourceLine" id="cb58-7" data-line-number="7">          <span class="dt">Y.label =</span> <span class="st">&#39;sPLSDA component 2&#39;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-splsdaPlots2"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-splsdaPlots2-1.png" alt=" The sPLSDA plots of the CEL-seq2 dataset." width="65%" />
+<p class="caption">
+Figure 3.5:  The sPLSDA plots of the CEL-seq2 dataset.
+</p>
+</div>
+<p>The variable selection has reduced the noise and refined the clusters compared to the non-sparse model.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="co">## The signature genes from each sPLS-DA study</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2">Chromium<span class="fl">.10</span>X.vars =<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb59-3" data-line-number="3">                             <span class="kw">selectVar</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a>
+<a class="sourceLine" id="cb59-4" data-line-number="4">Cel.seq.vars =<span class="st">      </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda.cel.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb59-5" data-line-number="5">                             <span class="kw">selectVar</span>(splsda.cel.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a>
+<a class="sourceLine" id="cb59-6" data-line-number="6">Drop.seq.vars =<span class="st">     </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda.drop.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb59-7" data-line-number="7">                             <span class="kw">selectVar</span>(splsda.drop.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="co">## create a venn diagram from signatures</span></a>
+<a class="sourceLine" id="cb60-2" data-line-number="2">vennProtocols &lt;-<span class="st"> </span><span class="kw">venn.diagram</span>(</a>
+<a class="sourceLine" id="cb60-3" data-line-number="3">    <span class="dt">x =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb60-4" data-line-number="4">        <span class="dt">Chr.10X=</span> Chromium<span class="fl">.10</span>X.vars ,</a>
+<a class="sourceLine" id="cb60-5" data-line-number="5">        <span class="dt">Cel.seq=</span> Cel.seq.vars,</a>
+<a class="sourceLine" id="cb60-6" data-line-number="6">        <span class="dt">Drop.seq =</span> Drop.seq.vars),</a>
+<a class="sourceLine" id="cb60-7" data-line-number="7">    <span class="dt">filename =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb60-8" data-line-number="8">    <span class="dt">cex=</span><span class="fl">1.5</span>, <span class="dt">cat.cex=</span><span class="fl">1.5</span>,</a>
+<a class="sourceLine" id="cb60-9" data-line-number="9">    <span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;green&#39;</span>, <span class="st">&#39;darkblue&#39;</span>,  <span class="st">&#39;yellow&#39;</span>)</a>
+<a class="sourceLine" id="cb60-10" data-line-number="10">    )</a>
+<a class="sourceLine" id="cb60-11" data-line-number="11"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/vennProtocols.png&#39;</span>)</a>
+<a class="sourceLine" id="cb60-12" data-line-number="12"><span class="kw">grid.draw</span>(vennProtocols)</a>
+<a class="sourceLine" id="cb60-13" data-line-number="13"><span class="kw">dev.off</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-vennProtocolsShow"></span>
+<img src="figures/vennProtocols.png" alt=" The venn diagram of common sPLSDA signatures among individual datasets." width="35%" />
+<p class="caption">
+Figure 3.6:  The venn diagram of common sPLSDA signatures among individual datasets.
+</p>
+</div>
+<p>The signatures from the 3 studies share 25 common genes.</p>
+</div>
+</div>
+<div id="compare-with-mint-combined" class="section level2">
+<h2><span class="header-section-number">3.6</span> Compare with MINT-Combined</h2>
+<p>In case the vignette is being run separately, the MINT sPLSDA object can be reproduced:</p>
+<p>Or directly from your local directory:</p>
+<div id="loading-plots" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Loading Plots</h3>
+<p>The consistency of the selected variables across individual and the MINT combined studies can be evaluated by plotting the loadings for each study using the <em>plotLoadings</em> function, which produces the barplot of variable loadings for each component.</p>
+<p>The inputs to <em>plotLoadings</em> depends on the analysis object (mint.<em>s</em>plsda, mint.pls, etc.) and consists of the plot object plus:</p>
+<ul>
+<li><strong>contrib:</strong> Whether to show the class in which the expression of the features is maximum or minimum. One of <em>‘min’</em> or <em>‘max’</em>.</li>
+<li><strong>method:</strong> The criterion to assess the contribution. One of <em>‘mean’</em> or <em>‘median’</em> (recommended for skewed data).</li>
+<li><strong>study:</strong> The studies to be plotted (for combined data). <em>all.partial</em> or <em>global</em> for all.</li>
+</ul>
+<p>For a complete list of the arguments for any object please refer to the documentation.</p>
+<p>We plot the loadings for both components for maximum contribution. Colours indicate the class (cell line) in which the gene is positively/negatively expressed:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co">## 10X</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="kw">plotLoadings</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb61-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span><span class="ot">FALSE</span>, <span class="dt">title=</span><span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb61-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="st">&#39;10X&#39;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-loadings1"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-loadings1-1.png" alt="The loading plots for the first component of sPLS-DA on 10X data. The orange colour corresponds to H2228 cells, and the grey colour belongs to HCC827 cell line." width="55%" />
+<p class="caption">
+Figure 3.7: The loading plots for the first component of sPLS-DA on 10X data. The orange colour corresponds to H2228 cells, and the grey colour belongs to HCC827 cell line.
+</p>
+</div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co">## CEL-seq2</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="kw">plotLoadings</span>(splsda.cel.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb62-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span><span class="ot">FALSE</span>, <span class="dt">title=</span><span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb62-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="st">&#39;CEL-seq2&#39;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-loadings2"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-loadings2-1.png" alt="The loading plots for the first component of sPLS-DA on CEL-seq2 data." width="55%" />
+<p class="caption">
+Figure 3.8: The loading plots for the first component of sPLS-DA on CEL-seq2 data.
+</p>
+</div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="co">## Drop-seq</span></a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="kw">plotLoadings</span>(splsda.drop.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb63-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span><span class="ot">FALSE</span>, <span class="dt">title=</span><span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb63-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="st">&#39;Drop-seq&#39;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-loadings3"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-loadings3-1.png" alt="The loading plots for the first component of sPLS-DA on Drop-seq data." width="55%" />
+<p class="caption">
+Figure 3.9: The loading plots for the first component of sPLS-DA on Drop-seq data.
+</p>
+</div>
+<p>These genes are differentiating cells along the first sPLSDA component. Majority of signature genes are postively expressed in H2228 cells (orange). There is not a clear consensus among individual datasets in terms of the signature genes and their weight (loading).</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="co">## MINT Comp. 1</span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2"><span class="kw">plotLoadings</span>(mint.splsda.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb64-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span><span class="ot">FALSE</span>, <span class="dt">title=</span><span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb64-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="kw">c</span>(<span class="st">&#39;10X&#39;</span>, <span class="st">&#39;CEL-seq2&#39;</span>, <span class="st">&#39;Drop-seq&#39;</span>) )</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-loadings4"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-loadings4-1.png" alt="The loading plots for the first component of the Sparse MINT on the combined dataset." width="65%" />
+<p class="caption">
+Figure 3.10: The loading plots for the first component of the Sparse MINT on the combined dataset.
+</p>
+</div>
+<p>MINT has produced signature that is consistent across studies. Similarly, we can plot the loadings on the second component variables.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="co">## MINT Comp. 2</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="kw">plotLoadings</span>(mint.splsda.tuned.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb65-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span><span class="ot">FALSE</span>, <span class="dt">title=</span><span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb65-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="kw">c</span>(<span class="st">&#39;10X&#39;</span>, <span class="st">&#39;CEL-seq2&#39;</span>, <span class="st">&#39;Drop-seq&#39;</span>) )</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-loadingscomp2"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-loadingscomp2-1.png" alt="The loading plots for the second component of the Sparse MINT on the combined dataset." width="65%" />
+<p class="caption">
+Figure 3.11: The loading plots for the second component of the Sparse MINT on the combined dataset.
+</p>
+</div>
+</div>
+<div id="signature-comparison" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> Signature Comparison</h3>
+<p>The <em>selectVar</em> function in <em>mixOmics</em> outputs the key predictors on each component along with their loadings. We can create a set of Venn diagrams to visualise the overlap of the signature found using PLS-DA in individual datasets and the combined dataset. For all datasets, we take all the variables on both components as the signature.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="co">## MINT signature</span></a>
+<a class="sourceLine" id="cb66-2" data-line-number="2">MINT.Combined.vars =<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb66-3" data-line-number="3">                             <span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">vennMINT &lt;-<span class="st"> </span><span class="kw">venn.diagram</span>(</a>
+<a class="sourceLine" id="cb67-2" data-line-number="2">    <span class="dt">x =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb67-3" data-line-number="3">        <span class="dt">Chr.10X=</span> Chromium<span class="fl">.10</span>X.vars ,</a>
+<a class="sourceLine" id="cb67-4" data-line-number="4">        <span class="dt">Cel.seq=</span> Cel.seq.vars,</a>
+<a class="sourceLine" id="cb67-5" data-line-number="5">        <span class="dt">Drop.seq =</span> Drop.seq.vars,</a>
+<a class="sourceLine" id="cb67-6" data-line-number="6">        <span class="dt">MINT.Combined=</span>MINT.Combined.vars),</a>
+<a class="sourceLine" id="cb67-7" data-line-number="7">    <span class="dt">filename =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb67-8" data-line-number="8">    <span class="dt">cex=</span><span class="fl">1.5</span>, <span class="dt">cat.cex=</span><span class="fl">1.5</span>,</a>
+<a class="sourceLine" id="cb67-9" data-line-number="9">    <span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;green&#39;</span>, <span class="st">&#39;darkblue&#39;</span>,  <span class="st">&#39;yellow&#39;</span>, <span class="st">&#39;red&#39;</span>)</a>
+<a class="sourceLine" id="cb67-10" data-line-number="10">    )</a>
+<a class="sourceLine" id="cb67-11" data-line-number="11"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/vennMINT.png&#39;</span>)</a>
+<a class="sourceLine" id="cb67-12" data-line-number="12"><span class="kw">grid.draw</span>(vennMINT)</a>
+<a class="sourceLine" id="cb67-13" data-line-number="13"><span class="kw">dev.off</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-vennMINTShow"></span>
+<img src="figures/vennMINT.png" alt=" The venn diagram of sPLSDA signatures among individual datasets and the MINT combined dataset." width="55%" />
+<p class="caption">
+Figure 3.12:  The venn diagram of sPLSDA signatures among individual datasets and the MINT combined dataset.
+</p>
+</div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="co">## the signature genes identified by all studies</span></a>
+<a class="sourceLine" id="cb68-2" data-line-number="2">common.sig =<span class="st"> </span><span class="kw">Reduce</span>(intersect, <span class="kw">list</span>(MINT.Combined.vars, Chromium<span class="fl">.10</span>X.vars, Cel.seq.vars, Drop.seq.vars))</a></code></pre></div>
+<p>MINT has successfully detected the core 25 signature genes shared by all individual PLSDA models, plus 10 genes identied in 2 out of 3 studies.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="co">## the 10 signature genes with highest loadings</span></a>
+<a class="sourceLine" id="cb69-2" data-line-number="2">common.sig[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
+<pre><code>##  [1] &quot;ENSG00000196126&quot; &quot;ENSG00000154277&quot; &quot;ENSG00000173432&quot;
+##  [4] &quot;ENSG00000019582&quot; &quot;ENSG00000204287&quot; &quot;ENSG00000198502&quot;
+##  [7] &quot;ENSG00000231389&quot; &quot;ENSG00000196139&quot; &quot;ENSG00000179344&quot;
+## [10] &quot;ENSG00000108602&quot;</code></pre>
+</div>
+<div id="variable-plots" class="section level3">
+<h3><span class="header-section-number">3.6.3</span> Variable Plots</h3>
+<p>Using <em>plotVar</em> function, it is possible to display the selected variables on a correlation circle plot to find the correlation between gene expressions:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="co">## correlation circle plot</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="kw">plotVar</span>(mint.splsda.tuned.res, <span class="dt">cex =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="MINT_Data_Integration_files/figure-html/unnamed-chunk-7-1.png" alt="The variable plot highlighting the contribution of each selected variable to each component and their correlation." width="55%" />
+<p class="caption">
+Figure 3.13: The variable plot highlighting the contribution of each selected variable to each component and their correlation.
+</p>
+</div>
+<p>The figure above shows that majority of the signature genes are positively expressed in component 1.</p>
+<p>we can assess the expression profiles for the genes on the extremes of both components:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="co">## component 1 - most positively and negatively expressed between cell lines</span></a>
+<a class="sourceLine" id="cb72-2" data-line-number="2">var.c1 =<span class="st"> </span><span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>value</a>
+<a class="sourceLine" id="cb72-3" data-line-number="3">positive.gene.c1 =<span class="st"> </span><span class="kw">rownames</span>(var.c1)[<span class="kw">which.max</span>(var.c1<span class="op">$</span>value.var)]</a>
+<a class="sourceLine" id="cb72-4" data-line-number="4">negative.gene.c1 =<span class="st"> </span><span class="kw">rownames</span>(var.c1)[<span class="kw">which.min</span>(var.c1<span class="op">$</span>value.var)]</a>
+<a class="sourceLine" id="cb72-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb72-6" data-line-number="6"><span class="co">## component 2 - most positively and negatively expressed between cell lines</span></a>
+<a class="sourceLine" id="cb72-7" data-line-number="7">var.c2 =<span class="st"> </span><span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>value</a>
+<a class="sourceLine" id="cb72-8" data-line-number="8">positive.gene.c2 =<span class="st"> </span><span class="kw">rownames</span>(var.c2)[<span class="kw">which.max</span>(var.c2<span class="op">$</span>value.var)]</a>
+<a class="sourceLine" id="cb72-9" data-line-number="9">negative.gene.c2 =<span class="st"> </span><span class="kw">rownames</span>(var.c2)[<span class="kw">which.min</span>(var.c2<span class="op">$</span>value.var)]</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="co">## a function to create violin + box plots for this specific dataset</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2">violinPlot =<span class="st"> </span><span class="cf">function</span>(mint.object, gene){</a>
+<a class="sourceLine" id="cb73-3" data-line-number="3">  cols =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;H2228&quot;</span> =<span class="st"> &quot;orange&quot;</span>, <span class="st">&quot;H1975&quot;</span> =<span class="st"> &quot;dodgerblue3&quot;</span>, <span class="st">&quot;HCC827&quot;</span> =<span class="st"> &quot;grey&quot;</span>)</a>
+<a class="sourceLine" id="cb73-4" data-line-number="4">  <span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb73-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(mint.object<span class="op">$</span>Y,  mint.object<span class="op">$</span>X[,gene],</a>
+<a class="sourceLine" id="cb73-6" data-line-number="6">                     <span class="dt">fill=</span> mint.object<span class="op">$</span>Y), <span class="dt">alpha=</span><span class="dv">1</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb73-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(mint.object<span class="op">$</span>Y, mint.object<span class="op">$</span>X[,gene],</a>
+<a class="sourceLine" id="cb73-8" data-line-number="8">                     <span class="dt">fill=</span> mint.object<span class="op">$</span>Y), <span class="dt">alpha=</span><span class="fl">0.7</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-9" data-line-number="9"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Cell Line&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Standardised Expression Value&quot;</span> )<span class="op">+</span></a>
+<a class="sourceLine" id="cb73-10" data-line-number="10"><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Cell Line&quot;</span>) ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-11" data-line-number="11"><span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>cols ) </a>
+<a class="sourceLine" id="cb73-12" data-line-number="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co">## violin + box plots for the most positively expressed gene on component 1</span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, positive.gene.c1)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-vilolinplotPositive"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-vilolinplotPositive-1.png" alt="Violin plots of expression profile of the most positively expressed gene on component 1 in different cell lines" width="50%" />
+<p class="caption">
+Figure 3.14: Violin plots of expression profile of the most positively expressed gene on component 1 in different cell lines
+</p>
+</div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="co">## violin + box plots for the most negatively expressed gene on component 1</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, negative.gene.c1)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-vilolinplotNegative"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-vilolinplotNegative-1.png" alt="Violin plots of expression profile of the most negatively expressed gene  on component 1 in different cell lines" width="50%" />
+<p class="caption">
+Figure 3.15: Violin plots of expression profile of the most negatively expressed gene on component 1 in different cell lines
+</p>
+</div>
+<p>As expected, the expression profile of the above genes for H2228 cell line has opposite correlation to the other two. We can also evaluate the genes of the second sPLS-DA component:</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="co">## violin + box plots for the most positively expressed gene on component 2</span></a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, positive.gene.c2)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-vilolinplotPositive-c2"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-vilolinplotPositive-c2-1.png" alt="Violin plots of expression profile of the most positively expressed gene on component 2 in different cell lines" width="50%" />
+<p class="caption">
+Figure 3.16: Violin plots of expression profile of the most positively expressed gene on component 2 in different cell lines
+</p>
+</div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="co">## violin + box plots for the most negatively expressed gene on component 2</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, negative.gene.c2)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-vilolinplotNegative-c2"></span>
+<img src="MINT_Data_Integration_files/figure-html/2-vilolinplotNegative-c2-1.png" alt="Violin plots of expression profile of the most negatively expressed gene  on component 2 in different cell lines" width="50%" />
+<p class="caption">
+Figure 3.17: Violin plots of expression profile of the most negatively expressed gene on component 2 in different cell lines
+</p>
+</div>
+<p>The expression profiles show that the selected gene tends to be negatively expressed in HCC827 cell line and positively expressed in H1975 cell line.</p>
+<p>A Clustered Image Map including the final signature can be plotted. The argument <em>comp</em> can be also be specified to highlight only the variables selected on specific components.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">cim</span>(mint.splsda.tuned.res, <span class="dt">comp =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">margins=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">5</span>), </a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">    <span class="dt">row.sideColors =</span> <span class="kw">color.mixo</span>(<span class="kw">as.numeric</span>(mint.splsda.tuned.res<span class="op">$</span>Y)), <span class="dt">row.names =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb78-3" data-line-number="3">    <span class="dt">title =</span> <span class="st">&#39;MINT sPLS-DA&#39;</span>, <span class="dt">save=</span><span class="st">&#39;png&#39;</span>, <span class="dt">name.save =</span> <span class="st">&#39;heatmap&#39;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-heatmap"></span>
+<img src="heatmap.png" alt="The heatmap showing the cell grouping based on the gene expression profiles." width="80%" />
+<p class="caption">
+Figure 3.18: The heatmap showing the cell grouping based on the gene expression profiles.
+</p>
+</div>
+<p>The heatmap shows that the cells from each cell line tend to group together based on their gene expression profile. It can be reiterated that the cells from the H2228 cell line show positive expression in majority of signature genes.</p>
+</div>
+</div>
+<div id="signature-comparison-with-bulk-assay" class="section level2">
+<h2><span class="header-section-number">3.7</span> Signature Comparison with Bulk Assay</h2>
+<div id="cell-mixtures-data" class="section level3">
+<h3><span class="header-section-number">3.7.1</span> Cell Mixtures Data</h3>
+<p>The experimental design for CellBench data also included a cell mixture design for a pseudo-trajectory analysis. Briefly, in this study 9 cells were pooled from different cell types in different proportions and then reduced to 1/9th to mimic single cells and were sequenced using CEL-seq2 protocol. A mixture of 90 cells in equal amounts was used as the control group for a Differential Expression (DE) analysis of the pure cell lines at the extreme of trajectories. The results available on <a href="https://github.com/LuyiTian/CellBench_data/tree/master/data">CellBench repository</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-cellmixdesign"></span>
+<img src="figures/9cellmix.png" alt="The cell mixture design. Adopted from Luyi Tian slides" width="55%" />
+<p class="caption">
+Figure 3.19: The cell mixture design. Adopted from Luyi Tian slides
+</p>
+</div>
+<p>We will take DE genes from the cell mixture study as reference for comparison. The DE genes are available on CellBench respository.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="co">## load directly from github</span></a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">DE_URL &lt;-<span class="st"> &#39;https://tinyurl.com/DEtable-90cells&#39;</span></a>
+<a class="sourceLine" id="cb79-3" data-line-number="3"><span class="kw">load</span>(<span class="kw">url</span>(DE_URL))</a></code></pre></div>
+</div>
+<div id="de-genes-vs-mint-signature" class="section level3">
+<h3><span class="header-section-number">3.7.2</span> DE Genes vs MINT signature</h3>
+<p>We now compare the unique signature genes from MINT sPLS-DA analysis to the ones from cell mixture DE analysis:</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="co">## keep the genes present in the sPLS-DA analysis</span></a>
+<a class="sourceLine" id="cb80-2" data-line-number="2">HCC827_DEtable =<span class="st"> </span>HCC827_DEtable[<span class="kw">row.names</span>(HCC827_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</a>
+<a class="sourceLine" id="cb80-3" data-line-number="3">H2228_DEtable =<span class="st"> </span>H2228_DEtable[<span class="kw">row.names</span>(H2228_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</a>
+<a class="sourceLine" id="cb80-4" data-line-number="4">H1975_DEtable =<span class="st"> </span>H1975_DEtable[<span class="kw">row.names</span>(H1975_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</a>
+<a class="sourceLine" id="cb80-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb80-6" data-line-number="6"><span class="co">## create a column of genes for ease of merging</span></a>
+<a class="sourceLine" id="cb80-7" data-line-number="7">HCC827_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(HCC827_DEtable, <span class="st">&#39;gene&#39;</span>)</a>
+<a class="sourceLine" id="cb80-8" data-line-number="8">H2228_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(H2228_DEtable, <span class="st">&#39;gene&#39;</span>)</a>
+<a class="sourceLine" id="cb80-9" data-line-number="9">H1975_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(H1975_DEtable, <span class="st">&#39;gene&#39;</span>)</a>
+<a class="sourceLine" id="cb80-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb80-11" data-line-number="11"><span class="co">## create a combined DEtable from the 3 cell lines</span></a>
+<a class="sourceLine" id="cb80-12" data-line-number="12">DEtable =<span class="st"> </span><span class="kw">rbind</span>(HCC827_DE,H2228_DE, H1975_DE)</a>
+<a class="sourceLine" id="cb80-13" data-line-number="13"><span class="co">## order by gene name and FDR (increasing)</span></a>
+<a class="sourceLine" id="cb80-14" data-line-number="14">DEtable =<span class="st"> </span>DEtable[<span class="kw">order</span>(DEtable[,<span class="st">&#39;gene&#39;</span>],DEtable[,<span class="st">&#39;FDR&#39;</span>]),]</a>
+<a class="sourceLine" id="cb80-15" data-line-number="15"><span class="co">## keep the ones with FDR&lt;0.05</span></a>
+<a class="sourceLine" id="cb80-16" data-line-number="16">DEtable =<span class="st"> </span>DEtable[DEtable<span class="op">$</span>FDR<span class="op">&lt;</span><span class="fl">0.05</span>,]</a>
+<a class="sourceLine" id="cb80-17" data-line-number="17"><span class="co">## remove duplicate gene names</span></a>
+<a class="sourceLine" id="cb80-18" data-line-number="18">DEtable =<span class="st"> </span>DEtable[<span class="op">!</span><span class="kw">duplicated</span>(DEtable<span class="op">$</span>gene),]</a>
+<a class="sourceLine" id="cb80-19" data-line-number="19"><span class="co">## overlap with MINT</span></a>
+<a class="sourceLine" id="cb80-20" data-line-number="20">DE.MINT =<span class="st"> </span>DEtable[(DEtable<span class="op">$</span>gene <span class="op">%in%</span><span class="st"> </span>MINT.Combined.vars),]</a>
+<a class="sourceLine" id="cb80-21" data-line-number="21"><span class="co">## sort in increasing FDR order</span></a>
+<a class="sourceLine" id="cb80-22" data-line-number="22">DE.MINT =<span class="st"> </span>DE.MINT[<span class="kw">order</span>(DE.MINT<span class="op">$</span>FDR),]</a>
+<a class="sourceLine" id="cb80-23" data-line-number="23"><span class="co">## number of MINT signature genes that are differentially expressed</span></a>
+<a class="sourceLine" id="cb80-24" data-line-number="24"><span class="kw">dim</span>(DE.MINT)[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] 45</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="co">## geometric mean of the FDR of signature</span></a>
+<a class="sourceLine" id="cb82-2" data-line-number="2"><span class="kw">exp</span>(<span class="kw">mean</span>(<span class="kw">log</span>(DE.MINT<span class="op">$</span>FDR)))</a></code></pre></div>
+<pre><code>## [1] 1.548651e-18</code></pre>
+<p>All of signature genes identified by MINT are differentially expressed at FDR&lt;0.05 with geometric mean FDR of <span class="math inline">\(1.54\times10^{-18}\)</span>.</p>
+</div>
+</div>
+<div id="session-information-1" class="section level2">
+<h2><span class="header-section-number">3.8</span> Session Information</h2>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="co">## session information to build this vignette</span></a>
+<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+## 
+## attached base packages:
+##  [1] grid      parallel  stats4    stats     graphics  grDevices utils    
+##  [8] datasets  methods   base     
+## 
+## other attached packages:
+##  [1] tibble_1.4.2                VennDiagram_1.6.20         
+##  [3] futile.logger_1.4.3         scater_1.9.24              
+##  [5] scran_1.9.39                mixOmics_6.4.6             
+##  [7] ggplot2_3.1.0               lattice_0.20-38            
+##  [9] MASS_7.3-51.1               SingleCellExperiment_1.3.12
+## [11] SummarizedExperiment_1.11.6 DelayedArray_0.7.49        
+## [13] BiocParallel_1.15.15        matrixStats_0.54.0         
+## [15] Biobase_2.41.2              GenomicRanges_1.33.14      
+## [17] GenomeInfoDb_1.17.4         IRanges_2.15.19            
+## [19] S4Vectors_0.19.24           BiocGenerics_0.27.1        
+## [21] knitr_1.20                 
+## 
+## loaded via a namespace (and not attached):
+##  [1] viridis_0.5.1             dynamicTreeCut_1.63-1    
+##  [3] edgeR_3.23.7              tidyr_0.8.2              
+##  [5] viridisLite_0.3.0         DelayedMatrixStats_1.3.11
+##  [7] ellipse_0.4.1             assertthat_0.2.0         
+##  [9] statmod_1.4.30            highr_0.7                
+## [11] vipor_0.4.5               GenomeInfoDbData_1.2.0   
+## [13] yaml_2.2.0                pillar_1.3.0             
+## [15] backports_1.1.2           glue_1.3.0               
+## [17] limma_3.37.10             digest_0.6.18            
+## [19] RColorBrewer_1.1-2        XVector_0.21.4           
+## [21] colorspace_1.3-2          htmltools_0.3.6          
+## [23] Matrix_1.2-15             plyr_1.8.4               
+## [25] pkgconfig_2.0.2           bookdown_0.7             
+## [27] zlibbioc_1.27.0           purrr_0.2.5              
+## [29] corpcor_1.6.9             scales_1.0.0             
+## [31] HDF5Array_1.9.19          RSpectra_0.13-1          
+## [33] withr_2.1.2               lazyeval_0.2.1           
+## [35] magrittr_1.5              crayon_1.3.4             
+## [37] evaluate_0.12             beeswarm_0.2.3           
+## [39] tools_3.5.0               formatR_1.5              
+## [41] stringr_1.3.1             Rhdf5lib_1.3.3           
+## [43] munsell_0.5.0             locfit_1.5-9.1           
+## [45] lambda.r_1.2.3            bindrcpp_0.2.2           
+## [47] compiler_3.5.0            rlang_0.3.0.1            
+## [49] rhdf5_2.25.11             RCurl_1.95-4.11          
+## [51] BiocNeighbors_0.99.22     rstudioapi_0.8           
+## [53] igraph_1.2.2              labeling_0.3             
+## [55] bitops_1.0-6              rmarkdown_1.10           
+## [57] gtable_0.2.0              codetools_0.2-15         
+## [59] rARPACK_0.11-0            reshape2_1.4.3           
+## [61] R6_2.3.0                  gridExtra_2.3            
+## [63] dplyr_0.7.8               bindr_0.1.1              
+## [65] rprojroot_1.3-2           futile.options_1.0.1     
+## [67] ggbeeswarm_0.6.0          stringi_1.2.4            
+## [69] Rcpp_1.0.0                tidyselect_0.2.5         
+## [71] xfun_0.4</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-integration-with-mint.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["MINT_Data_Integration.pdf", "MINT_Data_Integration.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
