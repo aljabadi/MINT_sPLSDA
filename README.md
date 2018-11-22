@@ -29,4 +29,4 @@ A subset of data can be stored in this location for a faster initial run. See *p
 
 ## docs
 
-Contains the bookdown outputs of the Rproject file to create the [this vignette](https://ajabadi.github.io/MINT_sPLSDA/)
+Contains the bookdown outputs of the Rproject file to create the vignette.
