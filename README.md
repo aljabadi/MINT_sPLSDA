@@ -1,6 +1,6 @@
 # Single Cell Data Analysis and Integration using MINT
 
-**The vignette book is available at [this link](https://ajabadi.github.io/MINT_sPLSDA/)**
+**The vignette book is available at [this link](https://ajabadi.github.io/MINT_sPLSDA/).**
 
 ## Rproject
 
