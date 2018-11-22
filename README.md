@@ -9,7 +9,7 @@ Contains the R project that produced the vignette available at [this link](https
 
 Contains the R files extracted from the Rmd files.
 
-## vignettes-standlone
+## vignettes-standalone
 
 Self-contained standalone Rmd files that can be run separately.
 
