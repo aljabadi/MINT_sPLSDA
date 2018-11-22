@@ -1,54 +1,61 @@
-## if loading the required input data locally
-## input/output directories:
-io = list()
+params <-
+list(local.input = FALSE, subset.data = FALSE, output.data = FALSE, 
+    Rscripts = FALSE, recalc = TRUE)
 
-## SCE data dir - FALSE for GitHub load:
-# io$local.sincell = '../data/sincell_with_class.RData'
-io$local.sincell = F # F or a directory
-
-## where to save the run - FALSE for not saving:
-# io$save.runs = '../output'
-io$save.runs = F # F or a directory
-
-## where to save the R scripts - F for project directory:
-# io$Rscript.dir = '../R-scripts'
-io$Rscript.dir = F
-
-## save the final mint.splsda object in io$save.runs for signature analyses?:
-io$save.mint.spls = F # T or F
-
-## DE tables directory for signature chapter - FALSE for GitHub load:
-# io$DEtables = '../data/DEtable_90cells.RData'
-io$DEtables = F # F or a directory
-## installing libraries
+## installing the required packages for this vignette if necessary
+required.pkgs = c('mixOmics',
+                  'SingleCellExperiment', ## single-cell experiment data analysis
+                  'scran', ## sc-RNAseq data analysis
+                  'VennDiagram', ## Venn diagrams
+                  'tibble') ## for data tables
 
 ## installing BiocManager to install packages
 ## it can install CRAN packages as well
-if (!requireNamespace('BiocManager', quietly = TRUE)){
+if (!requireNamespace('BiocManager', quietly = T)){
   paste('Trying to install BiocManager')
   install.packages('BiocManager')
 }
-
-## package installations (might take a bit of time)
-BiocManager::install('mixOmics', update = F)
-BiocManager::install('SingleCellExperiment', update = F) ## single-cell experiment data analysis
-BiocManager::install('scran', update = F) ## sc-RNAseq data analysis
-BiocManager::install('scater', update = F) ## sc gene expression analysis
-BiocManager::install('vennDiagram', update = F) ## Venn diagrams
-BiocManager::install('tibble', update = F) ## for data tables
+## package installer function - only if it is not installed.
+package.installer = function(pkgs=required.pkgs){
+  for (package in pkgs){
+    if (!requireNamespace(package, quietly = T)){
+  paste0('Trying to install ', package)
+  BiocManager::install(package, update = F)
+    }
+    }
+}
+## run function
+package.installer(required.pkgs)
 ## load the required libraries
 library(SingleCellExperiment)
 library(mixOmics)
 library(scran)
-library(scater)
 library(knitr)
 library(VennDiagram)
 library(tibble)
-## load from github
-DataURL='https://tinyurl.com/sincell-with-class-RData-LuyiT'
-load(url(DataURL))
-## ## load from local directory, change to your own
-## load(io$local.sincell)
+check.exists <- function(object) ## function to assess existence of objects
+{
+  exists(as.character(substitute(object)))
+}
+
+## input/output from parameters
+io = list()
+
+## whether or where from to locally load data - FALSE: GitHub load; or a directory
+io$local.input = ifelse(check.exists(params$local.input), params$local.input, F)
+
+## whether or where to save run data - FALSE: do not save; or a directory
+io$output.data = ifelse(check.exists(params$output.data), params$output.data, F)
+
+## whether or where to save R scripts - FALSE: do not save; or a directory
+io$Rscripts=ifelse(check.exists(params$Rscripts), params$Rscripts, F)
+if (isFALSE(io$local.input)){
+  ## load from GitHub
+  DataURL='https://tinyurl.com/sincell-with-class-RData-LuyiT'
+  load(url(DataURL))
+} else {
+  load(file.path(io$local.input, 'sincell_with_class.RData'))
+}
 ## make a summary of QC'ed cell line data processed by each protocol
 sce10xqc_smr =  summary(as.factor(sce10x_qc$cell_line))
 sce4qc_smr =    summary(as.factor(sce4_qc$cell_line))
@@ -77,7 +84,7 @@ venn.plot = venn.diagram(
   x = list(Chrom.10X = rownames(sce10x_qc),
            CEL.seq2 = rownames(sce4_qc),
            Drop.seq = rownames(scedrop_qc_qc)),
-  filename = NULL, label=TRUE, margin=0.05,
+  filename = NULL, label=T, margin=0.05,
   height = 1400, width = 2200,
   col = 'transparent', fill = c('cornflowerblue','green', 'red'),
   alpha = 0.60, cex = 2, fontfamily = 'serif', fontface = 'bold',
@@ -96,13 +103,13 @@ scdrop.norm = normalize(scdrop.norm)
 ## CEL-seq2
 sccel.norm =  computeSumFactors(sce4_qc)
 sccel.norm =  normalize(sccel.norm)
-## pca on the normlaised count matrices and find 10 PCs
+## pca on the normalised count matrices and find 10 PCs
 pca.res.10x =     pca(t(logcounts(sc10x.norm)),  ncomp = 10,
-                      center=TRUE, scale=FALSE)
+                      center=T, scale=F)
 pca.res.celseq =  pca(t(logcounts(sccel.norm)),  ncomp = 10,
-                      center=TRUE, scale=FALSE)
+                      center=T, scale=F)
 pca.res.dropseq = pca(t(logcounts(scdrop.norm)), ncomp = 10,
-                      center=TRUE, scale=FALSE)
+                      center=T, scale=F)
 ## details of the pca output
 pca.res.10x
 
@@ -124,13 +131,13 @@ col.cell = c('H1975'='#0000ff', 'HCC827'='grey30', 'H2228' ='#ff8000')
 shape.batch = c('10X' = 1, 'CEL-seq2'=2, 'Drop-seq'=3 )
 ## pca plots for protocols
 ## 10x
-plotIndiv(pca.res.10x, legend = TRUE, title = 'PCA 10X', pch = shape.batch['10X'], col = col.cell,
+plotIndiv(pca.res.10x, legend = T, title = 'PCA 10X', pch = shape.batch['10X'], col = col.cell,
           group = sce10x_qc$cell_line, legend.title = 'Cell Line')
 ## CEL-seq2
-plotIndiv(pca.res.celseq, legend = TRUE, title = 'PCA CEL-seq2', pch = shape.batch['CEL-seq2'],
+plotIndiv(pca.res.celseq, legend = T, title = 'PCA CEL-seq2', pch = shape.batch['CEL-seq2'],
           col = col.cell, group = sce4_qc$cell_line, legend.title = 'Cell Line')
 ## Drop-seq
-plotIndiv(pca.res.dropseq, legend = TRUE, title = 'PCA Drop-seq', pch = shape.batch['Drop-seq'],
+plotIndiv(pca.res.dropseq, legend = T, title = 'PCA Drop-seq', pch = shape.batch['Drop-seq'],
           col = col.cell, group = scedrop_qc_qc$cell_line, legend.title = 'Cell Line')
 ## find the intersect of the genes for integration
 list.intersect = Reduce(intersect, list(
@@ -171,14 +178,14 @@ pca.combined = pca(data.combined, ncomp = 2)
 plotIndiv(pca.combined, title = 'PCA Combined',
           pch = batch, ## shape by cell line
           group = cell.line, ## colour by batch
-          legend = TRUE, legend.title = 'Study',
+          legend = T, legend.title = 'Study',
           legend.title.pch = 'Cell Line')
 ## plot the combined pca coloured by protocols
 plotIndiv(pca.combined, title = 'PCA Combined',
           pch = cell.line, ## shape by cell line
           group = batch, ## colour by protocol
           col.per.group = c('red', 'purple', 'green'),
-          legend = TRUE, legend.title = 'Study',
+          legend = T, legend.title = 'Study',
           legend.title.pch = 'Cell Line')
 ## create variables needed for MINT
 ## factor variable of cell lines
@@ -190,8 +197,8 @@ mint.plsda.res = mint.plsda(X = data.combined, Y = Y,
                              study = study, ncomp = 2)
 ## plot the mint.plsda plots for the combined dataset
 plotIndiv(mint.plsda.res, group = cell.line,
-          legend  = TRUE, subtitle     = 'MINT - Coloured by Cell Line',
-          ellipse = FALSE, legend.title = 'Cell Line',
+          legend  = T, subtitle     = 'MINT - Coloured by Cell Line',
+          ellipse = F, legend.title = 'Cell Line',
           legend.title.pch = 'protocol',
           X.label = 'PLS-DA component 1',
           Y.label = 'PLS-DA component 2')
@@ -201,7 +208,7 @@ mint.plsda.res = mint.plsda(X = data.combined, Y = Y,
 ## perform cross validation and calculate classification error rates
 set.seed(12321)  # for reproducibility of the results
 perf.mint.plsda.res = perf(mint.plsda.res,
-          progressBar = FALSE)
+          progressBar = F)
 ## plot the classification error rate vs number of components
 plot(perf.mint.plsda.res, col = color.mixo(5:7))
 perf.mint.plsda.res$global.error$BER ## further error diagnostics 
@@ -213,7 +220,7 @@ list.keepX = c(50,50)
 mint.splsda.res = mint.splsda(X = data.combined, Y = Y,
                               study = study, ncomp = 2, keepX = list.keepX)
 plotIndiv(mint.splsda.res,
-          legend  = TRUE, subtitle = 'Sparse MINT', ellipse = TRUE,
+          legend  = T, subtitle = 'Sparse MINT', ellipse = T,
           X.label = 'sPLS-DA component 1', 
           Y.label = 'sPLS-DA component 2',
           group = Y, ## colour by cell line
@@ -231,7 +238,7 @@ tune.mint.c1 = tune(
   test.keepX = c(seq(5,35,5),seq(40,70,10), 100), method = 'mint.splsda',
   ## use all distances to estimate the classification error rate
   dist = c('max.dist',  'centroids.dist', 'mahalanobis.dist'),
-  progressBar = FALSE
+  progressBar = F
 )
 ## component 1 to 2
 tune.mint.c2 = tune(
@@ -240,7 +247,7 @@ tune.mint.c2 = tune(
   already.tested.X = tune.mint.c1$choice.keepX,
   test.keepX = c(seq(5,35,5),seq(40,70,10), 100), method = 'mint.splsda',
   dist = c('max.dist',  'centroids.dist', 'mahalanobis.dist'),
-  progressBar = FALSE
+  progressBar = F
 )
 end.time = Sys.time()
 ## see how long it takes to find the optimum number of variables:
@@ -255,25 +262,32 @@ plot(tune.mint.c2, col = 'darkblue')
 mint.splsda.tuned.res = mint.splsda( X =data.combined, Y = Y,
                               study = study, ncomp = 2,  
                               keepX = tune.mint.c2$choice.keepX)
-## ## save it to local directory for signature analyses
-## save(mint.splsda.tuned.res, file = ifelse(isFALSE(io$save.runs),
-##                                           'mint.splsda.tuned.res.RData',
-##                                           file.path(io$save.runs,'mint.splsda.tuned.res.RData')))
 ## plot the tuned mint.splsda plot for the combined dataset
-plotIndiv(mint.splsda.tuned.res, study = 'global', legend = TRUE,
-          title = 'MINT sPLS-DA',  subtitle = 'Global', ellipse=TRUE)
+plotIndiv(mint.splsda.tuned.res, study = 'global', legend = T,
+          title = 'MINT sPLS-DA',  subtitle = 'Global', ellipse=T)
 ## tuned mint.splsda plot for each protocol
 plotIndiv(mint.splsda.tuned.res, study = 'all.partial',  title = 'MINT sPLS-DA', 
           subtitle = c('10X', 'CEL-seq2', 'Drop-seq'))
 set.seed(12321)  # for reproducibility of the results
 ## perform classification with leave-one-group-out cross validation 
-perf.mint.final = perf(mint.splsda.res, progressBar = FALSE, dist = 'max.dist')
+perf.mint.final = perf(mint.splsda.res, progressBar = F, dist = 'max.dist')
 ## classification error rate
 perf.mint.final$global.error
 ## ROC curves for both components
 auc.mint.splsda1 = auroc(mint.splsda.tuned.res, roc.comp = 1, roc.study='CEL-seq2')
 auc.mint.splsda2 = auroc(mint.splsda.tuned.res, roc.comp = 2, roc.study='CEL-seq2')
-## ## run this code if you wish to save the RData for loading
-## save.image(file = file.path(io$save.runs,'01-Data-Integration.RData'))
+## if specified, save the run data
+if (!isFALSE(io$output.data)){
+  ## save normlaised sce objects
+  sce.norm = c('sc10x.norm', 'sccel.norm', 'scdrop.norm')
+  save(list=sce.norm,  file = file.path(io$output.data,'sce.norm.RData'))
+  ## save the final mint object
+  save(mint.splsda.tuned.res, file =file.path(io$output.data,'mint.splsda.tuned.res.RData'))
+  ## save the rest of the data separately
+  session01 = ls()
+  session01 = session01[!session01 %in% c(sce.norm, 'mint.splsda.tuned.res')]
+  save(session01, file =file.path(io$output.data,'session.integration.RData'))
+}
+writeLines(capture.output(sessionInfo()), "sessionInfo.md")
 ## session information to build this vignette
 sessionInfo()

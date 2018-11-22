@@ -1,5 +1,6 @@
-book_filename: "MINT_Data_Integration"
+book_filename: "scMINT_sPLSDA"
 delete_merged_file: true
+output_dir: "docs"
 language:
   ui:
-    chapter_name: "Section "
+    chapter_name: "Chapter "

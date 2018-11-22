@@ -1,47 +1,79 @@
-## if loading the required input data locally
-## input/output directories:
-io = list()
+params <-
+list(local.input = FALSE, subset.data = FALSE, output.data = FALSE, 
+    Rscripts = FALSE, recalc = TRUE)
 
-## SCE data dir - FALSE for GitHub load:
-# io$local.sincell = '../data/sincell_with_class.RData'
-io$local.sincell = F # F or a directory
+## installing the required packages for this vignette if necessary
+required.pkgs = c('mixOmics',
+                  'SingleCellExperiment', ## single-cell experiment data analysis
+                  'scran', ## sc-RNAseq data analysis
+                  'VennDiagram', ## Venn diagrams
+                  'tibble') ## for data tables
 
-## where to save the run - FALSE for not saving:
-# io$save.runs = '../output'
-io$save.runs = F # F or a directory
-
-## where to save the R scripts:
-io$Rscript.dir = '../R-scripts'
-
-## have the final mint.splsda object saved in io$save.runs for signature analyses?:
-io$save.mint.spls = F # T or F
-
-## DE tables directory for signature chapter - FALSE for GitHub load:
-# io$DEtables = '../data/DEtable_90cells.RData'
-io$DEtables = F # F or a directory
+## installing BiocManager to install packages
+## it can install CRAN packages as well
+if (!requireNamespace('BiocManager', quietly = T)){
+  paste('Trying to install BiocManager')
+  install.packages('BiocManager')
+}
+## package installer function - only if it is not installed.
+package.installer = function(pkgs=required.pkgs){
+  for (package in pkgs){
+    if (!requireNamespace(package, quietly = T)){
+  paste0('Trying to install ', package)
+  BiocManager::install(package, update = F)
+    }
+    }
+}
+## run function
+package.installer(required.pkgs)
 ## load the required libraries
 library(SingleCellExperiment)
 library(mixOmics)
 library(scran)
-library(scater)
 library(knitr)
 library(VennDiagram)
 library(tibble)
-## load from github
-## raw
-RawURL='https://tinyurl.com/sincell-with-class-RData-LuyiT'
-load(url(RawURL))
-## ## or load from local directory, change to your own
-## load(io$local.sincell)
-## normalise the QC'ed count matrices
-sc10x.norm =  computeSumFactors(sce10x_qc) ## deconvolute using size factors
-sc10x.norm =  normalize(sc10x.norm) ## normalise expression values
-## DROP-seq
-scdrop.norm = computeSumFactors(scedrop_qc_qc)
-scdrop.norm = normalize(scdrop.norm)
-## CEL-seq2
-sccel.norm =  computeSumFactors(sce4_qc)
-sccel.norm =  normalize(sccel.norm)
+## check for valid input/output setup
+check.exists <- function(object) ## function to assess existence of objects
+{
+  exists(as.character(substitute(object)))
+}
+
+## input/output from parameters
+io = list()
+
+## whether or where from to locally load data - FALSE: GitHub load; or a directory
+io$local.input = ifelse(check.exists(params$local$input), params$local.input, F)
+
+## whether or where to save run data - FALSE: do not save; or a directory
+io$output.data = ifelse(check.exists(params$output.data), params$output.data, F)
+
+## whether or where to save R scripts - FALSE: do not save; or a directory
+io$Rscripts=ifelse(check.exists(params$Rscripts), params$Rscripts, F)
+
+## whether the normalised sce and mint objects from output.data should be re-calculated (TRUE) or directly loaded (FALSE)
+io$recalc = ifelse(check.exists(params$recalc), params$recalc, F)
+if (isFALSE(io$local.input)&&io$recalc){
+  ## load from GitHub
+  DataURL='https://tinyurl.com/sincell-with-class-RData-LuyiT'
+  load(url(DataURL))
+} else if (!isFALSE(io$local.input)&&io$recalc){
+  load(file.path(io$local.input, 'sincell_with_class.RData'))
+  }
+if (io$recalc){
+  ## normalise the QC'ed count matrices
+  sc10x.norm =  computeSumFactors(sce10x_qc) ## deconvolute using size factors
+  sc10x.norm =  normalize(sc10x.norm) ## normalise expression values
+  ## DROP-seq
+  scdrop.norm = computeSumFactors(scedrop_qc_qc)
+  scdrop.norm = normalize(scdrop.norm)
+  ## CEL-seq2
+  sccel.norm =  computeSumFactors(sce4_qc)
+  sccel.norm =  normalize(sccel.norm)
+} else {
+  ## load locally - change to your own
+  load(file.path(io$output.data,'sce.norm.RData'))
+}
 ## find the intersect of the genes
 list.intersect = Reduce(intersect, list(
 ## the rownames of the original (un-transposed) count matrix will output the genes
@@ -49,6 +81,7 @@ list.intersect = Reduce(intersect, list(
   rownames(logcounts(sccel.norm)),
   rownames(logcounts(scdrop.norm))
 ))
+## PLSDA - 10x
 ## extract the normalised count matrix from the SCE object (transposed)
 normalised.10x = t(logcounts(sc10x.norm))
 ## keep the common genes only for comparability
@@ -59,10 +92,11 @@ Y.10x = as.factor(sc10x.norm[list.intersect,]$cell_line)
 plsda.10x.res = plsda(X = normalised.10x, Y = Y.10x, ncomp = 5)
 ## perform cross validation and find the classification error rates
 start = Sys.time()
-perf.plsda.10x = perf(plsda.10x.res, progressBar=FALSE )
+perf.plsda.10x = perf(plsda.10x.res, progressBar=F )
 run.time = Sys.time()-start
 ## optimal number of components
 plot(perf.plsda.10x, col = color.mixo(5:7))
+## PLSDA - CEL-seq2 and Drop-seq 
 ## extract the normalised count matrix from the SCE object (transposed)
 ## CEL-seq2
 normalised.cel = t(logcounts(sccel.norm))
@@ -79,14 +113,14 @@ plsda.cel.res = plsda(X = normalised.cel, Y = Y.cel, ncomp = 2)
 plsda.drop.res = plsda(X = normalised.drop, Y = Y.drop, ncomp = 2)
 ## mint.plsda plot for 10X
 plotIndiv(plsda.10x.res,
-          legend  = TRUE, title     = 'PLSDA 10X', 
-          ellipse = TRUE, legend.title = 'Cell Line',
+          legend  = T, title     = 'PLSDA 10X', 
+          ellipse = T, legend.title = 'Cell Line',
           X.label = 'PLSDA component 1', 
           Y.label = 'PLSDA component 2', pch=1)
 ## mint.plsda plot for CEL-seq2
 plotIndiv(plsda.cel.res,
-          legend  = TRUE, title     = 'PLSDA CEL-seq2', 
-          ellipse = TRUE, legend.title = 'Cell Line',
+          legend  = T, title     = 'PLSDA CEL-seq2', 
+          ellipse = T, legend.title = 'Cell Line',
           X.label = 'PLSDA component 1', 
           Y.label = 'PLSDA component 2', pch=2)
 ## run sparse PLSDA on individual studies with MINT tuned parameters
@@ -100,16 +134,16 @@ splsda.drop.res = splsda( X =normalised.drop, Y = Y.drop, ncomp = 2,
 ## splsda plots with tuned number of variables for each sPLSDA component
 ## 10X
 plotIndiv(splsda.10x.res, group = Y.10x,
-          legend  = TRUE, title     = 'sPLSDA - 10X',
-          ellipse = FALSE,legend.title = 'Cell Line',
+          legend  = T, title     = 'sPLSDA - 10X',
+          ellipse = F,legend.title = 'Cell Line',
           pch=1,
           X.label = 'sPLSDA component 1',
           Y.label = 'sPLSDA component 2')
 
 ## CEL-seq2
 plotIndiv(splsda.cel.res, group = Y.cel,
-          legend  = TRUE, title     = 'sPLSDA - CEL-seq2',
-          ellipse = FALSE,legend.title = 'Cell Line',
+          legend  = T, title     = 'sPLSDA - CEL-seq2',
+          ellipse = F,legend.title = 'Cell Line',
           pch=2,
           X.label = 'sPLSDA component 1',
           Y.label = 'sPLSDA component 2')
@@ -133,59 +167,63 @@ vennProtocols <- venn.diagram(
 png(filename = 'figures/vennProtocols.png')
 grid.draw(vennProtocols)
 dev.off()
-data.combined = t( ## transpose of all 3 datasets combined
-  data.frame(
-    ## the genes from each protocol that match list.intersect
-    logcounts(sc10x.norm)[list.intersect,],
-    logcounts(sccel.norm)[list.intersect,],
-    logcounts(scdrop.norm)[list.intersect,] ))
-
-## create a factor variable of cell lines
-## must be in the same order as the data combination
-cell.line = as.factor(c(sce10x_qc$cell_line,
-                         sce4_qc$cell_line,
-                         scedrop_qc_qc$cell_line))
-## name the factor variable with the cell ID
-names(cell.line) = rownames(data.combined)
-
-## produce a character vector of batch names
-## must be in the same order as the data combination
-study = as.factor(
-  c(rep('10X',      ncol(logcounts(sc10x.norm))),
-    rep('CEL-seq2',  ncol(logcounts(sccel.norm))),
-    rep('Drop-seq', ncol(logcounts(scdrop.norm))) ))
-## name it with corresponding cell IDs
-names(study) = rownames(data.combined)
-
-## run sparse mint using optimum parameters:
-mint.splsda.tuned.res = mint.splsda( X =data.combined, Y = Y,
-                              study = study, ncomp = 2,  
-                              keepX = c(35,10))
-## ## change to your own
-## load(file.path(io$save.runs,'mint.splsda.tuned.res.RData'))
+if (io$recalc){
+  data.combined = t( ## transpose of all 3 datasets combined
+    data.frame(
+      ## the genes from each protocol that match list.intersect
+      logcounts(sc10x.norm)[list.intersect,],
+      logcounts(sccel.norm)[list.intersect,],
+      logcounts(scdrop.norm)[list.intersect,] ))
+  
+  ## create a factor variable of cell lines
+  ## must be in the same order as the data combination
+  cell.line = as.factor(c(sce10x_qc$cell_line,
+                           sce4_qc$cell_line,
+                           scedrop_qc_qc$cell_line))
+  ## name the factor variable with the cell ID
+  names(cell.line) = rownames(data.combined)
+  
+  ## produce a character vector of batch names
+  ## must be in the same order as the data combination
+  study = as.factor(
+    c(rep('10X',      ncol(logcounts(sc10x.norm))),
+      rep('CEL-seq2',  ncol(logcounts(sccel.norm))),
+      rep('Drop-seq', ncol(logcounts(scdrop.norm))) ))
+  ## name it with corresponding cell IDs
+  names(study) = rownames(data.combined)
+  
+  ## run sparse mint using optimum parameters:
+  mint.splsda.tuned.res = mint.splsda( X =data.combined, Y = Y,
+                                study = study, ncomp = 2,  
+                                keepX = c(35,10)) ## change for your own dataset
+} else { ## if already saved
+  load(file.path(io$output.data,'mint.splsda.tuned.res.RData'))
+}
+## Loading Plots
 ## 10X
 plotLoadings(splsda.10x.res, contrib='max', method = 'mean', comp=1, 
-             study='all.partial', legend=FALSE, title=NULL, 
+             study='all.partial', legend=F, title=NULL, 
              subtitle = '10X')
-## CEL-seq2
+## CEL-seq2 - Comp. 1
 plotLoadings(splsda.cel.res, contrib='max', method = 'mean', comp=1, 
-             study='all.partial', legend=FALSE, title=NULL,
+             study='all.partial', legend=F, title=NULL,
              subtitle = 'CEL-seq2')
-## Drop-seq
+## Drop-seq - Comp. 1
 plotLoadings(splsda.drop.res, contrib='max', method = 'mean', comp=1, 
-             study='all.partial', legend=FALSE, title=NULL,
+             study='all.partial', legend=F, title=NULL,
              subtitle = 'Drop-seq')
-## MINT Comp. 1
-plotLoadings(mint.splsda.res, contrib='max', method = 'mean', comp=1, 
-             study='all.partial', legend=FALSE, title=NULL, 
+## MINT - Comp. 1
+plotLoadings(mint.splsda.tuned.res, contrib='max', method = 'mean', comp=1, 
+             study='all.partial', legend=F, title=NULL, 
              subtitle = c('10X', 'CEL-seq2', 'Drop-seq') )
-## MINT Comp. 2
+## MINT - Comp. 2
 plotLoadings(mint.splsda.tuned.res, contrib='max', method = 'mean', comp=2, 
-             study='all.partial', legend=FALSE, title=NULL, 
+             study='all.partial', legend=F, title=NULL, 
              subtitle = c('10X', 'CEL-seq2', 'Drop-seq') )
 ## MINT signature
 MINT.Combined.vars = unique(c(selectVar(mint.splsda.tuned.res, comp=1)$name,
                              selectVar(mint.splsda.tuned.res, comp=2)$name))
+## create venn diagram
 vennMINT <- venn.diagram(
 	x = list(
 		Chr.10X= Chromium.10X.vars ,
@@ -205,6 +243,8 @@ common.sig = Reduce(intersect, list(MINT.Combined.vars, Chromium.10X.vars, Cel.s
 common.sig[1:10]
 ## correlation circle plot
 plotVar(mint.splsda.tuned.res, cex = 3)
+## show genes on extreme sides
+
 ## component 1 - most positively and negatively expressed between cell lines
 var.c1 = selectVar(mint.splsda.tuned.res, comp=1)$value
 positive.gene.c1 = rownames(var.c1)[which.max(var.c1$value.var)]
@@ -234,14 +274,17 @@ violinPlot(mint.splsda.tuned.res, negative.gene.c1)
 violinPlot(mint.splsda.tuned.res, positive.gene.c2)
 ## violin + box plots for the most negatively expressed gene on component 2
 violinPlot(mint.splsda.tuned.res, negative.gene.c2)
+## hierarchical clustering
 cim(mint.splsda.tuned.res, comp = c(1,2), margins=c(10,5), 
-    row.sideColors = color.mixo(as.numeric(mint.splsda.tuned.res$Y)), row.names = FALSE,
+    row.sideColors = color.mixo(as.numeric(mint.splsda.tuned.res$Y)), row.names = F,
     title = 'MINT sPLS-DA', save='png', name.save = 'heatmap')
-## load directly from github
-DE_URL <- 'https://tinyurl.com/DEtable-90cells'
-load(url(DE_URL))
-## ## or load the DEGs from the 'data' folder
-## load(io$DEtables)
+if (isFALSE(io$local.input)){
+  ## load from GitHub
+  DE_URL <- 'https://tinyurl.com/DEtable-90cells'
+  load(url(DE_URL))
+} else {
+  load(file.path(io$local.input, 'DEtable_90cells.RData'))
+  }
 ## keep the genes present in the sPLS-DA analysis
 HCC827_DEtable = HCC827_DEtable[row.names(HCC827_DEtable) %in% list.intersect,]
 H2228_DEtable = H2228_DEtable[row.names(H2228_DEtable) %in% list.intersect,]
@@ -268,7 +311,14 @@ DE.MINT = DE.MINT[order(DE.MINT$FDR),]
 dim(DE.MINT)[1]
 ## geometric mean of the FDR of signature
 exp(mean(log(DE.MINT$FDR)))
-## ## run this code if you wish to save the RData for loading
-## save.image(file = file.path(io$save.runs,'02-Signature.RData'))
+## if specified, save the run data
+if (!isFALSE(io$output.data)){
+  ## set to NULL if running this vignette alone:
+  already.saved = c('sc10x.norm', 'sccel.norm', 'scdrop.norm', 'mint.splsda.tuned.res')
+  ## save the files not saved already
+  session02 = ls()
+  session02 = session02[!session02 %in% already.saved]
+  save(session02, file =file.path(io$output.data,'session.signature.RData'))
+}
 ## session information to build this vignette
 sessionInfo()
