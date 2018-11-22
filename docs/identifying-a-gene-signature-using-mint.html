@@ -49,57 +49,67 @@
 
 
 <style type="text/css">
-div.sourceLine, a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-div.sourceLine, a.sourceLine { text-indent: -1em; padding-left: 1em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource div.sourceLine, .numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource div.sourceLine::before, .numberSource a.sourceLine::before
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em; }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; color: #aaaaaa;  padding-left: 4px; }
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+a.sourceLine::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -205,59 +215,59 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </div>
 <div id="libraries-1" class="section level2">
 <h2><span class="header-section-number">2.3</span> libraries</h2>
-<pre class="sourceCode r" id="cb45"><code class="sourceCode r"><div class="sourceLine" id="cb45-1" data-line-number="1">## load the required libraries</div>
-<div class="sourceLine" id="cb45-2" data-line-number="2"><span class="kw">library</span>(SingleCellExperiment)</div>
-<div class="sourceLine" id="cb45-3" data-line-number="3"><span class="kw">library</span>(mixOmics)</div>
-<div class="sourceLine" id="cb45-4" data-line-number="4"><span class="kw">library</span>(scran)</div>
-<div class="sourceLine" id="cb45-5" data-line-number="5"><span class="kw">library</span>(knitr)</div>
-<div class="sourceLine" id="cb45-6" data-line-number="6"><span class="kw">library</span>(VennDiagram)</div>
-<div class="sourceLine" id="cb45-7" data-line-number="7"><span class="kw">library</span>(tibble)</div></code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co">## load the required libraries</span></a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="kw">library</span>(SingleCellExperiment)</a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="kw">library</span>(mixOmics)</a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="kw">library</span>(scran)</a>
+<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="kw">library</span>(knitr)</a>
+<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="kw">library</span>(VennDiagram)</a>
+<a class="sourceLine" id="cb45-7" data-line-number="7"><span class="kw">library</span>(tibble)</a></code></pre></div>
 </div>
 <div id="data-1" class="section level2">
 <h2><span class="header-section-number">2.4</span> data</h2>
 <p>Here we set up the input and output specified in <em>params</em> section of <em>yaml</em>. By default, all required data are loaded from GitHub and run data are not saved.</p>
-<pre class="sourceCode r" id="cb46"><code class="sourceCode r"><div class="sourceLine" id="cb46-1" data-line-number="1">## check for valid input/output setup</div>
-<div class="sourceLine" id="cb46-2" data-line-number="2">check.exists &lt;-<span class="st"> </span><span class="cf">function</span>(object) ## function to assess existence of objects</div>
-<div class="sourceLine" id="cb46-3" data-line-number="3">{</div>
-<div class="sourceLine" id="cb46-4" data-line-number="4">  <span class="kw">exists</span>(<span class="kw">as.character</span>(<span class="kw">substitute</span>(object)))</div>
-<div class="sourceLine" id="cb46-5" data-line-number="5">}</div>
-<div class="sourceLine" id="cb46-6" data-line-number="6"></div>
-<div class="sourceLine" id="cb46-7" data-line-number="7">## input/output from parameters</div>
-<div class="sourceLine" id="cb46-8" data-line-number="8">io =<span class="st"> </span><span class="kw">list</span>()</div>
-<div class="sourceLine" id="cb46-9" data-line-number="9"></div>
-<div class="sourceLine" id="cb46-10" data-line-number="10">## whether or where from to locally load data - FALSE: GitHub load; or a directory</div>
-<div class="sourceLine" id="cb46-11" data-line-number="11">io<span class="op">$</span>local.input =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>local<span class="op">$</span>input), params<span class="op">$</span>local.input, F)</div>
-<div class="sourceLine" id="cb46-12" data-line-number="12"></div>
-<div class="sourceLine" id="cb46-13" data-line-number="13">## whether or where to save run data - FALSE: do not save; or a directory</div>
-<div class="sourceLine" id="cb46-14" data-line-number="14">io<span class="op">$</span>output.data =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>output.data), params<span class="op">$</span>output.data, F)</div>
-<div class="sourceLine" id="cb46-15" data-line-number="15"></div>
-<div class="sourceLine" id="cb46-16" data-line-number="16">## whether or where to save R scripts - FALSE: do not save; or a directory</div>
-<div class="sourceLine" id="cb46-17" data-line-number="17">io<span class="op">$</span>Rscripts=<span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>Rscripts), params<span class="op">$</span>Rscripts, F)</div>
-<div class="sourceLine" id="cb46-18" data-line-number="18"></div>
-<div class="sourceLine" id="cb46-19" data-line-number="19">## whether the normalised sce and mint objects from output.data should be re-calculated (TRUE) or directly loaded (FALSE)</div>
-<div class="sourceLine" id="cb46-20" data-line-number="20">io<span class="op">$</span>recalc =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>recalc), params<span class="op">$</span>recalc, F)</div></code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co">## check for valid input/output setup</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">check.exists &lt;-<span class="st"> </span><span class="cf">function</span>(object) <span class="co">## function to assess existence of objects</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3">{</a>
+<a class="sourceLine" id="cb46-4" data-line-number="4">  <span class="kw">exists</span>(<span class="kw">as.character</span>(<span class="kw">substitute</span>(object)))</a>
+<a class="sourceLine" id="cb46-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb46-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb46-7" data-line-number="7"><span class="co">## input/output from parameters</span></a>
+<a class="sourceLine" id="cb46-8" data-line-number="8">io =<span class="st"> </span><span class="kw">list</span>()</a>
+<a class="sourceLine" id="cb46-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb46-10" data-line-number="10"><span class="co">## whether or where from to locally load data - FALSE: GitHub load; or a directory</span></a>
+<a class="sourceLine" id="cb46-11" data-line-number="11">io<span class="op">$</span>local.input =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>local<span class="op">$</span>input), params<span class="op">$</span>local.input, F)</a>
+<a class="sourceLine" id="cb46-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb46-13" data-line-number="13"><span class="co">## whether or where to save run data - FALSE: do not save; or a directory</span></a>
+<a class="sourceLine" id="cb46-14" data-line-number="14">io<span class="op">$</span>output.data =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>output.data), params<span class="op">$</span>output.data, F)</a>
+<a class="sourceLine" id="cb46-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb46-16" data-line-number="16"><span class="co">## whether or where to save R scripts - FALSE: do not save; or a directory</span></a>
+<a class="sourceLine" id="cb46-17" data-line-number="17">io<span class="op">$</span>Rscripts=<span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>Rscripts), params<span class="op">$</span>Rscripts, F)</a>
+<a class="sourceLine" id="cb46-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb46-19" data-line-number="19"><span class="co">## whether the normalised sce and mint objects from output.data should be re-calculated (TRUE) or directly loaded (FALSE)</span></a>
+<a class="sourceLine" id="cb46-20" data-line-number="20">io<span class="op">$</span>recalc =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">check.exists</span>(params<span class="op">$</span>recalc), params<span class="op">$</span>recalc, F)</a></code></pre></div>
 <p>The <em>sce</em> objects can be re-load and normalised for reproducibility of the vignette. You may also load the normalised data and skip these steps (refer to <em>input/output</em> section):</p>
-<pre class="sourceCode r" id="cb47"><code class="sourceCode r"><div class="sourceLine" id="cb47-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">isFALSE</span>(io<span class="op">$</span>local.input)<span class="op">&amp;&amp;</span>io<span class="op">$</span>recalc){</div>
-<div class="sourceLine" id="cb47-2" data-line-number="2">  ## load from GitHub</div>
-<div class="sourceLine" id="cb47-3" data-line-number="3">  DataURL=<span class="st">&#39;https://tinyurl.com/sincell-with-class-RData-LuyiT&#39;</span></div>
-<div class="sourceLine" id="cb47-4" data-line-number="4">  <span class="kw">load</span>(<span class="kw">url</span>(DataURL))</div>
-<div class="sourceLine" id="cb47-5" data-line-number="5">} <span class="cf">else</span> <span class="cf">if</span> (<span class="op">!</span><span class="kw">isFALSE</span>(io<span class="op">$</span>local.input)<span class="op">&amp;&amp;</span>io<span class="op">$</span>recalc){</div>
-<div class="sourceLine" id="cb47-6" data-line-number="6">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>local.input, <span class="st">&#39;sincell_with_class.RData&#39;</span>))</div>
-<div class="sourceLine" id="cb47-7" data-line-number="7">  }</div></code></pre>
-<pre class="sourceCode r" id="cb48"><code class="sourceCode r"><div class="sourceLine" id="cb48-1" data-line-number="1"><span class="cf">if</span> (io<span class="op">$</span>recalc){</div>
-<div class="sourceLine" id="cb48-2" data-line-number="2">  ## normalise the QC&#39;ed count matrices</div>
-<div class="sourceLine" id="cb48-3" data-line-number="3">  sc10x.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce10x_qc) ## deconvolute using size factors</div>
-<div class="sourceLine" id="cb48-4" data-line-number="4">  sc10x.norm =<span class="st">  </span><span class="kw">normalize</span>(sc10x.norm) ## normalise expression values</div>
-<div class="sourceLine" id="cb48-5" data-line-number="5">  ## DROP-seq</div>
-<div class="sourceLine" id="cb48-6" data-line-number="6">  scdrop.norm =<span class="st"> </span><span class="kw">computeSumFactors</span>(scedrop_qc_qc)</div>
-<div class="sourceLine" id="cb48-7" data-line-number="7">  scdrop.norm =<span class="st"> </span><span class="kw">normalize</span>(scdrop.norm)</div>
-<div class="sourceLine" id="cb48-8" data-line-number="8">  ## CEL-seq2</div>
-<div class="sourceLine" id="cb48-9" data-line-number="9">  sccel.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce4_qc)</div>
-<div class="sourceLine" id="cb48-10" data-line-number="10">  sccel.norm =<span class="st">  </span><span class="kw">normalize</span>(sccel.norm)</div>
-<div class="sourceLine" id="cb48-11" data-line-number="11">} <span class="cf">else</span> {</div>
-<div class="sourceLine" id="cb48-12" data-line-number="12">  ## load locally - change to your own</div>
-<div class="sourceLine" id="cb48-13" data-line-number="13">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>output.data,<span class="st">&#39;sce.norm.RData&#39;</span>))</div>
-<div class="sourceLine" id="cb48-14" data-line-number="14">}</div></code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">isFALSE</span>(io<span class="op">$</span>local.input)<span class="op">&amp;&amp;</span>io<span class="op">$</span>recalc){</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2">  <span class="co">## load from GitHub</span></a>
+<a class="sourceLine" id="cb47-3" data-line-number="3">  DataURL=<span class="st">&#39;https://tinyurl.com/sincell-with-class-RData-LuyiT&#39;</span></a>
+<a class="sourceLine" id="cb47-4" data-line-number="4">  <span class="kw">load</span>(<span class="kw">url</span>(DataURL))</a>
+<a class="sourceLine" id="cb47-5" data-line-number="5">} <span class="cf">else</span> <span class="cf">if</span> (<span class="op">!</span><span class="kw">isFALSE</span>(io<span class="op">$</span>local.input)<span class="op">&amp;&amp;</span>io<span class="op">$</span>recalc){</a>
+<a class="sourceLine" id="cb47-6" data-line-number="6">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>local.input, <span class="st">&#39;sincell_with_class.RData&#39;</span>))</a>
+<a class="sourceLine" id="cb47-7" data-line-number="7">  }</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="cf">if</span> (io<span class="op">$</span>recalc){</a>
+<a class="sourceLine" id="cb48-2" data-line-number="2">  <span class="co">## normalise the QC&#39;ed count matrices</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3">  sc10x.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce10x_qc) <span class="co">## deconvolute using size factors</span></a>
+<a class="sourceLine" id="cb48-4" data-line-number="4">  sc10x.norm =<span class="st">  </span><span class="kw">normalize</span>(sc10x.norm) <span class="co">## normalise expression values</span></a>
+<a class="sourceLine" id="cb48-5" data-line-number="5">  <span class="co">## DROP-seq</span></a>
+<a class="sourceLine" id="cb48-6" data-line-number="6">  scdrop.norm =<span class="st"> </span><span class="kw">computeSumFactors</span>(scedrop_qc_qc)</a>
+<a class="sourceLine" id="cb48-7" data-line-number="7">  scdrop.norm =<span class="st"> </span><span class="kw">normalize</span>(scdrop.norm)</a>
+<a class="sourceLine" id="cb48-8" data-line-number="8">  <span class="co">## CEL-seq2</span></a>
+<a class="sourceLine" id="cb48-9" data-line-number="9">  sccel.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce4_qc)</a>
+<a class="sourceLine" id="cb48-10" data-line-number="10">  sccel.norm =<span class="st">  </span><span class="kw">normalize</span>(sccel.norm)</a>
+<a class="sourceLine" id="cb48-11" data-line-number="11">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb48-12" data-line-number="12">  <span class="co">## load locally - change to your own</span></a>
+<a class="sourceLine" id="cb48-13" data-line-number="13">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>output.data,<span class="st">&#39;sce.norm.RData&#39;</span>))</a>
+<a class="sourceLine" id="cb48-14" data-line-number="14">}</a></code></pre></div>
 </div>
 <div id="pls-da-on-each-protocol-individually" class="section level2">
 <h2><span class="header-section-number">2.5</span> PLS-DA on each protocol individually</h2>
@@ -266,30 +276,30 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h3><span class="header-section-number">2.5.1</span> method</h3>
 <p>As mentioned in previous vignette, PLS-DA finds the molecular signature that drives the association of cells to their cell lines. Here we use mixOmics’ <strong>plsda</strong> function to find the PLSDA components in each dataset, refer to the documentation for details.</p>
 <p>Since our aim is to find the signature from each dataset and compare, we need to find the data corresponding to common genes across all datasets:</p>
-<pre class="sourceCode r" id="cb49"><code class="sourceCode r"><div class="sourceLine" id="cb49-1" data-line-number="1">## find the intersect of the genes</div>
-<div class="sourceLine" id="cb49-2" data-line-number="2">list.intersect =<span class="st"> </span><span class="kw">Reduce</span>(intersect, <span class="kw">list</span>(</div>
-<div class="sourceLine" id="cb49-3" data-line-number="3">## the rownames of the original (un-transposed) count matrix will output the genes</div>
-<div class="sourceLine" id="cb49-4" data-line-number="4">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(sc10x.norm)),</div>
-<div class="sourceLine" id="cb49-5" data-line-number="5">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(sccel.norm)),</div>
-<div class="sourceLine" id="cb49-6" data-line-number="6">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(scdrop.norm))</div>
-<div class="sourceLine" id="cb49-7" data-line-number="7">))</div></code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co">## find the intersect of the genes</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">list.intersect =<span class="st"> </span><span class="kw">Reduce</span>(intersect, <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="co">## the rownames of the original (un-transposed) count matrix will output the genes</span></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(sc10x.norm)),</a>
+<a class="sourceLine" id="cb49-5" data-line-number="5">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(sccel.norm)),</a>
+<a class="sourceLine" id="cb49-6" data-line-number="6">  <span class="kw">rownames</span>(<span class="kw">logcounts</span>(scdrop.norm))</a>
+<a class="sourceLine" id="cb49-7" data-line-number="7">))</a></code></pre></div>
 <p>Initially, we apply the function to the 10X data and perform cross validation:</p>
-<pre class="sourceCode r" id="cb50"><code class="sourceCode r"><div class="sourceLine" id="cb50-1" data-line-number="1">## PLSDA - 10x</div>
-<div class="sourceLine" id="cb50-2" data-line-number="2">## extract the normalised count matrix from the SCE object (transposed)</div>
-<div class="sourceLine" id="cb50-3" data-line-number="3">normalised<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(sc10x.norm))</div>
-<div class="sourceLine" id="cb50-4" data-line-number="4">## keep the common genes only for comparability</div>
-<div class="sourceLine" id="cb50-5" data-line-number="5">normalised<span class="fl">.10</span>x =<span class="st"> </span>normalised<span class="fl">.10</span>x[,list.intersect]</div>
-<div class="sourceLine" id="cb50-6" data-line-number="6">## form a factor variable of cell lines</div>
-<div class="sourceLine" id="cb50-7" data-line-number="7">Y<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">as.factor</span>(sc10x.norm[list.intersect,]<span class="op">$</span>cell_line)</div>
-<div class="sourceLine" id="cb50-8" data-line-number="8">## PLS-DA on the dataset with 5 components</div>
-<div class="sourceLine" id="cb50-9" data-line-number="9">plsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">5</span>)</div>
-<div class="sourceLine" id="cb50-10" data-line-number="10">## perform cross validation and find the classification error rates</div>
-<div class="sourceLine" id="cb50-11" data-line-number="11">start =<span class="st"> </span><span class="kw">Sys.time</span>()</div>
-<div class="sourceLine" id="cb50-12" data-line-number="12">perf.plsda<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">perf</span>(plsda<span class="fl">.10</span>x.res, <span class="dt">progressBar=</span>F )</div>
-<div class="sourceLine" id="cb50-13" data-line-number="13">run.time =<span class="st"> </span><span class="kw">Sys.time</span>()<span class="op">-</span>start</div></code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="co">## PLSDA - 10x</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="co">## extract the normalised count matrix from the SCE object (transposed)</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3">normalised<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(sc10x.norm))</a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="co">## keep the common genes only for comparability</span></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5">normalised<span class="fl">.10</span>x =<span class="st"> </span>normalised<span class="fl">.10</span>x[,list.intersect]</a>
+<a class="sourceLine" id="cb50-6" data-line-number="6"><span class="co">## form a factor variable of cell lines</span></a>
+<a class="sourceLine" id="cb50-7" data-line-number="7">Y<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">as.factor</span>(sc10x.norm[list.intersect,]<span class="op">$</span>cell_line)</a>
+<a class="sourceLine" id="cb50-8" data-line-number="8"><span class="co">## PLS-DA on the dataset with 5 components</span></a>
+<a class="sourceLine" id="cb50-9" data-line-number="9">plsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb50-10" data-line-number="10"><span class="co">## perform cross validation and find the classification error rates</span></a>
+<a class="sourceLine" id="cb50-11" data-line-number="11">start =<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb50-12" data-line-number="12">perf.plsda<span class="fl">.10</span>x =<span class="st"> </span><span class="kw">perf</span>(plsda<span class="fl">.10</span>x.res, <span class="dt">progressBar=</span>F )</a>
+<a class="sourceLine" id="cb50-13" data-line-number="13">run.time =<span class="st"> </span><span class="kw">Sys.time</span>()<span class="op">-</span>start</a></code></pre></div>
 <p>The run took less than 2 mins. We can now plot the error rate profile:</p>
-<pre class="sourceCode r" id="cb51"><code class="sourceCode r"><div class="sourceLine" id="cb51-1" data-line-number="1">## optimal number of components</div>
-<div class="sourceLine" id="cb51-2" data-line-number="2"><span class="kw">plot</span>(perf.plsda<span class="fl">.10</span>x, <span class="dt">col =</span> <span class="kw">color.mixo</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>))</div></code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co">## optimal number of components</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="kw">plot</span>(perf.plsda<span class="fl">.10</span>x, <span class="dt">col =</span> <span class="kw">color.mixo</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-10-1.png" alt=" The classification error rate for different number of PLSDA components of 10X dataset." width="70%" />
 <p class="caption">
@@ -297,40 +307,40 @@ Figure 2.1:  The classification error rate for different number of PLSDA compone
 </p>
 </div>
 <p>Similar to the combined dataset, <em>ncomp</em>=2 leads to optimum error rate. We now apply <em>plsda</em> to the other 2 datasets:</p>
-<pre class="sourceCode r" id="cb52"><code class="sourceCode r"><div class="sourceLine" id="cb52-1" data-line-number="1">## PLSDA - CEL-seq2 and Drop-seq </div>
-<div class="sourceLine" id="cb52-2" data-line-number="2">## extract the normalised count matrix from the SCE object (transposed)</div>
-<div class="sourceLine" id="cb52-3" data-line-number="3">## CEL-seq2</div>
-<div class="sourceLine" id="cb52-4" data-line-number="4">normalised.cel =<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(sccel.norm))</div>
-<div class="sourceLine" id="cb52-5" data-line-number="5">normalised.cel =<span class="st"> </span>normalised.cel[,list.intersect]</div>
-<div class="sourceLine" id="cb52-6" data-line-number="6">## Drop-seq</div>
-<div class="sourceLine" id="cb52-7" data-line-number="7">normalised.drop=<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(scdrop.norm))</div>
-<div class="sourceLine" id="cb52-8" data-line-number="8">normalised.drop =<span class="st"> </span>normalised.drop[,list.intersect]</div>
-<div class="sourceLine" id="cb52-9" data-line-number="9">## factor variable of cell lines</div>
-<div class="sourceLine" id="cb52-10" data-line-number="10">Y.cel =<span class="st"> </span><span class="kw">as.factor</span>(sccel.norm[list.intersect,]<span class="op">$</span>cell_line)</div>
-<div class="sourceLine" id="cb52-11" data-line-number="11">Y.drop =<span class="st"> </span><span class="kw">as.factor</span>(scdrop.norm[list.intersect,]<span class="op">$</span>cell_line)</div>
-<div class="sourceLine" id="cb52-12" data-line-number="12">## PLS-DA on each dataset with 2 components</div>
-<div class="sourceLine" id="cb52-13" data-line-number="13">plsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">2</span>)</div>
-<div class="sourceLine" id="cb52-14" data-line-number="14">plsda.cel.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised.cel, <span class="dt">Y =</span> Y.cel, <span class="dt">ncomp =</span> <span class="dv">2</span>)</div>
-<div class="sourceLine" id="cb52-15" data-line-number="15">plsda.drop.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised.drop, <span class="dt">Y =</span> Y.drop, <span class="dt">ncomp =</span> <span class="dv">2</span>)</div></code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co">## PLSDA - CEL-seq2 and Drop-seq </span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="co">## extract the normalised count matrix from the SCE object (transposed)</span></a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="co">## CEL-seq2</span></a>
+<a class="sourceLine" id="cb52-4" data-line-number="4">normalised.cel =<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(sccel.norm))</a>
+<a class="sourceLine" id="cb52-5" data-line-number="5">normalised.cel =<span class="st"> </span>normalised.cel[,list.intersect]</a>
+<a class="sourceLine" id="cb52-6" data-line-number="6"><span class="co">## Drop-seq</span></a>
+<a class="sourceLine" id="cb52-7" data-line-number="7">normalised.drop=<span class="st"> </span><span class="kw">t</span>(<span class="kw">logcounts</span>(scdrop.norm))</a>
+<a class="sourceLine" id="cb52-8" data-line-number="8">normalised.drop =<span class="st"> </span>normalised.drop[,list.intersect]</a>
+<a class="sourceLine" id="cb52-9" data-line-number="9"><span class="co">## factor variable of cell lines</span></a>
+<a class="sourceLine" id="cb52-10" data-line-number="10">Y.cel =<span class="st"> </span><span class="kw">as.factor</span>(sccel.norm[list.intersect,]<span class="op">$</span>cell_line)</a>
+<a class="sourceLine" id="cb52-11" data-line-number="11">Y.drop =<span class="st"> </span><span class="kw">as.factor</span>(scdrop.norm[list.intersect,]<span class="op">$</span>cell_line)</a>
+<a class="sourceLine" id="cb52-12" data-line-number="12"><span class="co">## PLS-DA on each dataset with 2 components</span></a>
+<a class="sourceLine" id="cb52-13" data-line-number="13">plsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb52-14" data-line-number="14">plsda.cel.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised.cel, <span class="dt">Y =</span> Y.cel, <span class="dt">ncomp =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb52-15" data-line-number="15">plsda.drop.res =<span class="st"> </span><span class="kw">plsda</span>(<span class="dt">X =</span> normalised.drop, <span class="dt">Y =</span> Y.drop, <span class="dt">ncomp =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p>We plot the plsda plots for the 10X and CEL-seq2 data:</p>
-<pre class="sourceCode r" id="cb53"><code class="sourceCode r"><div class="sourceLine" id="cb53-1" data-line-number="1">## mint.plsda plot for 10X</div>
-<div class="sourceLine" id="cb53-2" data-line-number="2"><span class="kw">plotIndiv</span>(plsda<span class="fl">.10</span>x.res,</div>
-<div class="sourceLine" id="cb53-3" data-line-number="3">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;PLSDA 10X&#39;</span>, </div>
-<div class="sourceLine" id="cb53-4" data-line-number="4">          <span class="dt">ellipse =</span> T, <span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</div>
-<div class="sourceLine" id="cb53-5" data-line-number="5">          <span class="dt">X.label =</span> <span class="st">&#39;PLSDA component 1&#39;</span>, </div>
-<div class="sourceLine" id="cb53-6" data-line-number="6">          <span class="dt">Y.label =</span> <span class="st">&#39;PLSDA component 2&#39;</span>, <span class="dt">pch=</span><span class="dv">1</span>)</div></code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co">## mint.plsda plot for 10X</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="kw">plotIndiv</span>(plsda<span class="fl">.10</span>x.res,</a>
+<a class="sourceLine" id="cb53-3" data-line-number="3">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;PLSDA 10X&#39;</span>, </a>
+<a class="sourceLine" id="cb53-4" data-line-number="4">          <span class="dt">ellipse =</span> T, <span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb53-5" data-line-number="5">          <span class="dt">X.label =</span> <span class="st">&#39;PLSDA component 1&#39;</span>, </a>
+<a class="sourceLine" id="cb53-6" data-line-number="6">          <span class="dt">Y.label =</span> <span class="st">&#39;PLSDA component 2&#39;</span>, <span class="dt">pch=</span><span class="dv">1</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-12-1.png" alt="PLSDA plot for the 10x dataset." width="65%" />
 <p class="caption">
 Figure 1.2: PLSDA plot for the 10x dataset.
 </p>
 </div>
-<pre class="sourceCode r" id="cb54"><code class="sourceCode r"><div class="sourceLine" id="cb54-1" data-line-number="1">## mint.plsda plot for CEL-seq2</div>
-<div class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">plotIndiv</span>(plsda.cel.res,</div>
-<div class="sourceLine" id="cb54-3" data-line-number="3">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;PLSDA CEL-seq2&#39;</span>, </div>
-<div class="sourceLine" id="cb54-4" data-line-number="4">          <span class="dt">ellipse =</span> T, <span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</div>
-<div class="sourceLine" id="cb54-5" data-line-number="5">          <span class="dt">X.label =</span> <span class="st">&#39;PLSDA component 1&#39;</span>, </div>
-<div class="sourceLine" id="cb54-6" data-line-number="6">          <span class="dt">Y.label =</span> <span class="st">&#39;PLSDA component 2&#39;</span>, <span class="dt">pch=</span><span class="dv">2</span>)</div></code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co">## mint.plsda plot for CEL-seq2</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">plotIndiv</span>(plsda.cel.res,</a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;PLSDA CEL-seq2&#39;</span>, </a>
+<a class="sourceLine" id="cb54-4" data-line-number="4">          <span class="dt">ellipse =</span> T, <span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb54-5" data-line-number="5">          <span class="dt">X.label =</span> <span class="st">&#39;PLSDA component 1&#39;</span>, </a>
+<a class="sourceLine" id="cb54-6" data-line-number="6">          <span class="dt">Y.label =</span> <span class="st">&#39;PLSDA component 2&#39;</span>, <span class="dt">pch=</span><span class="dv">2</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-13-1.png" alt="PLSDA plot for the CEL-seq2 dataset." width="65%" />
 <p class="caption">
@@ -342,36 +352,36 @@ Figure 2.2: PLSDA plot for the CEL-seq2 dataset.
 <div id="sparse-plsda-splsda-for-each-protocol-individually" class="section level3">
 <h3><span class="header-section-number">2.5.2</span> Sparse PLSDA (sPLSDA) for each protocol individually</h3>
 <p>For consistency and better comparison, we will use same number of optimum components as MINT for the sparse PLS-DA on each protocol:</p>
-<pre class="sourceCode r" id="cb55"><code class="sourceCode r"><div class="sourceLine" id="cb55-1" data-line-number="1">## run sparse PLSDA on individual studies with MINT tuned parameters</div>
-<div class="sourceLine" id="cb55-2" data-line-number="2">keepX =<span class="st"> </span><span class="kw">c</span>(<span class="dv">35</span>,<span class="dv">10</span>)</div>
-<div class="sourceLine" id="cb55-3" data-line-number="3">splsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </div>
-<div class="sourceLine" id="cb55-4" data-line-number="4">                              <span class="dt">keepX =</span> keepX)</div>
-<div class="sourceLine" id="cb55-5" data-line-number="5">splsda.cel.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised.cel, <span class="dt">Y =</span> Y.cel, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </div>
-<div class="sourceLine" id="cb55-6" data-line-number="6">                              <span class="dt">keepX =</span> keepX)</div>
-<div class="sourceLine" id="cb55-7" data-line-number="7">splsda.drop.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised.drop, <span class="dt">Y =</span> Y.drop, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </div>
-<div class="sourceLine" id="cb55-8" data-line-number="8">                              <span class="dt">keepX =</span> keepX)</div></code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co">## run sparse PLSDA on individual studies with MINT tuned parameters</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">keepX =<span class="st"> </span><span class="kw">c</span>(<span class="dv">35</span>,<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3">splsda<span class="fl">.10</span>x.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised<span class="fl">.10</span>x, <span class="dt">Y =</span> Y<span class="fl">.10</span>x, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
+<a class="sourceLine" id="cb55-4" data-line-number="4">                              <span class="dt">keepX =</span> keepX)</a>
+<a class="sourceLine" id="cb55-5" data-line-number="5">splsda.cel.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised.cel, <span class="dt">Y =</span> Y.cel, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
+<a class="sourceLine" id="cb55-6" data-line-number="6">                              <span class="dt">keepX =</span> keepX)</a>
+<a class="sourceLine" id="cb55-7" data-line-number="7">splsda.drop.res =<span class="st"> </span><span class="kw">splsda</span>( <span class="dt">X =</span>normalised.drop, <span class="dt">Y =</span> Y.drop, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
+<a class="sourceLine" id="cb55-8" data-line-number="8">                              <span class="dt">keepX =</span> keepX)</a></code></pre></div>
 <p>And visualise the output to see how the clusters change with variable selection:</p>
-<pre class="sourceCode r" id="cb56"><code class="sourceCode r"><div class="sourceLine" id="cb56-1" data-line-number="1">## splsda plots with tuned number of variables for each sPLSDA component</div>
-<div class="sourceLine" id="cb56-2" data-line-number="2">## 10X</div>
-<div class="sourceLine" id="cb56-3" data-line-number="3"><span class="kw">plotIndiv</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">group =</span> Y<span class="fl">.10</span>x,</div>
-<div class="sourceLine" id="cb56-4" data-line-number="4">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;sPLSDA - 10X&#39;</span>,</div>
-<div class="sourceLine" id="cb56-5" data-line-number="5">          <span class="dt">ellipse =</span> F,<span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</div>
-<div class="sourceLine" id="cb56-6" data-line-number="6">          <span class="dt">pch=</span><span class="dv">1</span>,</div>
-<div class="sourceLine" id="cb56-7" data-line-number="7">          <span class="dt">X.label =</span> <span class="st">&#39;sPLSDA component 1&#39;</span>,</div>
-<div class="sourceLine" id="cb56-8" data-line-number="8">          <span class="dt">Y.label =</span> <span class="st">&#39;sPLSDA component 2&#39;</span>)</div></code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co">## splsda plots with tuned number of variables for each sPLSDA component</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="co">## 10X</span></a>
+<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="kw">plotIndiv</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">group =</span> Y<span class="fl">.10</span>x,</a>
+<a class="sourceLine" id="cb56-4" data-line-number="4">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;sPLSDA - 10X&#39;</span>,</a>
+<a class="sourceLine" id="cb56-5" data-line-number="5">          <span class="dt">ellipse =</span> F,<span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb56-6" data-line-number="6">          <span class="dt">pch=</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb56-7" data-line-number="7">          <span class="dt">X.label =</span> <span class="st">&#39;sPLSDA component 1&#39;</span>,</a>
+<a class="sourceLine" id="cb56-8" data-line-number="8">          <span class="dt">Y.label =</span> <span class="st">&#39;sPLSDA component 2&#39;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-15-1.png" alt=" The sPLSDA plots of the 10X dataset." width="65%" />
 <p class="caption">
 Figure 2.3:  The sPLSDA plots of the 10X dataset.
 </p>
 </div>
-<pre class="sourceCode r" id="cb57"><code class="sourceCode r"><div class="sourceLine" id="cb57-1" data-line-number="1">## CEL-seq2</div>
-<div class="sourceLine" id="cb57-2" data-line-number="2"><span class="kw">plotIndiv</span>(splsda.cel.res, <span class="dt">group =</span> Y.cel,</div>
-<div class="sourceLine" id="cb57-3" data-line-number="3">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;sPLSDA - CEL-seq2&#39;</span>,</div>
-<div class="sourceLine" id="cb57-4" data-line-number="4">          <span class="dt">ellipse =</span> F,<span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</div>
-<div class="sourceLine" id="cb57-5" data-line-number="5">          <span class="dt">pch=</span><span class="dv">2</span>,</div>
-<div class="sourceLine" id="cb57-6" data-line-number="6">          <span class="dt">X.label =</span> <span class="st">&#39;sPLSDA component 1&#39;</span>,</div>
-<div class="sourceLine" id="cb57-7" data-line-number="7">          <span class="dt">Y.label =</span> <span class="st">&#39;sPLSDA component 2&#39;</span>)</div></code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co">## CEL-seq2</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="kw">plotIndiv</span>(splsda.cel.res, <span class="dt">group =</span> Y.cel,</a>
+<a class="sourceLine" id="cb57-3" data-line-number="3">          <span class="dt">legend  =</span> T, <span class="dt">title     =</span> <span class="st">&#39;sPLSDA - CEL-seq2&#39;</span>,</a>
+<a class="sourceLine" id="cb57-4" data-line-number="4">          <span class="dt">ellipse =</span> F,<span class="dt">legend.title =</span> <span class="st">&#39;Cell Line&#39;</span>,</a>
+<a class="sourceLine" id="cb57-5" data-line-number="5">          <span class="dt">pch=</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb57-6" data-line-number="6">          <span class="dt">X.label =</span> <span class="st">&#39;sPLSDA component 1&#39;</span>,</a>
+<a class="sourceLine" id="cb57-7" data-line-number="7">          <span class="dt">Y.label =</span> <span class="st">&#39;sPLSDA component 2&#39;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-16-1.png" alt=" The sPLSDA plots of the CEL-seq2 dataset." width="65%" />
 <p class="caption">
@@ -379,26 +389,26 @@ Figure 2.4:  The sPLSDA plots of the CEL-seq2 dataset.
 </p>
 </div>
 <p>The variable selection has reduced the noise and refined the clusters compared to the non-sparse model.</p>
-<pre class="sourceCode r" id="cb58"><code class="sourceCode r"><div class="sourceLine" id="cb58-1" data-line-number="1">## The signature genes from each sPLS-DA study</div>
-<div class="sourceLine" id="cb58-2" data-line-number="2">Chromium<span class="fl">.10</span>X.vars =<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</div>
-<div class="sourceLine" id="cb58-3" data-line-number="3">                             <span class="kw">selectVar</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</div>
-<div class="sourceLine" id="cb58-4" data-line-number="4">Cel.seq.vars =<span class="st">      </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda.cel.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</div>
-<div class="sourceLine" id="cb58-5" data-line-number="5">                             <span class="kw">selectVar</span>(splsda.cel.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</div>
-<div class="sourceLine" id="cb58-6" data-line-number="6">Drop.seq.vars =<span class="st">     </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda.drop.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</div>
-<div class="sourceLine" id="cb58-7" data-line-number="7">                             <span class="kw">selectVar</span>(splsda.drop.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</div></code></pre>
-<pre class="sourceCode r" id="cb59"><code class="sourceCode r"><div class="sourceLine" id="cb59-1" data-line-number="1">## create a venn diagram from signatures</div>
-<div class="sourceLine" id="cb59-2" data-line-number="2">vennProtocols &lt;-<span class="st"> </span><span class="kw">venn.diagram</span>(</div>
-<div class="sourceLine" id="cb59-3" data-line-number="3">    <span class="dt">x =</span> <span class="kw">list</span>(</div>
-<div class="sourceLine" id="cb59-4" data-line-number="4">        <span class="dt">Chr.10X=</span> Chromium<span class="fl">.10</span>X.vars ,</div>
-<div class="sourceLine" id="cb59-5" data-line-number="5">        <span class="dt">Cel.seq=</span> Cel.seq.vars,</div>
-<div class="sourceLine" id="cb59-6" data-line-number="6">        <span class="dt">Drop.seq =</span> Drop.seq.vars),</div>
-<div class="sourceLine" id="cb59-7" data-line-number="7">    <span class="dt">filename =</span> <span class="ot">NULL</span>,</div>
-<div class="sourceLine" id="cb59-8" data-line-number="8">    <span class="dt">cex=</span><span class="fl">1.5</span>, <span class="dt">cat.cex=</span><span class="fl">1.5</span>,</div>
-<div class="sourceLine" id="cb59-9" data-line-number="9">    <span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;green&#39;</span>, <span class="st">&#39;darkblue&#39;</span>,  <span class="st">&#39;yellow&#39;</span>)</div>
-<div class="sourceLine" id="cb59-10" data-line-number="10">    )</div>
-<div class="sourceLine" id="cb59-11" data-line-number="11"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/vennProtocols.png&#39;</span>)</div>
-<div class="sourceLine" id="cb59-12" data-line-number="12"><span class="kw">grid.draw</span>(vennProtocols)</div>
-<div class="sourceLine" id="cb59-13" data-line-number="13"><span class="kw">dev.off</span>()</div></code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co">## The signature genes from each sPLS-DA study</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2">Chromium<span class="fl">.10</span>X.vars =<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb58-3" data-line-number="3">                             <span class="kw">selectVar</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a>
+<a class="sourceLine" id="cb58-4" data-line-number="4">Cel.seq.vars =<span class="st">      </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda.cel.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">                             <span class="kw">selectVar</span>(splsda.cel.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a>
+<a class="sourceLine" id="cb58-6" data-line-number="6">Drop.seq.vars =<span class="st">     </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(splsda.drop.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb58-7" data-line-number="7">                             <span class="kw">selectVar</span>(splsda.drop.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="co">## create a venn diagram from signatures</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2">vennProtocols &lt;-<span class="st"> </span><span class="kw">venn.diagram</span>(</a>
+<a class="sourceLine" id="cb59-3" data-line-number="3">    <span class="dt">x =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb59-4" data-line-number="4">        <span class="dt">Chr.10X=</span> Chromium<span class="fl">.10</span>X.vars ,</a>
+<a class="sourceLine" id="cb59-5" data-line-number="5">        <span class="dt">Cel.seq=</span> Cel.seq.vars,</a>
+<a class="sourceLine" id="cb59-6" data-line-number="6">        <span class="dt">Drop.seq =</span> Drop.seq.vars),</a>
+<a class="sourceLine" id="cb59-7" data-line-number="7">    <span class="dt">filename =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb59-8" data-line-number="8">    <span class="dt">cex=</span><span class="fl">1.5</span>, <span class="dt">cat.cex=</span><span class="fl">1.5</span>,</a>
+<a class="sourceLine" id="cb59-9" data-line-number="9">    <span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;green&#39;</span>, <span class="st">&#39;darkblue&#39;</span>,  <span class="st">&#39;yellow&#39;</span>)</a>
+<a class="sourceLine" id="cb59-10" data-line-number="10">    )</a>
+<a class="sourceLine" id="cb59-11" data-line-number="11"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/vennProtocols.png&#39;</span>)</a>
+<a class="sourceLine" id="cb59-12" data-line-number="12"><span class="kw">grid.draw</span>(vennProtocols)</a>
+<a class="sourceLine" id="cb59-13" data-line-number="13"><span class="kw">dev.off</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
 <img src="figures/vennProtocols.png" alt=" The venn diagram of common sPLSDA signatures among individual datasets." width="35%" />
 <p class="caption">
@@ -411,38 +421,38 @@ Figure 1.5:  The venn diagram of common sPLSDA signatures among individual datas
 <div id="compare-with-mint-combined" class="section level2">
 <h2><span class="header-section-number">2.6</span> compare with MINT-combined</h2>
 <p>We can either reproduce the tuned sparse MINT object or load it from local directory, if saved:</p>
-<pre class="sourceCode r" id="cb60"><code class="sourceCode r"><div class="sourceLine" id="cb60-1" data-line-number="1"><span class="cf">if</span> (io<span class="op">$</span>recalc){</div>
-<div class="sourceLine" id="cb60-2" data-line-number="2">  data.combined =<span class="st"> </span><span class="kw">t</span>( ## transpose of all 3 datasets combined</div>
-<div class="sourceLine" id="cb60-3" data-line-number="3">    <span class="kw">data.frame</span>(</div>
-<div class="sourceLine" id="cb60-4" data-line-number="4">      ## the genes from each protocol that match list.intersect</div>
-<div class="sourceLine" id="cb60-5" data-line-number="5">      <span class="kw">logcounts</span>(sc10x.norm)[list.intersect,],</div>
-<div class="sourceLine" id="cb60-6" data-line-number="6">      <span class="kw">logcounts</span>(sccel.norm)[list.intersect,],</div>
-<div class="sourceLine" id="cb60-7" data-line-number="7">      <span class="kw">logcounts</span>(scdrop.norm)[list.intersect,] ))</div>
-<div class="sourceLine" id="cb60-8" data-line-number="8">  </div>
-<div class="sourceLine" id="cb60-9" data-line-number="9">  ## create a factor variable of cell lines</div>
-<div class="sourceLine" id="cb60-10" data-line-number="10">  ## must be in the same order as the data combination</div>
-<div class="sourceLine" id="cb60-11" data-line-number="11">  cell.line =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">c</span>(sce10x_qc<span class="op">$</span>cell_line,</div>
-<div class="sourceLine" id="cb60-12" data-line-number="12">                           sce4_qc<span class="op">$</span>cell_line,</div>
-<div class="sourceLine" id="cb60-13" data-line-number="13">                           scedrop_qc_qc<span class="op">$</span>cell_line))</div>
-<div class="sourceLine" id="cb60-14" data-line-number="14">  ## name the factor variable with the cell ID</div>
-<div class="sourceLine" id="cb60-15" data-line-number="15">  <span class="kw">names</span>(cell.line) =<span class="st"> </span><span class="kw">rownames</span>(data.combined)</div>
-<div class="sourceLine" id="cb60-16" data-line-number="16">  </div>
-<div class="sourceLine" id="cb60-17" data-line-number="17">  ## produce a character vector of batch names</div>
-<div class="sourceLine" id="cb60-18" data-line-number="18">  ## must be in the same order as the data combination</div>
-<div class="sourceLine" id="cb60-19" data-line-number="19">  study =<span class="st"> </span><span class="kw">as.factor</span>(</div>
-<div class="sourceLine" id="cb60-20" data-line-number="20">    <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;10X&#39;</span>,      <span class="kw">ncol</span>(<span class="kw">logcounts</span>(sc10x.norm))),</div>
-<div class="sourceLine" id="cb60-21" data-line-number="21">      <span class="kw">rep</span>(<span class="st">&#39;CEL-seq2&#39;</span>,  <span class="kw">ncol</span>(<span class="kw">logcounts</span>(sccel.norm))),</div>
-<div class="sourceLine" id="cb60-22" data-line-number="22">      <span class="kw">rep</span>(<span class="st">&#39;Drop-seq&#39;</span>, <span class="kw">ncol</span>(<span class="kw">logcounts</span>(scdrop.norm))) ))</div>
-<div class="sourceLine" id="cb60-23" data-line-number="23">  ## name it with corresponding cell IDs</div>
-<div class="sourceLine" id="cb60-24" data-line-number="24">  <span class="kw">names</span>(study) =<span class="st"> </span><span class="kw">rownames</span>(data.combined)</div>
-<div class="sourceLine" id="cb60-25" data-line-number="25">  </div>
-<div class="sourceLine" id="cb60-26" data-line-number="26">  ## run sparse mint using optimum parameters:</div>
-<div class="sourceLine" id="cb60-27" data-line-number="27">  mint.splsda.tuned.res =<span class="st"> </span><span class="kw">mint.splsda</span>( <span class="dt">X =</span>data.combined, <span class="dt">Y =</span> Y,</div>
-<div class="sourceLine" id="cb60-28" data-line-number="28">                                <span class="dt">study =</span> study, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </div>
-<div class="sourceLine" id="cb60-29" data-line-number="29">                                <span class="dt">keepX =</span> <span class="kw">c</span>(<span class="dv">35</span>,<span class="dv">10</span>)) ## change for your own dataset</div>
-<div class="sourceLine" id="cb60-30" data-line-number="30">} <span class="cf">else</span> { ## if already saved</div>
-<div class="sourceLine" id="cb60-31" data-line-number="31">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>output.data,<span class="st">&#39;mint.splsda.tuned.res.RData&#39;</span>))</div>
-<div class="sourceLine" id="cb60-32" data-line-number="32">}</div></code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="cf">if</span> (io<span class="op">$</span>recalc){</a>
+<a class="sourceLine" id="cb60-2" data-line-number="2">  data.combined =<span class="st"> </span><span class="kw">t</span>( <span class="co">## transpose of all 3 datasets combined</span></a>
+<a class="sourceLine" id="cb60-3" data-line-number="3">    <span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb60-4" data-line-number="4">      <span class="co">## the genes from each protocol that match list.intersect</span></a>
+<a class="sourceLine" id="cb60-5" data-line-number="5">      <span class="kw">logcounts</span>(sc10x.norm)[list.intersect,],</a>
+<a class="sourceLine" id="cb60-6" data-line-number="6">      <span class="kw">logcounts</span>(sccel.norm)[list.intersect,],</a>
+<a class="sourceLine" id="cb60-7" data-line-number="7">      <span class="kw">logcounts</span>(scdrop.norm)[list.intersect,] ))</a>
+<a class="sourceLine" id="cb60-8" data-line-number="8">  </a>
+<a class="sourceLine" id="cb60-9" data-line-number="9">  <span class="co">## create a factor variable of cell lines</span></a>
+<a class="sourceLine" id="cb60-10" data-line-number="10">  <span class="co">## must be in the same order as the data combination</span></a>
+<a class="sourceLine" id="cb60-11" data-line-number="11">  cell.line =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">c</span>(sce10x_qc<span class="op">$</span>cell_line,</a>
+<a class="sourceLine" id="cb60-12" data-line-number="12">                           sce4_qc<span class="op">$</span>cell_line,</a>
+<a class="sourceLine" id="cb60-13" data-line-number="13">                           scedrop_qc_qc<span class="op">$</span>cell_line))</a>
+<a class="sourceLine" id="cb60-14" data-line-number="14">  <span class="co">## name the factor variable with the cell ID</span></a>
+<a class="sourceLine" id="cb60-15" data-line-number="15">  <span class="kw">names</span>(cell.line) =<span class="st"> </span><span class="kw">rownames</span>(data.combined)</a>
+<a class="sourceLine" id="cb60-16" data-line-number="16">  </a>
+<a class="sourceLine" id="cb60-17" data-line-number="17">  <span class="co">## produce a character vector of batch names</span></a>
+<a class="sourceLine" id="cb60-18" data-line-number="18">  <span class="co">## must be in the same order as the data combination</span></a>
+<a class="sourceLine" id="cb60-19" data-line-number="19">  study =<span class="st"> </span><span class="kw">as.factor</span>(</a>
+<a class="sourceLine" id="cb60-20" data-line-number="20">    <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;10X&#39;</span>,      <span class="kw">ncol</span>(<span class="kw">logcounts</span>(sc10x.norm))),</a>
+<a class="sourceLine" id="cb60-21" data-line-number="21">      <span class="kw">rep</span>(<span class="st">&#39;CEL-seq2&#39;</span>,  <span class="kw">ncol</span>(<span class="kw">logcounts</span>(sccel.norm))),</a>
+<a class="sourceLine" id="cb60-22" data-line-number="22">      <span class="kw">rep</span>(<span class="st">&#39;Drop-seq&#39;</span>, <span class="kw">ncol</span>(<span class="kw">logcounts</span>(scdrop.norm))) ))</a>
+<a class="sourceLine" id="cb60-23" data-line-number="23">  <span class="co">## name it with corresponding cell IDs</span></a>
+<a class="sourceLine" id="cb60-24" data-line-number="24">  <span class="kw">names</span>(study) =<span class="st"> </span><span class="kw">rownames</span>(data.combined)</a>
+<a class="sourceLine" id="cb60-25" data-line-number="25">  </a>
+<a class="sourceLine" id="cb60-26" data-line-number="26">  <span class="co">## run sparse mint using optimum parameters:</span></a>
+<a class="sourceLine" id="cb60-27" data-line-number="27">  mint.splsda.tuned.res =<span class="st"> </span><span class="kw">mint.splsda</span>( <span class="dt">X =</span>data.combined, <span class="dt">Y =</span> Y,</a>
+<a class="sourceLine" id="cb60-28" data-line-number="28">                                <span class="dt">study =</span> study, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
+<a class="sourceLine" id="cb60-29" data-line-number="29">                                <span class="dt">keepX =</span> <span class="kw">c</span>(<span class="dv">35</span>,<span class="dv">10</span>)) <span class="co">## change for your own dataset</span></a>
+<a class="sourceLine" id="cb60-30" data-line-number="30">} <span class="cf">else</span> { <span class="co">## if already saved</span></a>
+<a class="sourceLine" id="cb60-31" data-line-number="31">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>output.data,<span class="st">&#39;mint.splsda.tuned.res.RData&#39;</span>))</a>
+<a class="sourceLine" id="cb60-32" data-line-number="32">}</a></code></pre></div>
 <div id="loading-plots" class="section level3">
 <h3><span class="header-section-number">2.6.1</span> loading plots</h3>
 <p>The consistency of the selected variables across individual and the MINT combined studies can be evaluated by plotting the loadings for each study using the <em>plotLoadings</em> function, which produces the barplot of variable loadings for each component.</p>
@@ -454,31 +464,31 @@ Figure 1.5:  The venn diagram of common sPLSDA signatures among individual datas
 </ul>
 <p>For a complete list of the arguments for any object please refer to the documentation.</p>
 <p>We plot the loadings for both components for maximum contribution. Colours indicate the class (cell line) in which the gene is positively/negatively expressed:</p>
-<pre class="sourceCode r" id="cb61"><code class="sourceCode r"><div class="sourceLine" id="cb61-1" data-line-number="1">## Loading Plots</div>
-<div class="sourceLine" id="cb61-2" data-line-number="2">## 10X</div>
-<div class="sourceLine" id="cb61-3" data-line-number="3"><span class="kw">plotLoadings</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </div>
-<div class="sourceLine" id="cb61-4" data-line-number="4">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>, </div>
-<div class="sourceLine" id="cb61-5" data-line-number="5">             <span class="dt">subtitle =</span> <span class="st">&#39;10X&#39;</span>)</div></code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co">## Loading Plots</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="co">## 10X</span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="kw">plotLoadings</span>(splsda<span class="fl">.10</span>x.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb61-4" data-line-number="4">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb61-5" data-line-number="5">             <span class="dt">subtitle =</span> <span class="st">&#39;10X&#39;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-21"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-21-1.png" alt="The loading plots for the first component of sPLS-DA on 10X data. The orange colour corresponds to H2228 cells, and the grey colour belongs to HCC827 cell line." width="70%" />
 <p class="caption">
 Figure 1.7: The loading plots for the first component of sPLS-DA on 10X data. The orange colour corresponds to H2228 cells, and the grey colour belongs to HCC827 cell line.
 </p>
 </div>
-<pre class="sourceCode r" id="cb62"><code class="sourceCode r"><div class="sourceLine" id="cb62-1" data-line-number="1">## CEL-seq2 - Comp. 1</div>
-<div class="sourceLine" id="cb62-2" data-line-number="2"><span class="kw">plotLoadings</span>(splsda.cel.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </div>
-<div class="sourceLine" id="cb62-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>,</div>
-<div class="sourceLine" id="cb62-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="st">&#39;CEL-seq2&#39;</span>)</div></code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co">## CEL-seq2 - Comp. 1</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="kw">plotLoadings</span>(splsda.cel.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb62-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb62-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="st">&#39;CEL-seq2&#39;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-22-1.png" alt="The loading plots for the first component of sPLS-DA on CEL-seq2 data." width="70%" />
 <p class="caption">
 Figure 2.5: The loading plots for the first component of sPLS-DA on CEL-seq2 data.
 </p>
 </div>
-<pre class="sourceCode r" id="cb63"><code class="sourceCode r"><div class="sourceLine" id="cb63-1" data-line-number="1">## Drop-seq - Comp. 1</div>
-<div class="sourceLine" id="cb63-2" data-line-number="2"><span class="kw">plotLoadings</span>(splsda.drop.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </div>
-<div class="sourceLine" id="cb63-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>,</div>
-<div class="sourceLine" id="cb63-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="st">&#39;Drop-seq&#39;</span>)</div></code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="co">## Drop-seq - Comp. 1</span></a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="kw">plotLoadings</span>(splsda.drop.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb63-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb63-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="st">&#39;Drop-seq&#39;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-23-1.png" alt="The loading plots for the first component of sPLS-DA on Drop-seq data." width="70%" />
 <p class="caption">
@@ -486,10 +496,10 @@ Figure 2.6: The loading plots for the first component of sPLS-DA on Drop-seq dat
 </p>
 </div>
 <p>These genes are differentiating cells along the first sPLSDA component. Majority of signature genes are postively expressed in H2228 cells (orange). There is not a clear consensus among individual datasets in terms of the signature genes and their weight (loading).</p>
-<pre class="sourceCode r" id="cb64"><code class="sourceCode r"><div class="sourceLine" id="cb64-1" data-line-number="1">## MINT - Comp. 1</div>
-<div class="sourceLine" id="cb64-2" data-line-number="2"><span class="kw">plotLoadings</span>(mint.splsda.tuned.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </div>
-<div class="sourceLine" id="cb64-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>, </div>
-<div class="sourceLine" id="cb64-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="kw">c</span>(<span class="st">&#39;10X&#39;</span>, <span class="st">&#39;CEL-seq2&#39;</span>, <span class="st">&#39;Drop-seq&#39;</span>) )</div></code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="co">## MINT - Comp. 1</span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2"><span class="kw">plotLoadings</span>(mint.splsda.tuned.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb64-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb64-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="kw">c</span>(<span class="st">&#39;10X&#39;</span>, <span class="st">&#39;CEL-seq2&#39;</span>, <span class="st">&#39;Drop-seq&#39;</span>) )</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-24-1.png" alt="The loading plots for the first component of the Sparse MINT on the combined dataset." width="65%" />
 <p class="caption">
@@ -497,10 +507,10 @@ Figure 2.7: The loading plots for the first component of the Sparse MINT on the 
 </p>
 </div>
 <p>MINT has produced signature that is consistent across studies. Similarly, we can plot the loadings on the second component variables.</p>
-<pre class="sourceCode r" id="cb65"><code class="sourceCode r"><div class="sourceLine" id="cb65-1" data-line-number="1">## MINT - Comp. 2</div>
-<div class="sourceLine" id="cb65-2" data-line-number="2"><span class="kw">plotLoadings</span>(mint.splsda.tuned.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">2</span>, </div>
-<div class="sourceLine" id="cb65-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>, </div>
-<div class="sourceLine" id="cb65-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="kw">c</span>(<span class="st">&#39;10X&#39;</span>, <span class="st">&#39;CEL-seq2&#39;</span>, <span class="st">&#39;Drop-seq&#39;</span>) )</div></code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="co">## MINT - Comp. 2</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="kw">plotLoadings</span>(mint.splsda.tuned.res, <span class="dt">contrib=</span><span class="st">&#39;max&#39;</span>, <span class="dt">method =</span> <span class="st">&#39;mean&#39;</span>, <span class="dt">comp=</span><span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb65-3" data-line-number="3">             <span class="dt">study=</span><span class="st">&#39;all.partial&#39;</span>, <span class="dt">legend=</span>F, <span class="dt">title=</span><span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb65-4" data-line-number="4">             <span class="dt">subtitle =</span> <span class="kw">c</span>(<span class="st">&#39;10X&#39;</span>, <span class="st">&#39;CEL-seq2&#39;</span>, <span class="st">&#39;Drop-seq&#39;</span>) )</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-25-1.png" alt="The loading plots for the second component of the Sparse MINT on the combined dataset." width="65%" />
 <p class="caption">
@@ -511,34 +521,34 @@ Figure 2.8: The loading plots for the second component of the Sparse MINT on the
 <div id="signature-comparison" class="section level3">
 <h3><span class="header-section-number">2.6.2</span> signature comparison</h3>
 <p>The <em>selectVar</em> function in <em>mixOmics</em> outputs the key predictors on each component along with their loadings. We can create a set of Venn diagrams to visualise the overlap of the signature found using PLS-DA in individual datasets and the combined dataset. For all datasets, we take all the variables on both components as the signature.</p>
-<pre class="sourceCode r" id="cb66"><code class="sourceCode r"><div class="sourceLine" id="cb66-1" data-line-number="1">## MINT signature</div>
-<div class="sourceLine" id="cb66-2" data-line-number="2">MINT.Combined.vars =<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</div>
-<div class="sourceLine" id="cb66-3" data-line-number="3">                             <span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</div></code></pre>
-<pre class="sourceCode r" id="cb67"><code class="sourceCode r"><div class="sourceLine" id="cb67-1" data-line-number="1">## create venn diagram</div>
-<div class="sourceLine" id="cb67-2" data-line-number="2">vennMINT &lt;-<span class="st"> </span><span class="kw">venn.diagram</span>(</div>
-<div class="sourceLine" id="cb67-3" data-line-number="3">    <span class="dt">x =</span> <span class="kw">list</span>(</div>
-<div class="sourceLine" id="cb67-4" data-line-number="4">        <span class="dt">Chr.10X=</span> Chromium<span class="fl">.10</span>X.vars ,</div>
-<div class="sourceLine" id="cb67-5" data-line-number="5">        <span class="dt">Cel.seq=</span> Cel.seq.vars,</div>
-<div class="sourceLine" id="cb67-6" data-line-number="6">        <span class="dt">Drop.seq =</span> Drop.seq.vars,</div>
-<div class="sourceLine" id="cb67-7" data-line-number="7">        <span class="dt">MINT.Combined=</span>MINT.Combined.vars),</div>
-<div class="sourceLine" id="cb67-8" data-line-number="8">    <span class="dt">filename =</span> <span class="ot">NULL</span>,</div>
-<div class="sourceLine" id="cb67-9" data-line-number="9">    <span class="dt">cex=</span><span class="fl">1.5</span>, <span class="dt">cat.cex=</span><span class="fl">1.5</span>,</div>
-<div class="sourceLine" id="cb67-10" data-line-number="10">    <span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;green&#39;</span>, <span class="st">&#39;darkblue&#39;</span>,  <span class="st">&#39;yellow&#39;</span>, <span class="st">&#39;red&#39;</span>)</div>
-<div class="sourceLine" id="cb67-11" data-line-number="11">    )</div>
-<div class="sourceLine" id="cb67-12" data-line-number="12"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/vennMINT.png&#39;</span>)</div>
-<div class="sourceLine" id="cb67-13" data-line-number="13"><span class="kw">grid.draw</span>(vennMINT)</div>
-<div class="sourceLine" id="cb67-14" data-line-number="14"><span class="kw">dev.off</span>()</div></code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="co">## MINT signature</span></a>
+<a class="sourceLine" id="cb66-2" data-line-number="2">MINT.Combined.vars =<span class="st"> </span><span class="kw">unique</span>(<span class="kw">c</span>(<span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>name,</a>
+<a class="sourceLine" id="cb66-3" data-line-number="3">                             <span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>name))</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="co">## create venn diagram</span></a>
+<a class="sourceLine" id="cb67-2" data-line-number="2">vennMINT &lt;-<span class="st"> </span><span class="kw">venn.diagram</span>(</a>
+<a class="sourceLine" id="cb67-3" data-line-number="3">    <span class="dt">x =</span> <span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb67-4" data-line-number="4">        <span class="dt">Chr.10X=</span> Chromium<span class="fl">.10</span>X.vars ,</a>
+<a class="sourceLine" id="cb67-5" data-line-number="5">        <span class="dt">Cel.seq=</span> Cel.seq.vars,</a>
+<a class="sourceLine" id="cb67-6" data-line-number="6">        <span class="dt">Drop.seq =</span> Drop.seq.vars,</a>
+<a class="sourceLine" id="cb67-7" data-line-number="7">        <span class="dt">MINT.Combined=</span>MINT.Combined.vars),</a>
+<a class="sourceLine" id="cb67-8" data-line-number="8">    <span class="dt">filename =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb67-9" data-line-number="9">    <span class="dt">cex=</span><span class="fl">1.5</span>, <span class="dt">cat.cex=</span><span class="fl">1.5</span>,</a>
+<a class="sourceLine" id="cb67-10" data-line-number="10">    <span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;green&#39;</span>, <span class="st">&#39;darkblue&#39;</span>,  <span class="st">&#39;yellow&#39;</span>, <span class="st">&#39;red&#39;</span>)</a>
+<a class="sourceLine" id="cb67-11" data-line-number="11">    )</a>
+<a class="sourceLine" id="cb67-12" data-line-number="12"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/vennMINT.png&#39;</span>)</a>
+<a class="sourceLine" id="cb67-13" data-line-number="13"><span class="kw">grid.draw</span>(vennMINT)</a>
+<a class="sourceLine" id="cb67-14" data-line-number="14"><span class="kw">dev.off</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
 <img src="figures/vennMINT.png" alt=" The venn diagram of sPLSDA signatures among individual datasets and the MINT combined dataset." width="70%" />
 <p class="caption">
 Figure 1.10:  The venn diagram of sPLSDA signatures among individual datasets and the MINT combined dataset.
 </p>
 </div>
-<pre class="sourceCode r" id="cb68"><code class="sourceCode r"><div class="sourceLine" id="cb68-1" data-line-number="1">## the signature genes identified by all studies</div>
-<div class="sourceLine" id="cb68-2" data-line-number="2">common.sig =<span class="st"> </span><span class="kw">Reduce</span>(intersect, <span class="kw">list</span>(MINT.Combined.vars, Chromium<span class="fl">.10</span>X.vars, Cel.seq.vars, Drop.seq.vars))</div></code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="co">## the signature genes identified by all studies</span></a>
+<a class="sourceLine" id="cb68-2" data-line-number="2">common.sig =<span class="st"> </span><span class="kw">Reduce</span>(intersect, <span class="kw">list</span>(MINT.Combined.vars, Chromium<span class="fl">.10</span>X.vars, Cel.seq.vars, Drop.seq.vars))</a></code></pre></div>
 <p>MINT has successfully detected the core 25 signature genes shared by all individual PLSDA models, plus 10 genes identied in 2 out of 3 studies.</p>
-<pre class="sourceCode r" id="cb69"><code class="sourceCode r"><div class="sourceLine" id="cb69-1" data-line-number="1">## the 10 signature genes with highest loadings</div>
-<div class="sourceLine" id="cb69-2" data-line-number="2">common.sig[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</div></code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="co">## the 10 signature genes with highest loadings</span></a>
+<a class="sourceLine" id="cb69-2" data-line-number="2">common.sig[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
 <pre><code>##  [1] &quot;ENSG00000196126&quot; &quot;ENSG00000154277&quot; &quot;ENSG00000173432&quot;
 ##  [4] &quot;ENSG00000019582&quot; &quot;ENSG00000204287&quot; &quot;ENSG00000198502&quot;
 ##  [7] &quot;ENSG00000231389&quot; &quot;ENSG00000196139&quot; &quot;ENSG00000179344&quot;
@@ -547,8 +557,8 @@ Figure 1.10:  The venn diagram of sPLSDA signatures among individual datasets an
 <div id="variable-plots" class="section level3">
 <h3><span class="header-section-number">2.6.3</span> variable plots</h3>
 <p>Using <em>plotVar</em> function, it is possible to display the selected variables on a correlation circle plot to find the correlation between gene expressions:</p>
-<pre class="sourceCode r" id="cb71"><code class="sourceCode r"><div class="sourceLine" id="cb71-1" data-line-number="1">## correlation circle plot</div>
-<div class="sourceLine" id="cb71-2" data-line-number="2"><span class="kw">plotVar</span>(mint.splsda.tuned.res, <span class="dt">cex =</span> <span class="dv">3</span>)</div></code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="co">## correlation circle plot</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="kw">plotVar</span>(mint.splsda.tuned.res, <span class="dt">cex =</span> <span class="dv">3</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-31-1.png" alt="The variable plot highlighting the contribution of each selected variable to each component and their correlation." width="55%" />
 <p class="caption">
@@ -557,39 +567,39 @@ Figure 2.9: The variable plot highlighting the contribution of each selected var
 </div>
 <p>The figure above shows that majority of the signature genes are positively expressed in component 1.</p>
 <p>we can assess the expression profiles for the genes on the extremes of both components:</p>
-<pre class="sourceCode r" id="cb72"><code class="sourceCode r"><div class="sourceLine" id="cb72-1" data-line-number="1">## show genes on extreme sides</div>
-<div class="sourceLine" id="cb72-2" data-line-number="2"></div>
-<div class="sourceLine" id="cb72-3" data-line-number="3">## component 1 - most positively and negatively expressed between cell lines</div>
-<div class="sourceLine" id="cb72-4" data-line-number="4">var.c1 =<span class="st"> </span><span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>value</div>
-<div class="sourceLine" id="cb72-5" data-line-number="5">positive.gene.c1 =<span class="st"> </span><span class="kw">rownames</span>(var.c1)[<span class="kw">which.max</span>(var.c1<span class="op">$</span>value.var)]</div>
-<div class="sourceLine" id="cb72-6" data-line-number="6">negative.gene.c1 =<span class="st"> </span><span class="kw">rownames</span>(var.c1)[<span class="kw">which.min</span>(var.c1<span class="op">$</span>value.var)]</div>
-<div class="sourceLine" id="cb72-7" data-line-number="7"></div>
-<div class="sourceLine" id="cb72-8" data-line-number="8">## component 2 - most positively and negatively expressed between cell lines</div>
-<div class="sourceLine" id="cb72-9" data-line-number="9">var.c2 =<span class="st"> </span><span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>value</div>
-<div class="sourceLine" id="cb72-10" data-line-number="10">positive.gene.c2 =<span class="st"> </span><span class="kw">rownames</span>(var.c2)[<span class="kw">which.max</span>(var.c2<span class="op">$</span>value.var)]</div>
-<div class="sourceLine" id="cb72-11" data-line-number="11">negative.gene.c2 =<span class="st"> </span><span class="kw">rownames</span>(var.c2)[<span class="kw">which.min</span>(var.c2<span class="op">$</span>value.var)]</div></code></pre>
-<pre class="sourceCode r" id="cb73"><code class="sourceCode r"><div class="sourceLine" id="cb73-1" data-line-number="1">## a function to create violin + box plots for this specific dataset</div>
-<div class="sourceLine" id="cb73-2" data-line-number="2">violinPlot =<span class="st"> </span><span class="cf">function</span>(mint.object, gene){</div>
-<div class="sourceLine" id="cb73-3" data-line-number="3">  cols =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;H2228&quot;</span> =<span class="st"> &quot;orange&quot;</span>, <span class="st">&quot;H1975&quot;</span> =<span class="st"> &quot;dodgerblue3&quot;</span>, <span class="st">&quot;HCC827&quot;</span> =<span class="st"> &quot;grey&quot;</span>)</div>
-<div class="sourceLine" id="cb73-4" data-line-number="4">  <span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></div>
-<div class="sourceLine" id="cb73-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(mint.object<span class="op">$</span>Y,  mint.object<span class="op">$</span>X[,gene],</div>
-<div class="sourceLine" id="cb73-6" data-line-number="6">                     <span class="dt">fill=</span> mint.object<span class="op">$</span>Y), <span class="dt">alpha=</span><span class="dv">1</span>)<span class="op">+</span></div>
-<div class="sourceLine" id="cb73-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(mint.object<span class="op">$</span>Y, mint.object<span class="op">$</span>X[,gene],</div>
-<div class="sourceLine" id="cb73-8" data-line-number="8">                     <span class="dt">fill=</span> mint.object<span class="op">$</span>Y), <span class="dt">alpha=</span><span class="fl">0.7</span>) <span class="op">+</span></div>
-<div class="sourceLine" id="cb73-9" data-line-number="9"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Cell Line&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Standardised Expression Value&quot;</span> )<span class="op">+</span></div>
-<div class="sourceLine" id="cb73-10" data-line-number="10"><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Cell Line&quot;</span>) ) <span class="op">+</span></div>
-<div class="sourceLine" id="cb73-11" data-line-number="11"><span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>cols ) </div>
-<div class="sourceLine" id="cb73-12" data-line-number="12">}</div></code></pre>
-<pre class="sourceCode r" id="cb74"><code class="sourceCode r"><div class="sourceLine" id="cb74-1" data-line-number="1">## violin + box plots for the most positively expressed gene on component 1</div>
-<div class="sourceLine" id="cb74-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, positive.gene.c1)</div></code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="co">## show genes on extreme sides</span></a>
+<a class="sourceLine" id="cb72-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb72-3" data-line-number="3"><span class="co">## component 1 - most positively and negatively expressed between cell lines</span></a>
+<a class="sourceLine" id="cb72-4" data-line-number="4">var.c1 =<span class="st"> </span><span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">1</span>)<span class="op">$</span>value</a>
+<a class="sourceLine" id="cb72-5" data-line-number="5">positive.gene.c1 =<span class="st"> </span><span class="kw">rownames</span>(var.c1)[<span class="kw">which.max</span>(var.c1<span class="op">$</span>value.var)]</a>
+<a class="sourceLine" id="cb72-6" data-line-number="6">negative.gene.c1 =<span class="st"> </span><span class="kw">rownames</span>(var.c1)[<span class="kw">which.min</span>(var.c1<span class="op">$</span>value.var)]</a>
+<a class="sourceLine" id="cb72-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb72-8" data-line-number="8"><span class="co">## component 2 - most positively and negatively expressed between cell lines</span></a>
+<a class="sourceLine" id="cb72-9" data-line-number="9">var.c2 =<span class="st"> </span><span class="kw">selectVar</span>(mint.splsda.tuned.res, <span class="dt">comp=</span><span class="dv">2</span>)<span class="op">$</span>value</a>
+<a class="sourceLine" id="cb72-10" data-line-number="10">positive.gene.c2 =<span class="st"> </span><span class="kw">rownames</span>(var.c2)[<span class="kw">which.max</span>(var.c2<span class="op">$</span>value.var)]</a>
+<a class="sourceLine" id="cb72-11" data-line-number="11">negative.gene.c2 =<span class="st"> </span><span class="kw">rownames</span>(var.c2)[<span class="kw">which.min</span>(var.c2<span class="op">$</span>value.var)]</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="co">## a function to create violin + box plots for this specific dataset</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2">violinPlot =<span class="st"> </span><span class="cf">function</span>(mint.object, gene){</a>
+<a class="sourceLine" id="cb73-3" data-line-number="3">  cols =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;H2228&quot;</span> =<span class="st"> &quot;orange&quot;</span>, <span class="st">&quot;H1975&quot;</span> =<span class="st"> &quot;dodgerblue3&quot;</span>, <span class="st">&quot;HCC827&quot;</span> =<span class="st"> &quot;grey&quot;</span>)</a>
+<a class="sourceLine" id="cb73-4" data-line-number="4">  <span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb73-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(mint.object<span class="op">$</span>Y,  mint.object<span class="op">$</span>X[,gene],</a>
+<a class="sourceLine" id="cb73-6" data-line-number="6">                     <span class="dt">fill=</span> mint.object<span class="op">$</span>Y), <span class="dt">alpha=</span><span class="dv">1</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb73-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(mint.object<span class="op">$</span>Y, mint.object<span class="op">$</span>X[,gene],</a>
+<a class="sourceLine" id="cb73-8" data-line-number="8">                     <span class="dt">fill=</span> mint.object<span class="op">$</span>Y), <span class="dt">alpha=</span><span class="fl">0.7</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-9" data-line-number="9"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Cell Line&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Standardised Expression Value&quot;</span> )<span class="op">+</span></a>
+<a class="sourceLine" id="cb73-10" data-line-number="10"><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Cell Line&quot;</span>) ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-11" data-line-number="11"><span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span>cols ) </a>
+<a class="sourceLine" id="cb73-12" data-line-number="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co">## violin + box plots for the most positively expressed gene on component 1</span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, positive.gene.c1)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-34-1.png" alt="Violin plots of expression profile of the most positively expressed gene on component 1 in different cell lines" width="50%" />
 <p class="caption">
 Figure 2.10: Violin plots of expression profile of the most positively expressed gene on component 1 in different cell lines
 </p>
 </div>
-<pre class="sourceCode r" id="cb75"><code class="sourceCode r"><div class="sourceLine" id="cb75-1" data-line-number="1">## violin + box plots for the most negatively expressed gene on component 1</div>
-<div class="sourceLine" id="cb75-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, negative.gene.c1)</div></code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="co">## violin + box plots for the most negatively expressed gene on component 1</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, negative.gene.c1)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-35-1.png" alt="Violin plots of expression profile of the most negatively expressed gene  on component 1 in different cell lines" width="50%" />
 <p class="caption">
@@ -597,16 +607,16 @@ Figure 2.11: Violin plots of expression profile of the most negatively expressed
 </p>
 </div>
 <p>As expected, the expression profile of the above genes for H2228 cell line has opposite correlation to the other two. We can also evaluate the genes of the second sPLS-DA component:</p>
-<pre class="sourceCode r" id="cb76"><code class="sourceCode r"><div class="sourceLine" id="cb76-1" data-line-number="1">## violin + box plots for the most positively expressed gene on component 2</div>
-<div class="sourceLine" id="cb76-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, positive.gene.c2)</div></code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="co">## violin + box plots for the most positively expressed gene on component 2</span></a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, positive.gene.c2)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-36-1.png" alt="Violin plots of expression profile of the most positively expressed gene on component 2 in different cell lines" width="50%" />
 <p class="caption">
 Figure 1.13: Violin plots of expression profile of the most positively expressed gene on component 2 in different cell lines
 </p>
 </div>
-<pre class="sourceCode r" id="cb77"><code class="sourceCode r"><div class="sourceLine" id="cb77-1" data-line-number="1">## violin + box plots for the most negatively expressed gene on component 2</div>
-<div class="sourceLine" id="cb77-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, negative.gene.c2)</div></code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="co">## violin + box plots for the most negatively expressed gene on component 2</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="kw">violinPlot</span>(mint.splsda.tuned.res, negative.gene.c2)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
 <img src="02-Signature_files/figure-html/unnamed-chunk-37-1.png" alt="Violin plots of expression profile of the most negatively expressed gene  on component 2 in different cell lines" width="50%" />
 <p class="caption">
@@ -615,10 +625,10 @@ Figure 2.12: Violin plots of expression profile of the most negatively expressed
 </div>
 <p>The expression profiles show that the selected gene tends to be negatively expressed in HCC827 cell line and positively expressed in H1975 cell line.</p>
 <p>A Clustered Image Map including the final signature can be plotted. The argument <em>comp</em> can be also be specified to highlight only the variables selected on specific components.</p>
-<pre class="sourceCode r" id="cb78"><code class="sourceCode r"><div class="sourceLine" id="cb78-1" data-line-number="1">## hierarchical clustering</div>
-<div class="sourceLine" id="cb78-2" data-line-number="2"><span class="kw">cim</span>(mint.splsda.tuned.res, <span class="dt">comp =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">margins=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">5</span>), </div>
-<div class="sourceLine" id="cb78-3" data-line-number="3">    <span class="dt">row.sideColors =</span> <span class="kw">color.mixo</span>(<span class="kw">as.numeric</span>(mint.splsda.tuned.res<span class="op">$</span>Y)), <span class="dt">row.names =</span> F,</div>
-<div class="sourceLine" id="cb78-4" data-line-number="4">    <span class="dt">title =</span> <span class="st">&#39;MINT sPLS-DA&#39;</span>, <span class="dt">save=</span><span class="st">&#39;png&#39;</span>, <span class="dt">name.save =</span> <span class="st">&#39;heatmap&#39;</span>)</div></code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="co">## hierarchical clustering</span></a>
+<a class="sourceLine" id="cb78-2" data-line-number="2"><span class="kw">cim</span>(mint.splsda.tuned.res, <span class="dt">comp =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">margins=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">5</span>), </a>
+<a class="sourceLine" id="cb78-3" data-line-number="3">    <span class="dt">row.sideColors =</span> <span class="kw">color.mixo</span>(<span class="kw">as.numeric</span>(mint.splsda.tuned.res<span class="op">$</span>Y)), <span class="dt">row.names =</span> F,</a>
+<a class="sourceLine" id="cb78-4" data-line-number="4">    <span class="dt">title =</span> <span class="st">&#39;MINT sPLS-DA&#39;</span>, <span class="dt">save=</span><span class="st">&#39;png&#39;</span>, <span class="dt">name.save =</span> <span class="st">&#39;heatmap&#39;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
 <img src="heatmap.png" alt="The heatmap showing the cell grouping based on the gene expression profiles." width="80%" />
 <p class="caption">
@@ -640,67 +650,62 @@ Figure 1.15: The cell mixture design. Adopted from Luyi Tian slides
 </p>
 </div>
 <p>We will take DE genes from the cell mixture study as reference for comparison. The DE genes are available on CellBench respository.</p>
-<pre class="sourceCode r" id="cb79"><code class="sourceCode r"><div class="sourceLine" id="cb79-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">isFALSE</span>(io<span class="op">$</span>local.input)){</div>
-<div class="sourceLine" id="cb79-2" data-line-number="2">  ## load from GitHub</div>
-<div class="sourceLine" id="cb79-3" data-line-number="3">  DE_URL &lt;-<span class="st"> &#39;https://tinyurl.com/DEtable-90cells&#39;</span></div>
-<div class="sourceLine" id="cb79-4" data-line-number="4">  <span class="kw">load</span>(<span class="kw">url</span>(DE_URL))</div>
-<div class="sourceLine" id="cb79-5" data-line-number="5">} <span class="cf">else</span> {</div>
-<div class="sourceLine" id="cb79-6" data-line-number="6">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>local.input, <span class="st">&#39;DEtable_90cells.RData&#39;</span>))</div>
-<div class="sourceLine" id="cb79-7" data-line-number="7">  }</div></code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">isFALSE</span>(io<span class="op">$</span>local.input)){</a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">  <span class="co">## load from GitHub</span></a>
+<a class="sourceLine" id="cb79-3" data-line-number="3">  DE_URL &lt;-<span class="st"> &#39;https://tinyurl.com/DEtable-90cells&#39;</span></a>
+<a class="sourceLine" id="cb79-4" data-line-number="4">  <span class="kw">load</span>(<span class="kw">url</span>(DE_URL))</a>
+<a class="sourceLine" id="cb79-5" data-line-number="5">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb79-6" data-line-number="6">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>local.input, <span class="st">&#39;DEtable_90cells.RData&#39;</span>))</a>
+<a class="sourceLine" id="cb79-7" data-line-number="7">  }</a></code></pre></div>
 </div>
 <div id="de-genes-vs-mint-signature" class="section level3">
 <h3><span class="header-section-number">2.7.2</span> DE genes vs MINT signature</h3>
 <p>We now compare the unique signature genes from MINT sPLS-DA analysis to the ones from cell mixture DE analysis:</p>
-<pre class="sourceCode r" id="cb80"><code class="sourceCode r"><div class="sourceLine" id="cb80-1" data-line-number="1">## keep the genes present in the sPLS-DA analysis</div>
-<div class="sourceLine" id="cb80-2" data-line-number="2">HCC827_DEtable =<span class="st"> </span>HCC827_DEtable[<span class="kw">row.names</span>(HCC827_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</div>
-<div class="sourceLine" id="cb80-3" data-line-number="3">H2228_DEtable =<span class="st"> </span>H2228_DEtable[<span class="kw">row.names</span>(H2228_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</div>
-<div class="sourceLine" id="cb80-4" data-line-number="4">H1975_DEtable =<span class="st"> </span>H1975_DEtable[<span class="kw">row.names</span>(H1975_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</div>
-<div class="sourceLine" id="cb80-5" data-line-number="5"></div>
-<div class="sourceLine" id="cb80-6" data-line-number="6">## create a column of genes for ease of merging</div>
-<div class="sourceLine" id="cb80-7" data-line-number="7">HCC827_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(HCC827_DEtable, <span class="st">&#39;gene&#39;</span>)</div>
-<div class="sourceLine" id="cb80-8" data-line-number="8">H2228_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(H2228_DEtable, <span class="st">&#39;gene&#39;</span>)</div>
-<div class="sourceLine" id="cb80-9" data-line-number="9">H1975_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(H1975_DEtable, <span class="st">&#39;gene&#39;</span>)</div>
-<div class="sourceLine" id="cb80-10" data-line-number="10"></div>
-<div class="sourceLine" id="cb80-11" data-line-number="11">## create a combined DEtable from the 3 cell lines</div>
-<div class="sourceLine" id="cb80-12" data-line-number="12">DEtable =<span class="st"> </span><span class="kw">rbind</span>(HCC827_DE,H2228_DE, H1975_DE)</div>
-<div class="sourceLine" id="cb80-13" data-line-number="13">## order by gene name and FDR (increasing)</div>
-<div class="sourceLine" id="cb80-14" data-line-number="14">DEtable =<span class="st"> </span>DEtable[<span class="kw">order</span>(DEtable[,<span class="st">&#39;gene&#39;</span>],DEtable[,<span class="st">&#39;FDR&#39;</span>]),]</div>
-<div class="sourceLine" id="cb80-15" data-line-number="15">## keep the ones with FDR&lt;0.05</div>
-<div class="sourceLine" id="cb80-16" data-line-number="16">DEtable =<span class="st"> </span>DEtable[DEtable<span class="op">$</span>FDR<span class="op">&lt;</span><span class="fl">0.05</span>,]</div>
-<div class="sourceLine" id="cb80-17" data-line-number="17">## remove duplicate gene names</div>
-<div class="sourceLine" id="cb80-18" data-line-number="18">DEtable =<span class="st"> </span>DEtable[<span class="op">!</span><span class="kw">duplicated</span>(DEtable<span class="op">$</span>gene),]</div>
-<div class="sourceLine" id="cb80-19" data-line-number="19">## overlap with MINT</div>
-<div class="sourceLine" id="cb80-20" data-line-number="20">DE.MINT =<span class="st"> </span>DEtable[(DEtable<span class="op">$</span>gene <span class="op">%in%</span><span class="st"> </span>MINT.Combined.vars),]</div>
-<div class="sourceLine" id="cb80-21" data-line-number="21">## sort in increasing FDR order</div>
-<div class="sourceLine" id="cb80-22" data-line-number="22">DE.MINT =<span class="st"> </span>DE.MINT[<span class="kw">order</span>(DE.MINT<span class="op">$</span>FDR),]</div>
-<div class="sourceLine" id="cb80-23" data-line-number="23">## number of MINT signature genes that are differentially expressed</div>
-<div class="sourceLine" id="cb80-24" data-line-number="24"><span class="kw">dim</span>(DE.MINT)[<span class="dv">1</span>]</div></code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="co">## keep the genes present in the sPLS-DA analysis</span></a>
+<a class="sourceLine" id="cb80-2" data-line-number="2">HCC827_DEtable =<span class="st"> </span>HCC827_DEtable[<span class="kw">row.names</span>(HCC827_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</a>
+<a class="sourceLine" id="cb80-3" data-line-number="3">H2228_DEtable =<span class="st"> </span>H2228_DEtable[<span class="kw">row.names</span>(H2228_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</a>
+<a class="sourceLine" id="cb80-4" data-line-number="4">H1975_DEtable =<span class="st"> </span>H1975_DEtable[<span class="kw">row.names</span>(H1975_DEtable) <span class="op">%in%</span><span class="st"> </span>list.intersect,]</a>
+<a class="sourceLine" id="cb80-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb80-6" data-line-number="6"><span class="co">## create a column of genes for ease of merging</span></a>
+<a class="sourceLine" id="cb80-7" data-line-number="7">HCC827_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(HCC827_DEtable, <span class="st">&#39;gene&#39;</span>)</a>
+<a class="sourceLine" id="cb80-8" data-line-number="8">H2228_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(H2228_DEtable, <span class="st">&#39;gene&#39;</span>)</a>
+<a class="sourceLine" id="cb80-9" data-line-number="9">H1975_DE =<span class="st"> </span><span class="kw">rownames_to_column</span>(H1975_DEtable, <span class="st">&#39;gene&#39;</span>)</a>
+<a class="sourceLine" id="cb80-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb80-11" data-line-number="11"><span class="co">## create a combined DEtable from the 3 cell lines</span></a>
+<a class="sourceLine" id="cb80-12" data-line-number="12">DEtable =<span class="st"> </span><span class="kw">rbind</span>(HCC827_DE,H2228_DE, H1975_DE)</a>
+<a class="sourceLine" id="cb80-13" data-line-number="13"><span class="co">## order by gene name and FDR (increasing)</span></a>
+<a class="sourceLine" id="cb80-14" data-line-number="14">DEtable =<span class="st"> </span>DEtable[<span class="kw">order</span>(DEtable[,<span class="st">&#39;gene&#39;</span>],DEtable[,<span class="st">&#39;FDR&#39;</span>]),]</a>
+<a class="sourceLine" id="cb80-15" data-line-number="15"><span class="co">## keep the ones with FDR&lt;0.05</span></a>
+<a class="sourceLine" id="cb80-16" data-line-number="16">DEtable =<span class="st"> </span>DEtable[DEtable<span class="op">$</span>FDR<span class="op">&lt;</span><span class="fl">0.05</span>,]</a>
+<a class="sourceLine" id="cb80-17" data-line-number="17"><span class="co">## remove duplicate gene names</span></a>
+<a class="sourceLine" id="cb80-18" data-line-number="18">DEtable =<span class="st"> </span>DEtable[<span class="op">!</span><span class="kw">duplicated</span>(DEtable<span class="op">$</span>gene),]</a>
+<a class="sourceLine" id="cb80-19" data-line-number="19"><span class="co">## overlap with MINT</span></a>
+<a class="sourceLine" id="cb80-20" data-line-number="20">DE.MINT =<span class="st"> </span>DEtable[(DEtable<span class="op">$</span>gene <span class="op">%in%</span><span class="st"> </span>MINT.Combined.vars),]</a>
+<a class="sourceLine" id="cb80-21" data-line-number="21"><span class="co">## sort in increasing FDR order</span></a>
+<a class="sourceLine" id="cb80-22" data-line-number="22">DE.MINT =<span class="st"> </span>DE.MINT[<span class="kw">order</span>(DE.MINT<span class="op">$</span>FDR),]</a>
+<a class="sourceLine" id="cb80-23" data-line-number="23"><span class="co">## number of MINT signature genes that are differentially expressed</span></a>
+<a class="sourceLine" id="cb80-24" data-line-number="24"><span class="kw">dim</span>(DE.MINT)[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1] 45</code></pre>
-<pre class="sourceCode r" id="cb82"><code class="sourceCode r"><div class="sourceLine" id="cb82-1" data-line-number="1">## geometric mean of the FDR of signature</div>
-<div class="sourceLine" id="cb82-2" data-line-number="2"><span class="kw">exp</span>(<span class="kw">mean</span>(<span class="kw">log</span>(DE.MINT<span class="op">$</span>FDR)))</div></code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="co">## geometric mean of the FDR of signature</span></a>
+<a class="sourceLine" id="cb82-2" data-line-number="2"><span class="kw">exp</span>(<span class="kw">mean</span>(<span class="kw">log</span>(DE.MINT<span class="op">$</span>FDR)))</a></code></pre></div>
 <pre><code>## [1] 1.548651e-18</code></pre>
 <p>All of signature genes identified by MINT are differentially expressed at FDR&lt;0.05 with geometric mean FDR of <span class="math inline">\(1.54\times10^{-18}\)</span>.</p>
 </div>
 </div>
 <div id="session-information-1" class="section level2">
 <h2><span class="header-section-number">2.8</span> session information</h2>
-<pre class="sourceCode r" id="cb84"><code class="sourceCode r"><div class="sourceLine" id="cb84-1" data-line-number="1">## session information to build this vignette</div>
-<div class="sourceLine" id="cb84-2" data-line-number="2"><span class="kw">sessionInfo</span>()</div></code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="co">## session information to build this vignette</span></a>
+<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>## R version 3.5.0 (2018-04-23)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Red Hat Enterprise Linux Server 7.5 (Maipo)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14.1
 ## 
 ## Matrix products: default
-## BLAS: /usr/local/easybuild/software/R/3.5.0-GCC-6.2.0/lib64/R/lib/libRblas.so
-## LAPACK: /usr/local/easybuild/software/R/3.5.0-GCC-6.2.0/lib64/R/lib/libRlapack.so
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-##  [1] LC_CTYPE=en_AU.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_AU.UTF-8        LC_COLLATE=en_AU.UTF-8    
-##  [5] LC_MONETARY=en_AU.UTF-8    LC_MESSAGES=en_AU.UTF-8   
-##  [7] LC_PAPER=en_AU.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_AU.UTF-8 LC_IDENTIFICATION=C       
+## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
 ## 
 ## attached base packages:
 ##  [1] grid      parallel  stats4    stats     graphics  grDevices utils    
@@ -708,53 +713,53 @@ Figure 1.15: The cell mixture design. Adopted from Luyi Tian slides
 ## 
 ## other attached packages:
 ##  [1] tibble_1.4.2                VennDiagram_1.6.20         
-##  [3] futile.logger_1.4.3         scran_1.10.1               
-##  [5] mixOmics_6.6.0              ggplot2_3.0.0              
-##  [7] lattice_0.20-35             MASS_7.3-50                
-##  [9] SingleCellExperiment_1.4.0  SummarizedExperiment_1.12.0
-## [11] DelayedArray_0.8.0          BiocParallel_1.16.0        
-## [13] matrixStats_0.54.0          Biobase_2.42.0             
-## [15] GenomicRanges_1.34.0        GenomeInfoDb_1.18.0        
-## [17] IRanges_2.16.0              S4Vectors_0.20.1           
-## [19] BiocGenerics_0.28.0         knitr_1.20                 
+##  [3] futile.logger_1.4.3         scran_1.9.39               
+##  [5] mixOmics_6.4.6              ggplot2_3.1.0              
+##  [7] lattice_0.20-38             MASS_7.3-51.1              
+##  [9] SingleCellExperiment_1.3.12 SummarizedExperiment_1.11.6
+## [11] DelayedArray_0.7.49         BiocParallel_1.15.15       
+## [13] matrixStats_0.54.0          Biobase_2.41.2             
+## [15] GenomicRanges_1.33.14       GenomeInfoDb_1.17.4        
+## [17] IRanges_2.15.19             S4Vectors_0.19.24          
+## [19] BiocGenerics_0.27.1         knitr_1.20                 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] bitops_1.0-6             RColorBrewer_1.1-2      
-##  [3] rprojroot_1.3-2          dynamicTreeCut_1.63-1   
-##  [5] tools_3.5.0              backports_1.1.2         
-##  [7] R6_2.3.0                 HDF5Array_1.10.0        
-##  [9] vipor_0.4.5              lazyeval_0.2.1          
-## [11] colorspace_1.3-2         withr_2.1.2             
-## [13] tidyselect_0.2.5         gridExtra_2.3           
-## [15] compiler_3.5.0           BiocNeighbors_1.0.0     
-## [17] formatR_1.5              labeling_0.3            
-## [19] bookdown_0.7             scales_1.0.0            
-## [21] stringr_1.3.1            digest_0.6.18           
-## [23] rmarkdown_1.10           XVector_0.22.0          
-## [25] scater_1.10.0            pkgconfig_2.0.2         
-## [27] htmltools_0.3.6          limma_3.38.2            
-## [29] highr_0.7                rlang_0.3.0.1           
-## [31] DelayedMatrixStats_1.4.0 bindr_0.1.1             
-## [33] dplyr_0.7.6              RCurl_1.95-4.11         
-## [35] magrittr_1.5             GenomeInfoDbData_1.2.0  
-## [37] Matrix_1.2-14            Rcpp_1.0.0              
-## [39] ggbeeswarm_0.6.0         munsell_0.5.0           
-## [41] Rhdf5lib_1.4.0           viridis_0.5.1           
-## [43] stringi_1.2.4            yaml_2.2.0              
-## [45] edgeR_3.24.0             zlibbioc_1.28.0         
-## [47] rhdf5_2.26.0             plyr_1.8.4              
-## [49] crayon_1.3.4             locfit_1.5-9.1          
-## [51] pillar_1.3.0             igraph_1.2.2            
-## [53] corpcor_1.6.9            reshape2_1.4.3          
-## [55] codetools_0.2-15         futile.options_1.0.1    
-## [57] glue_1.3.0               evaluate_0.12           
-## [59] lambda.r_1.2.3           BiocManager_1.30.3      
-## [61] gtable_0.2.0             purrr_0.2.5             
-## [63] tidyr_0.8.1              assertthat_0.2.0        
-## [65] xfun_0.4                 RSpectra_0.13-1         
-## [67] viridisLite_0.3.0        rARPACK_0.11-0          
-## [69] beeswarm_0.2.3           ellipse_0.4.1           
-## [71] bindrcpp_0.2.2           statmod_1.4.30</code></pre>
+##  [1] bitops_1.0-6              RColorBrewer_1.1-2       
+##  [3] rprojroot_1.3-2           dynamicTreeCut_1.63-1    
+##  [5] tools_3.5.0               backports_1.1.2          
+##  [7] R6_2.3.0                  HDF5Array_1.9.19         
+##  [9] vipor_0.4.5               lazyeval_0.2.1           
+## [11] colorspace_1.3-2          withr_2.1.2              
+## [13] tidyselect_0.2.5          gridExtra_2.3            
+## [15] compiler_3.5.0            BiocNeighbors_0.99.22    
+## [17] formatR_1.5               labeling_0.3             
+## [19] bookdown_0.7              scales_1.0.0             
+## [21] stringr_1.3.1             digest_0.6.18            
+## [23] rmarkdown_1.10            XVector_0.21.4           
+## [25] scater_1.9.24             pkgconfig_2.0.2          
+## [27] htmltools_0.3.6           limma_3.37.10            
+## [29] highr_0.7                 rlang_0.3.0.1            
+## [31] DelayedMatrixStats_1.3.11 bindr_0.1.1              
+## [33] dplyr_0.7.8               RCurl_1.95-4.11          
+## [35] magrittr_1.5              GenomeInfoDbData_1.2.0   
+## [37] Matrix_1.2-15             Rcpp_1.0.0               
+## [39] ggbeeswarm_0.6.0          munsell_0.5.0            
+## [41] Rhdf5lib_1.3.3            viridis_0.5.1            
+## [43] stringi_1.2.4             yaml_2.2.0               
+## [45] edgeR_3.23.7              zlibbioc_1.27.0          
+## [47] rhdf5_2.25.11             plyr_1.8.4               
+## [49] crayon_1.3.4              locfit_1.5-9.1           
+## [51] pillar_1.3.0              igraph_1.2.2             
+## [53] corpcor_1.6.9             reshape2_1.4.3           
+## [55] codetools_0.2-15          futile.options_1.0.1     
+## [57] glue_1.3.0                evaluate_0.12            
+## [59] lambda.r_1.2.3            BiocManager_1.30.4       
+## [61] gtable_0.2.0              purrr_0.2.5              
+## [63] tidyr_0.8.2               assertthat_0.2.0         
+## [65] xfun_0.4                  RSpectra_0.13-1          
+## [67] viridisLite_0.3.0         rARPACK_0.11-0           
+## [69] beeswarm_0.2.3            ellipse_0.4.1            
+## [71] bindrcpp_0.2.2            statmod_1.4.30</code></pre>
 
 </div>
 </div>
