@@ -1,8 +1,10 @@
 # Single Cell Data Analysis and Integration using MINT
 
+**The vignette book is available at [this link](https://ajabadi.github.io/MINT_sPLSDA/)**
+
 ## Rproject
 
-Contains the R project that produced the vignette available at [this link](https://ajabadi.github.io/MINT_sPLSDA/).
+Contains the R project that produced the vignette.
 *sessioninfo.md* contains the R session information when the current version of the vignette was built.
 
 ## Rscripts
