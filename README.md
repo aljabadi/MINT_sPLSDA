@@ -1,3 +1,5 @@
+*This is a snap-shot of master branch at well functional stages.*
+
 # Single Cell Data Analysis and Integration using MINT
 
 **The vignette book is available at [this link](https://ajabadi.github.io/MINT_sPLSDA/).**
