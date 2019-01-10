@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-11-23">
+<meta name="date" content="2019-01-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -256,17 +256,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb47-7" data-line-number="7">  }</a></code></pre></div>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="cf">if</span> (io<span class="op">$</span>recalc){</a>
 <a class="sourceLine" id="cb48-2" data-line-number="2">  <span class="co">## normalise the QC&#39;ed count matrices</span></a>
-<a class="sourceLine" id="cb48-3" data-line-number="3">  sc10x.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce10x_qc) <span class="co">## deconvolute using size factors</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3">  sc10x.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce_sc_10x_qc) <span class="co">## deconvolute using size factors</span></a>
 <a class="sourceLine" id="cb48-4" data-line-number="4">  sc10x.norm =<span class="st">  </span><span class="kw">normalize</span>(sc10x.norm) <span class="co">## normalise expression values</span></a>
 <a class="sourceLine" id="cb48-5" data-line-number="5">  <span class="co">## DROP-seq</span></a>
-<a class="sourceLine" id="cb48-6" data-line-number="6">  scdrop.norm =<span class="st"> </span><span class="kw">computeSumFactors</span>(scedrop_qc_qc)</a>
+<a class="sourceLine" id="cb48-6" data-line-number="6">  scdrop.norm =<span class="st"> </span><span class="kw">computeSumFactors</span>(sce_sc_Dropseq_qc)</a>
 <a class="sourceLine" id="cb48-7" data-line-number="7">  scdrop.norm =<span class="st"> </span><span class="kw">normalize</span>(scdrop.norm)</a>
 <a class="sourceLine" id="cb48-8" data-line-number="8">  <span class="co">## CEL-seq2</span></a>
-<a class="sourceLine" id="cb48-9" data-line-number="9">  sccel.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce4_qc)</a>
+<a class="sourceLine" id="cb48-9" data-line-number="9">  sccel.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce_sc_CELseq2_qc)</a>
 <a class="sourceLine" id="cb48-10" data-line-number="10">  sccel.norm =<span class="st">  </span><span class="kw">normalize</span>(sccel.norm)</a>
 <a class="sourceLine" id="cb48-11" data-line-number="11">} <span class="cf">else</span> {</a>
 <a class="sourceLine" id="cb48-12" data-line-number="12">  <span class="co">## load locally - change to your own</span></a>
-<a class="sourceLine" id="cb48-13" data-line-number="13">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>output.data,<span class="st">&#39;sce.norm.RData&#39;</span>))</a>
+<a class="sourceLine" id="cb48-13" data-line-number="13">  <span class="kw">load</span>(<span class="st">&#39;../output/sce.norm.RData&#39;</span>)</a>
 <a class="sourceLine" id="cb48-14" data-line-number="14">}</a></code></pre></div>
 </div>
 <div id="pls-da-on-each-protocol-individually" class="section level2">
@@ -431,9 +431,9 @@ Figure 1.5:  The venn diagram of common sPLSDA signatures among individual datas
 <a class="sourceLine" id="cb60-8" data-line-number="8">  </a>
 <a class="sourceLine" id="cb60-9" data-line-number="9">  <span class="co">## create a factor variable of cell lines</span></a>
 <a class="sourceLine" id="cb60-10" data-line-number="10">  <span class="co">## must be in the same order as the data combination</span></a>
-<a class="sourceLine" id="cb60-11" data-line-number="11">  cell.line =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">c</span>(sce10x_qc<span class="op">$</span>cell_line,</a>
-<a class="sourceLine" id="cb60-12" data-line-number="12">                           sce4_qc<span class="op">$</span>cell_line,</a>
-<a class="sourceLine" id="cb60-13" data-line-number="13">                           scedrop_qc_qc<span class="op">$</span>cell_line))</a>
+<a class="sourceLine" id="cb60-11" data-line-number="11">  cell.line =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">c</span>(sce_sc_10x_qc<span class="op">$</span>cell_line,</a>
+<a class="sourceLine" id="cb60-12" data-line-number="12">                           sce_sc_CELseq2_qc<span class="op">$</span>cell_line,</a>
+<a class="sourceLine" id="cb60-13" data-line-number="13">                           sce_sc_Dropseq_qc<span class="op">$</span>cell_line))</a>
 <a class="sourceLine" id="cb60-14" data-line-number="14">  <span class="co">## name the factor variable with the cell ID</span></a>
 <a class="sourceLine" id="cb60-15" data-line-number="15">  <span class="kw">names</span>(cell.line) =<span class="st"> </span><span class="kw">rownames</span>(data.combined)</a>
 <a class="sourceLine" id="cb60-16" data-line-number="16">  </a>
@@ -451,7 +451,7 @@ Figure 1.5:  The venn diagram of common sPLSDA signatures among individual datas
 <a class="sourceLine" id="cb60-28" data-line-number="28">                                <span class="dt">study =</span> study, <span class="dt">ncomp =</span> <span class="dv">2</span>,  </a>
 <a class="sourceLine" id="cb60-29" data-line-number="29">                                <span class="dt">keepX =</span> <span class="kw">c</span>(<span class="dv">35</span>,<span class="dv">10</span>)) <span class="co">## change for your own dataset</span></a>
 <a class="sourceLine" id="cb60-30" data-line-number="30">} <span class="cf">else</span> { <span class="co">## if already saved</span></a>
-<a class="sourceLine" id="cb60-31" data-line-number="31">  <span class="kw">load</span>(<span class="kw">file.path</span>(io<span class="op">$</span>output.data,<span class="st">&#39;mint.splsda.tuned.res.RData&#39;</span>))</a>
+<a class="sourceLine" id="cb60-31" data-line-number="31">  <span class="kw">load</span>(<span class="kw">file.path</span>(<span class="st">&#39;../output/mint.splsda.tuned.res.RData&#39;</span>))</a>
 <a class="sourceLine" id="cb60-32" data-line-number="32">}</a></code></pre></div>
 <div id="loading-plots" class="section level3">
 <h3><span class="header-section-number">2.6.1</span> loading plots</h3>
@@ -708,13 +708,13 @@ Figure 1.15: The cell mixture design. Adopted from Luyi Tian slides
 ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
 ## 
 ## attached base packages:
-##  [1] grid      parallel  stats4    stats     graphics  grDevices utils    
+##  [1] grid      stats4    parallel  stats     graphics  grDevices utils    
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
 ##  [1] tibble_1.4.2                VennDiagram_1.6.20         
 ##  [3] futile.logger_1.4.3         scran_1.9.39               
-##  [5] mixOmics_6.4.6              ggplot2_3.1.0              
+##  [5] mixOmics_6.7.0              ggplot2_3.1.0              
 ##  [7] lattice_0.20-38             MASS_7.3-51.1              
 ##  [9] SingleCellExperiment_1.3.12 SummarizedExperiment_1.11.6
 ## [11] DelayedArray_0.7.49         BiocParallel_1.15.15       
@@ -724,42 +724,42 @@ Figure 1.15: The cell mixture design. Adopted from Luyi Tian slides
 ## [19] BiocGenerics_0.27.1         knitr_1.20                 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] bitops_1.0-6              RColorBrewer_1.1-2       
-##  [3] rprojroot_1.3-2           dynamicTreeCut_1.63-1    
-##  [5] tools_3.5.0               backports_1.1.2          
-##  [7] R6_2.3.0                  HDF5Array_1.9.19         
-##  [9] vipor_0.4.5               lazyeval_0.2.1           
-## [11] colorspace_1.3-2          withr_2.1.2              
-## [13] tidyselect_0.2.5          gridExtra_2.3            
-## [15] compiler_3.5.0            BiocNeighbors_0.99.22    
-## [17] formatR_1.5               labeling_0.3             
-## [19] bookdown_0.7              scales_1.0.0             
-## [21] stringr_1.3.1             digest_0.6.18            
-## [23] rmarkdown_1.10            XVector_0.21.4           
-## [25] scater_1.9.24             pkgconfig_2.0.2          
-## [27] htmltools_0.3.6           limma_3.37.10            
-## [29] highr_0.7                 rlang_0.3.0.1            
-## [31] DelayedMatrixStats_1.3.11 bindr_0.1.1              
-## [33] dplyr_0.7.8               RCurl_1.95-4.11          
-## [35] magrittr_1.5              GenomeInfoDbData_1.2.0   
-## [37] Matrix_1.2-15             Rcpp_1.0.0               
-## [39] ggbeeswarm_0.6.0          munsell_0.5.0            
-## [41] Rhdf5lib_1.3.3            viridis_0.5.1            
-## [43] stringi_1.2.4             yaml_2.2.0               
-## [45] edgeR_3.23.7              zlibbioc_1.27.0          
-## [47] rhdf5_2.25.11             plyr_1.8.4               
-## [49] crayon_1.3.4              locfit_1.5-9.1           
-## [51] pillar_1.3.0              igraph_1.2.2             
-## [53] corpcor_1.6.9             reshape2_1.4.3           
-## [55] codetools_0.2-15          futile.options_1.0.1     
-## [57] glue_1.3.0                evaluate_0.12            
-## [59] lambda.r_1.2.3            BiocManager_1.30.4       
-## [61] gtable_0.2.0              purrr_0.2.5              
-## [63] tidyr_0.8.2               assertthat_0.2.0         
-## [65] xfun_0.4                  RSpectra_0.13-1          
-## [67] viridisLite_0.3.0         rARPACK_0.11-0           
-## [69] beeswarm_0.2.3            ellipse_0.4.1            
-## [71] bindrcpp_0.2.2            statmod_1.4.30</code></pre>
+##  [1] viridis_0.5.1             dynamicTreeCut_1.63-1    
+##  [3] edgeR_3.23.7              tidyr_0.8.2              
+##  [5] viridisLite_0.3.0         DelayedMatrixStats_1.3.11
+##  [7] ellipse_0.4.1             assertthat_0.2.0         
+##  [9] statmod_1.4.30            highr_0.7                
+## [11] vipor_0.4.5               GenomeInfoDbData_1.2.0   
+## [13] yaml_2.2.0                pillar_1.3.0             
+## [15] backports_1.1.2           glue_1.3.0               
+## [17] limma_3.37.10             digest_0.6.18            
+## [19] RColorBrewer_1.1-2        XVector_0.21.4           
+## [21] colorspace_1.3-2          htmltools_0.3.6          
+## [23] Matrix_1.2-15             plyr_1.8.4               
+## [25] pkgconfig_2.0.2           bookdown_0.7             
+## [27] zlibbioc_1.27.0           purrr_0.2.5              
+## [29] corpcor_1.6.9             scales_1.0.0             
+## [31] HDF5Array_1.9.19          RSpectra_0.13-1          
+## [33] withr_2.1.2               lazyeval_0.2.1           
+## [35] magrittr_1.5              crayon_1.3.4             
+## [37] evaluate_0.12             beeswarm_0.2.3           
+## [39] tools_3.5.0               scater_1.9.24            
+## [41] formatR_1.5               stringr_1.3.1            
+## [43] Rhdf5lib_1.3.3            munsell_0.5.0            
+## [45] locfit_1.5-9.1            lambda.r_1.2.3           
+## [47] bindrcpp_0.2.2            compiler_3.5.0           
+## [49] rlang_0.3.0.1             rhdf5_2.25.11            
+## [51] RCurl_1.95-4.11           BiocNeighbors_0.99.22    
+## [53] rstudioapi_0.8            igraph_1.2.2             
+## [55] labeling_0.3              bitops_1.0-6             
+## [57] rmarkdown_1.10            codetools_0.2-15         
+## [59] gtable_0.2.0              rARPACK_0.11-0           
+## [61] reshape2_1.4.3            R6_2.3.0                 
+## [63] gridExtra_2.3             dplyr_0.7.8              
+## [65] bindr_0.1.1               rprojroot_1.3-2          
+## [67] futile.options_1.0.1      ggbeeswarm_0.6.0         
+## [69] stringi_1.2.4             Rcpp_1.0.0               
+## [71] tidyselect_0.2.5          xfun_0.4</code></pre>
 
 </div>
 </div>

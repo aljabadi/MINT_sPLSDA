@@ -3,16 +3,17 @@
 library(bookdown)
 bookdown::render_book(input = 'index.Rmd', ## all files that match '.Rmd' as input
                       # output_format = 'all', ## only gitbook outbook, no pdf or ePub
-                      output_format = 'bookdown::gitbook',
+                      output_format = c('bookdown::gitbook','bookdown::pdf_book'),
                       new_session = T, ## TRUE: do not merge the Rmd files into a single file
                       preview=F, ## ???
                       output_dir= '../docs', ## where to store the output vignettes
                       params =   list( ## input list of parameters
-                        local.input=F, ## input data - F for github load
+                        #local.input=F, ## input data - F for github load
+                        local.input=  '../data',
                         subset.data = F, ## a reduced set of data; or F for main data
-                        # subset.data = '../data/subset/sincell_reduced_80_200.RData',
-                        output.data='../output', ## to store saved data
-                        Rscripts = '../Rscripts', ## where to save r scripts - F for not saving
+                        # subset.data = '../data/subset/sincell_reduced_300_60.RData',
+                        output.data= F,#'../output', ## to store saved data
+                        Rscripts = F, #'../Rscripts', ## where to save r scripts - F for not saving
                         recalc = F ## do not recalculate the objects for second vignette
                       ),
                       clean=T

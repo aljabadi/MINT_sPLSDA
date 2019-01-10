@@ -20,7 +20,7 @@ purlMode=F ## global variable for extracting R code at the end - must be F here
 ```
 
 
-This vignette explains the functionalities of **MINT** (**M**ultivarite **INT**egrative method) [@mint] toolkit in combining datasets from multiple single cell transcriptomic studies on the same cell types. The integration is across the common *P* features. Hence, we call this framework **P-Integration**. We will also illustrate why Prinicipal Component Analysis might not be as powerful in such setting. It is worth mentioning that *MINT* can be used to combine datasets from any types of similar 'omics studies (transcriptomics, proteomics, metabolomics, etc) on the samples which share common features. For integration across different omics you can use [DIABLO](http://mixomics.org/mixdiablo/).
+This vignette explains the functionalities of **MINT** (**M**ultivariate **INT**egrative method) [@mint] toolkit in combining datasets from multiple single cell transcriptomic studies on the same cell types. The integration is across the common *P* features. Hence, we call this framework **P-Integration**. We will also illustrate why Prinicipal Component Analysis might not be as powerful in such setting. It is worth mentioning that *MINT* can be used to combine datasets from any types of similar 'omics studies (transcriptomics, proteomics, metabolomics, etc) on the samples which share common features. For integration across different omics you can use [DIABLO](http://mixomics.org/mixdiablo/).
 
 ## prerequisites
 
@@ -123,15 +123,17 @@ Throughout this vignette, the terms *batch*, *protocol*, and *study* are used in
 
 We can load the data either directly from the [GitHub repository](https://github.com/LuyiTian/CellBench_data/tree/master/data) or from local directory into R environment:
 
-```{r}
+```{r, eval=!F}
 if (isFALSE(io$local.input)){
   ## load from GitHub
   DataURL='https://tinyurl.com/sincell-with-class-RData-LuyiT'
   load(url(DataURL))
 } else {
+  stopifnot(dir.exists(io$local.input))
   load(file.path(io$local.input, 'sincell_with_class.RData'))
 }
 ```
+
 
 ```{r, echo=F, purl=F}
 ## load the subset of data if desired
@@ -146,9 +148,9 @@ if (!isFALSE(params$subset.data)){
 
 The loaded datasets consist of:
 
-+ *sce10x_qc*: From the Chromium 10X technology;
-+ *sce4_qc*: From the CEL-seq2 technology; and
-+ *scedrop_qc_qc*: From the Drop-seq technology (quality controlled twice due to abundant outliers).
++ *sce_sc_10x_qc*: From the Chromium 10X technology;
++ *sce_sc_CELseq2_qc*: From the CEL-seq2 technology; and
++ *sce_sc_Dropseq_qc*: From the Drop-seq technology (quality controlled twice due to abundant outliers).
 
 Each dataset is of *SingleCellExperiment (SCE)* class, which is an extension of the [*RangedSummarizedExperiment*](https://www.rdocumentation.org/packages/SummarizedExperiment/versions/1.2.3/topics/RangedSummarizedExperiment-class) class. For more details see the [package's vignette](https://bioconductor.org/packages/devel/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) or refer to the R Documentation.
 
@@ -162,18 +164,18 @@ we now stratify the cell and gene data by cell line in each protocol.
 
 ```{r}
 ## make a summary of QC'ed cell line data processed by each protocol
-sce10xqc_smr =  summary(as.factor(sce10x_qc$cell_line))
-sce4qc_smr =    summary(as.factor(sce4_qc$cell_line))
-scedropqc_smr = summary(as.factor(scedrop_qc_qc$cell_line))
+sce10xqc_smr =  summary(as.factor(sce_sc_10x_qc$cell_line))
+sce4qc_smr =    summary(as.factor(sce_sc_CELseq2_qc$cell_line))
+scedropqc_smr = summary(as.factor(sce_sc_Dropseq_qc$cell_line))
 ## combine the summaries
 celline_smr = rbind(sce10xqc_smr,sce4qc_smr,scedropqc_smr)
 ## produce a 'total' row as well
 celline_smr = cbind(celline_smr, apply(celline_smr,1,sum))
 ## add the genes as well
 celline_smr = cbind(celline_smr,
-                    c(dim(counts(sce10x_qc))[1],
-                      dim(counts(sce4_qc))[1],
-                      dim(counts(scedrop_qc_qc))[1]))
+                    c(dim(counts(sce_sc_10x_qc))[1],
+                      dim(counts(sce_sc_CELseq2_qc))[1],
+                      dim(counts(sce_sc_Dropseq_qc))[1]))
 ## label the rows
 row.names(celline_smr) = c('10X', 'CEL-seq2', 'Drop-seq')
 colnames(celline_smr) = c('H1975', 'H2228', 'HCC827', 
@@ -198,9 +200,9 @@ The 10X protocol yielded the highest number of cellls (~900). We can visualise t
 ```{r, results='hide'}
 ## create venn diagram of genes in each protocol:
 venn.plot = venn.diagram(
-  x = list(Chrom.10X = rownames(sce10x_qc),
-           CEL.seq2 = rownames(sce4_qc),
-           Drop.seq = rownames(scedrop_qc_qc)),
+  x = list(Chrom.10X = rownames(sce_sc_10x_qc),
+           CEL.seq2 = rownames(sce_sc_CELseq2_qc),
+           Drop.seq = rownames(sce_sc_Dropseq_qc)),
   filename = NULL, label=T, margin=0.05,
   height = 1400, width = 2200,
   col = 'transparent', fill = c('cornflowerblue','green', 'red'),
@@ -227,13 +229,13 @@ We use the [*scran* package](http://bioconductor.org/packages/release/bioc/html/
 
 ```{r}
 ## normalise the QC'ed count matrices
-sc10x.norm =  computeSumFactors(sce10x_qc) ## deconvolute using size factors
+sc10x.norm =  computeSumFactors(sce_sc_10x_qc) ## deconvolute using size factors
 sc10x.norm =  normalize(sc10x.norm) ## normalise expression values
 ## DROP-seq
-scdrop.norm = computeSumFactors(scedrop_qc_qc)
+scdrop.norm = computeSumFactors(sce_sc_Dropseq_qc)
 scdrop.norm = normalize(scdrop.norm)
 ## CEL-seq2
-sccel.norm =  computeSumFactors(sce4_qc)
+sccel.norm =  computeSumFactors(sce_sc_CELseq2_qc)
 sccel.norm =  normalize(sccel.norm)
 ```
 
@@ -322,7 +324,7 @@ shape.batch = c('10X' = 1, 'CEL-seq2'=2, 'Drop-seq'=3 )
 ## pca plots for protocols
 ## 10x
 plotIndiv(pca.res.10x, legend = T, title = 'PCA 10X', pch = shape.batch['10X'], col = col.cell,
-          group = sce10x_qc$cell_line, legend.title = 'Cell Line')
+          group = sce_sc_10x_qc$cell_line, legend.title = 'Cell Line')
 ```
 
 PCA plot for 10X data shows that the H2228 cells are most differentiated from others along the first PC, while the other two are located similarly along this PC. The 3 clusters are separated along the second PC. The Drop-seq data have been quality controlled twice and still exhibit two clusters. One possible explanation is the existence of doublets (droplets with 2 cells). This highlights the importance of carefully tuning the experiment parameters.
@@ -330,13 +332,13 @@ PCA plot for 10X data shows that the H2228 cells are most differentiated from ot
 ```{r, fig.asp= 0.8, out.width='50%',fig.cap= 'The PCA plots for the CEL-seq2 data. The data are widely scattered in the 2D plane while H2228 cells are relatively distant from the other two.'}
 ## CEL-seq2
 plotIndiv(pca.res.celseq, legend = T, title = 'PCA CEL-seq2', pch = shape.batch['CEL-seq2'],
-          col = col.cell, group = sce4_qc$cell_line, legend.title = 'Cell Line')
+          col = col.cell, group = sce_sc_CELseq2_qc$cell_line, legend.title = 'Cell Line')
 ```
 
 ```{r,fig.asp= 0.8,out.width='50%', fig.cap= 'The PCA plots for the Drop-seq data. While H2228 and HCC827 cell data tend to cluster by cell line, the H1975 data exhibit two clusters with negative correlation (on opposite sides of origin). The within-data variation is not consistent between datasets. For instance, the 10X data show a clear grouping structure by cell lines, while this observation is not as strongly supported in other datasets. '}
 ## Drop-seq
 plotIndiv(pca.res.dropseq, legend = T, title = 'PCA Drop-seq', pch = shape.batch['Drop-seq'],
-          col = col.cell, group = scedrop_qc_qc$cell_line, legend.title = 'Cell Line')
+          col = col.cell, group = sce_sc_Dropseq_qc$cell_line, legend.title = 'Cell Line')
 ```
 
 ## PCA on the combined dataset
@@ -373,9 +375,9 @@ This matrix includes the count data for the combined dataset. We will also creat
 ```{r}
 ## create a factor variable of cell lines
 ## must be in the same order as the data combination
-cell.line = as.factor(c(sce10x_qc$cell_line,
-                         sce4_qc$cell_line,
-                         scedrop_qc_qc$cell_line))
+cell.line = as.factor(c(sce_sc_10x_qc$cell_line,
+                         sce_sc_CELseq2_qc$cell_line,
+                         sce_sc_Dropseq_qc$cell_line))
 ## name the factor variable with the cell ID
 names(cell.line) = rownames(data.combined)
 
@@ -401,8 +403,8 @@ pca.combined = pca(data.combined, ncomp = 2)
 plotIndiv(pca.combined, title = 'PCA Combined',
           pch = batch, ## shape by cell line
           group = cell.line, ## colour by batch
-          legend = T, legend.title = 'Study',
-          legend.title.pch = 'Cell Line')
+          legend = T, legend.title = 'Cell Line',
+          legend.title.pch = 'Study')
 ```
 
 ```{r, out.width='60%', fig.cap= 'The PCA plot for the combined data, coloured by protocols.'}
@@ -436,7 +438,7 @@ The *mint.plsda* function in *mixOmics* has a set of inputs to perform the analy
 + **study**: Factor indicating the membership of each sample to each of the studies/batches being combined.
 For a detailed list of functions available with *MINT* refer to the documentation.
 
-Since PLS-DA is a supervised method, we initially create a vector to assign each sample to its class/cell.line (Y) and then perform *MINT*, keeping 2 PLS-DA components:
+Since PLS-DA is a supervised method, we initially create a vector to assign each sample to its class/cell.line (Y) and then perform *MINT*, keeping 5 PLS-DA components:
 
 ```{r}
 ## create variables needed for MINT
@@ -444,9 +446,9 @@ Since PLS-DA is a supervised method, we initially create a vector to assign each
 Y = as.factor(cell.line[rownames(data.combined)])
 ## factor variable of studies
 study = batch ## defined in the combined PCA section
-## MINT on the combined dataset
+## MINT on the combined dataset with 5 components
 mint.plsda.res = mint.plsda(X = data.combined, Y = Y,
-                             study = study, ncomp = 2)
+                             study = study, ncomp = 5)
 ```
 
 The outcome is a *mint.plsda* object which can be plotted using *plotIndiv* function:
@@ -465,12 +467,9 @@ As seen in the PLS-DA plots, the data are differentiated mainly by their cell li
  
 ### optimum number of components
 
-So far, we presented a *MINT* PLS-DA with only 2 components. We can look at the calassification error rates over different choices of number of components using *perf* function in *mixOmics*, which evaluates the performance of the fitted PLS models internally using Leave-One-Group-Out Cross Validation (LOGOCV) in *MINT* (M-Fold Cross-Validation is also available). Refer to the documentation for more details about *perf* arguments.
+We can look at the calassification error rates over the chosen number of components (5) using *perf* function in *mixOmics*, which evaluates the performance of the fitted PLS models internally using Leave-One-Group-Out Cross Validation (LOGOCV) in *MINT* (M-Fold Cross-Validation is also available). Refer to the documentation for more details about *perf* arguments.
 
 ```{r}
-## retrieve 5 PLS-DA components using MINT
-mint.plsda.res = mint.plsda(X = data.combined, Y = Y,
-                                 study = study, ncomp = 5)
 ## perform cross validation and calculate classification error rates
 set.seed(12321)  # for reproducibility of the results
 perf.mint.plsda.res = perf(mint.plsda.res,
@@ -512,7 +511,6 @@ mint.splsda.res = mint.splsda(X = data.combined, Y = Y,
 ```
 
 Plot the sparse *MINT* object:
-
 
 ```{r, out.width='50%', fig.cap='The Sparse MINT PLS-DA plot for the combined dataset. Data points are coloured by cell lines.'}
 plotIndiv(mint.splsda.res,
@@ -586,7 +584,7 @@ Next, we plot the *mint.splsda* object with global variables (for the combined d
 ```{r, out.width='50%', fig.cap='The tuned MINT sPLS-DA plot for the combined data. While there are still a number of samples that are not well classified, the clusters are more refined when we perform variable selection.'}
 ## plot the tuned mint.splsda plot for the combined dataset
 plotIndiv(mint.splsda.tuned.res, study = 'global', legend = T,
-          title = 'MINT sPLS-DA',  subtitle = 'Global', ellipse=T)
+          title = 'MINT sPLS-DA',  subtitle = 'Global', ellipse=T, legend.title = 'Cell Line')
 ```
 
 We can also look at the dataset per protocol using *all.partial* as the input for the *study* argument:

@@ -62,13 +62,13 @@ if (isFALSE(io$local.input)&&io$recalc){
   }
 if (io$recalc){
   ## normalise the QC'ed count matrices
-  sc10x.norm =  computeSumFactors(sce10x_qc) ## deconvolute using size factors
+  sc10x.norm =  computeSumFactors(sce_sc_10x_qc) ## deconvolute using size factors
   sc10x.norm =  normalize(sc10x.norm) ## normalise expression values
   ## DROP-seq
-  scdrop.norm = computeSumFactors(scedrop_qc_qc)
+  scdrop.norm = computeSumFactors(sce_sc_Dropseq_qc)
   scdrop.norm = normalize(scdrop.norm)
   ## CEL-seq2
-  sccel.norm =  computeSumFactors(sce4_qc)
+  sccel.norm =  computeSumFactors(sce_sc_CELseq2_qc)
   sccel.norm =  normalize(sccel.norm)
 } else {
   ## load locally - change to your own
@@ -177,9 +177,9 @@ if (io$recalc){
   
   ## create a factor variable of cell lines
   ## must be in the same order as the data combination
-  cell.line = as.factor(c(sce10x_qc$cell_line,
-                           sce4_qc$cell_line,
-                           scedrop_qc_qc$cell_line))
+  cell.line = as.factor(c(sce_sc_10x_qc$cell_line,
+                           sce_sc_CELseq2_qc$cell_line,
+                           sce_sc_Dropseq_qc$cell_line))
   ## name the factor variable with the cell ID
   names(cell.line) = rownames(data.combined)
   

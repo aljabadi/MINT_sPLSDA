@@ -57,18 +57,18 @@ if (isFALSE(io$local.input)){
   load(file.path(io$local.input, 'sincell_with_class.RData'))
 }
 ## make a summary of QC'ed cell line data processed by each protocol
-sce10xqc_smr =  summary(as.factor(sce10x_qc$cell_line))
-sce4qc_smr =    summary(as.factor(sce4_qc$cell_line))
-scedropqc_smr = summary(as.factor(scedrop_qc_qc$cell_line))
+sce10xqc_smr =  summary(as.factor(sce_sc_10x_qc$cell_line))
+sce4qc_smr =    summary(as.factor(sce_sc_CELseq2_qc$cell_line))
+scedropqc_smr = summary(as.factor(sce_sc_Dropseq_qc$cell_line))
 ## combine the summaries
 celline_smr = rbind(sce10xqc_smr,sce4qc_smr,scedropqc_smr)
 ## produce a 'total' row as well
 celline_smr = cbind(celline_smr, apply(celline_smr,1,sum))
 ## add the genes as well
 celline_smr = cbind(celline_smr,
-                    c(dim(counts(sce10x_qc))[1],
-                      dim(counts(sce4_qc))[1],
-                      dim(counts(scedrop_qc_qc))[1]))
+                    c(dim(counts(sce_sc_10x_qc))[1],
+                      dim(counts(sce_sc_CELseq2_qc))[1],
+                      dim(counts(sce_sc_Dropseq_qc))[1]))
 ## label the rows
 row.names(celline_smr) = c('10X', 'CEL-seq2', 'Drop-seq')
 colnames(celline_smr) = c('H1975', 'H2228', 'HCC827', 
@@ -81,9 +81,9 @@ kable(celline_smr,
 celline_smr
 ## create venn diagram of genes in each protocol:
 venn.plot = venn.diagram(
-  x = list(Chrom.10X = rownames(sce10x_qc),
-           CEL.seq2 = rownames(sce4_qc),
-           Drop.seq = rownames(scedrop_qc_qc)),
+  x = list(Chrom.10X = rownames(sce_sc_10x_qc),
+           CEL.seq2 = rownames(sce_sc_CELseq2_qc),
+           Drop.seq = rownames(sce_sc_Dropseq_qc)),
   filename = NULL, label=T, margin=0.05,
   height = 1400, width = 2200,
   col = 'transparent', fill = c('cornflowerblue','green', 'red'),
@@ -95,13 +95,13 @@ png(filename = 'figures/GeneVenn.png')
 grid.draw(venn.plot)
 dev.off()
 ## normalise the QC'ed count matrices
-sc10x.norm =  computeSumFactors(sce10x_qc) ## deconvolute using size factors
+sc10x.norm =  computeSumFactors(sce_sc_10x_qc) ## deconvolute using size factors
 sc10x.norm =  normalize(sc10x.norm) ## normalise expression values
 ## DROP-seq
-scdrop.norm = computeSumFactors(scedrop_qc_qc)
+scdrop.norm = computeSumFactors(sce_sc_Dropseq_qc)
 scdrop.norm = normalize(scdrop.norm)
 ## CEL-seq2
-sccel.norm =  computeSumFactors(sce4_qc)
+sccel.norm =  computeSumFactors(sce_sc_CELseq2_qc)
 sccel.norm =  normalize(sccel.norm)
 ## pca on the normalised count matrices and find 10 PCs
 pca.res.10x =     pca(t(logcounts(sc10x.norm)),  ncomp = 10,
@@ -132,13 +132,13 @@ shape.batch = c('10X' = 1, 'CEL-seq2'=2, 'Drop-seq'=3 )
 ## pca plots for protocols
 ## 10x
 plotIndiv(pca.res.10x, legend = T, title = 'PCA 10X', pch = shape.batch['10X'], col = col.cell,
-          group = sce10x_qc$cell_line, legend.title = 'Cell Line')
+          group = sce_sc_10x_qc$cell_line, legend.title = 'Cell Line')
 ## CEL-seq2
 plotIndiv(pca.res.celseq, legend = T, title = 'PCA CEL-seq2', pch = shape.batch['CEL-seq2'],
-          col = col.cell, group = sce4_qc$cell_line, legend.title = 'Cell Line')
+          col = col.cell, group = sce_sc_CELseq2_qc$cell_line, legend.title = 'Cell Line')
 ## Drop-seq
 plotIndiv(pca.res.dropseq, legend = T, title = 'PCA Drop-seq', pch = shape.batch['Drop-seq'],
-          col = col.cell, group = scedrop_qc_qc$cell_line, legend.title = 'Cell Line')
+          col = col.cell, group = sce_sc_Dropseq_qc$cell_line, legend.title = 'Cell Line')
 ## find the intersect of the genes for integration
 list.intersect = Reduce(intersect, list(
 ## the rownames of the original (un-transposed) count matrix will -
@@ -158,9 +158,9 @@ data.combined = t( ## transpose of all 3 datasets combined
 dim(data.combined)
 ## create a factor variable of cell lines
 ## must be in the same order as the data combination
-cell.line = as.factor(c(sce10x_qc$cell_line,
-                         sce4_qc$cell_line,
-                         scedrop_qc_qc$cell_line))
+cell.line = as.factor(c(sce_sc_10x_qc$cell_line,
+                         sce_sc_CELseq2_qc$cell_line,
+                         sce_sc_Dropseq_qc$cell_line))
 ## name the factor variable with the cell ID
 names(cell.line) = rownames(data.combined)
 
@@ -178,8 +178,8 @@ pca.combined = pca(data.combined, ncomp = 2)
 plotIndiv(pca.combined, title = 'PCA Combined',
           pch = batch, ## shape by cell line
           group = cell.line, ## colour by batch
-          legend = T, legend.title = 'Study',
-          legend.title.pch = 'Cell Line')
+          legend = T, legend.title = 'Cell Line',
+          legend.title.pch = 'Study')
 ## plot the combined pca coloured by protocols
 plotIndiv(pca.combined, title = 'PCA Combined',
           pch = cell.line, ## shape by cell line
@@ -192,9 +192,9 @@ plotIndiv(pca.combined, title = 'PCA Combined',
 Y = as.factor(cell.line[rownames(data.combined)])
 ## factor variable of studies
 study = batch ## defined in the combined PCA section
-## MINT on the combined dataset
+## MINT on the combined dataset with 5 components
 mint.plsda.res = mint.plsda(X = data.combined, Y = Y,
-                             study = study, ncomp = 2)
+                             study = study, ncomp = 5)
 ## plot the mint.plsda plots for the combined dataset
 plotIndiv(mint.plsda.res, group = cell.line,
           legend  = T, subtitle     = 'MINT - Coloured by Cell Line',
@@ -202,9 +202,6 @@ plotIndiv(mint.plsda.res, group = cell.line,
           legend.title.pch = 'protocol',
           X.label = 'PLS-DA component 1',
           Y.label = 'PLS-DA component 2')
-## retrieve 5 PLS-DA components using MINT
-mint.plsda.res = mint.plsda(X = data.combined, Y = Y,
-                                 study = study, ncomp = 5)
 ## perform cross validation and calculate classification error rates
 set.seed(12321)  # for reproducibility of the results
 perf.mint.plsda.res = perf(mint.plsda.res,
@@ -264,7 +261,7 @@ mint.splsda.tuned.res = mint.splsda( X =data.combined, Y = Y,
                               keepX = tune.mint.c2$choice.keepX)
 ## plot the tuned mint.splsda plot for the combined dataset
 plotIndiv(mint.splsda.tuned.res, study = 'global', legend = T,
-          title = 'MINT sPLS-DA',  subtitle = 'Global', ellipse=T)
+          title = 'MINT sPLS-DA',  subtitle = 'Global', ellipse=T, legend.title = 'Cell Line')
 ## tuned mint.splsda plot for each protocol
 plotIndiv(mint.splsda.tuned.res, study = 'all.partial',  title = 'MINT sPLS-DA', 
           subtitle = c('10X', 'CEL-seq2', 'Drop-seq'))
