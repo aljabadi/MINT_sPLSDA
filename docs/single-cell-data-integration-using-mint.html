@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2019-01-10">
+<meta name="date" content="2019-01-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -382,7 +382,7 @@ Figure 1.2:  The venn diagram of common genes among datasets. MINT uses the comm
 <div id="normalisation" class="section level3">
 <h3><span class="header-section-number">1.7.3</span> normalisation</h3>
 <p>Normalisation is typically required in RNA-seq data analysis prior to downstream analysis to reduce heterogeneity among samples due to technical artefact as well as to help to impute the missing values using known data.</p>
-<p>We use the <a href="http://bioconductor.org/packages/release/bioc/html/scran.html"><em>scran</em> package</a>’s “Normalisation by deconvolution of size factors from cell pools” method <span class="citation">(Lun, Bach, and Marionib <a href="#ref-scnorm">2016</a>)</span>. It is a two-step process, in which the size factors are adjusted, and then the expression values are normalised:</p>
+<p>We use the <a href="http://bioconductor.org/packages/release/bioc/html/scran.html"><em>scran</em> package</a>’s “Normalisation by deconvolution of size factors from cell pools” method <span class="citation">(Lun, Bach, and Marioni <a href="#ref-scnorm">2016</a>)</span>. It is a two-step process, in which the size factors are adjusted, and then the expression values are normalised:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co">## normalise the QC&#39;ed count matrices</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">sc10x.norm =<span class="st">  </span><span class="kw">computeSumFactors</span>(sce_sc_10x_qc) <span class="co">## deconvolute using size factors</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">sc10x.norm =<span class="st">  </span><span class="kw">normalize</span>(sc10x.norm) <span class="co">## normalise expression values</span></a>
@@ -653,7 +653,7 @@ Figure 1.13: The Sparse MINT PLS-DA plot for the combined dataset. Data points a
 </div>
 <div id="choice-of-parameters" class="section level3">
 <h3><span class="header-section-number">1.10.4</span> choice of parameters</h3>
-<p>Previously, we chose 50 variables for a sparse analysis. The optimal number of the variables can be determined for each component using the <em>tune</em> function. The <em>test.keepX</em> argument specifies a vector of the candidate numbers of variables in each PLS-DA component to be evaluated. We will try 5,10,…,35,40,…,70 and 100 variables, and also record the runtime. We will separately tune each component for better visualisation but tuning can be done in one step for all components.</p>
+<p>Previously, we chose 50 variables for a sparse analysis. The optimal number of the variables can be determined for each component using the <em>tune</em> function. The <em>test.keepX</em> argument specifies a vector of the candidate numbers of variables in each PLS-DA component to be evaluated. Here, we will only try 5,10,…,35 variables to save on time, and also record the runtime. It is recommended to use a coarse and wide grid first (e.g. seq(10,300,10)) and refine it once the right neighbourhood is known. We will separately tune each component for better visualisation but tuning can be done in one step for all components.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co">## tune MINT for component 1 and then 2 and record the run time</span></a>
 <a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co">## we tune individual components for visualisation purposes</span></a>
 <a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co">## one can run only the tune.mint.c2 without already.tested.X</span></a>
@@ -662,8 +662,8 @@ Figure 1.13: The Sparse MINT PLS-DA plot for the combined dataset. Data points a
 <a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">## component 1</span></a>
 <a class="sourceLine" id="cb32-7" data-line-number="7">tune.mint.c1 =<span class="st"> </span><span class="kw">tune</span>(</a>
 <a class="sourceLine" id="cb32-8" data-line-number="8">  <span class="dt">X =</span> data.combined, <span class="dt">Y =</span> Y, <span class="dt">study =</span> study, <span class="dt">ncomp =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb32-9" data-line-number="9">  <span class="co">## assess numbers 5,10,15...50,60,70,...100:</span></a>
-<a class="sourceLine" id="cb32-10" data-line-number="10">  <span class="dt">test.keepX =</span> <span class="kw">c</span>(<span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">35</span>,<span class="dv">5</span>),<span class="kw">seq</span>(<span class="dv">40</span>,<span class="dv">70</span>,<span class="dv">10</span>), <span class="dv">100</span>), <span class="dt">method =</span> <span class="st">&#39;mint.splsda&#39;</span>,</a>
+<a class="sourceLine" id="cb32-9" data-line-number="9">  <span class="co">## assess numbers 5,10,15...35:</span></a>
+<a class="sourceLine" id="cb32-10" data-line-number="10">  <span class="dt">test.keepX =</span> <span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">35</span>,<span class="dv">5</span>), <span class="dt">method =</span> <span class="st">&#39;mint.splsda&#39;</span>,</a>
 <a class="sourceLine" id="cb32-11" data-line-number="11">  <span class="co">## use all distances to estimate the classification error rate</span></a>
 <a class="sourceLine" id="cb32-12" data-line-number="12">  <span class="dt">dist =</span> <span class="kw">c</span>(<span class="st">&#39;max.dist&#39;</span>,  <span class="st">&#39;centroids.dist&#39;</span>, <span class="st">&#39;mahalanobis.dist&#39;</span>),</a>
 <a class="sourceLine" id="cb32-13" data-line-number="13">  <span class="dt">progressBar =</span> F</a>
@@ -673,14 +673,14 @@ Figure 1.13: The Sparse MINT PLS-DA plot for the combined dataset. Data points a
 <a class="sourceLine" id="cb32-17" data-line-number="17">  <span class="dt">X =</span> data.combined, <span class="dt">Y =</span> Y, <span class="dt">study =</span> study, <span class="dt">ncomp =</span> <span class="dv">2</span>,</a>
 <a class="sourceLine" id="cb32-18" data-line-number="18">  <span class="co">## already tuned component 1</span></a>
 <a class="sourceLine" id="cb32-19" data-line-number="19">  <span class="dt">already.tested.X =</span> tune.mint.c1<span class="op">$</span>choice.keepX,</a>
-<a class="sourceLine" id="cb32-20" data-line-number="20">  <span class="dt">test.keepX =</span> <span class="kw">c</span>(<span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">35</span>,<span class="dv">5</span>),<span class="kw">seq</span>(<span class="dv">40</span>,<span class="dv">70</span>,<span class="dv">10</span>), <span class="dv">100</span>), <span class="dt">method =</span> <span class="st">&#39;mint.splsda&#39;</span>,</a>
+<a class="sourceLine" id="cb32-20" data-line-number="20">  <span class="dt">test.keepX =</span> <span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">35</span>,<span class="dv">5</span>), <span class="dt">method =</span> <span class="st">&#39;mint.splsda&#39;</span>,</a>
 <a class="sourceLine" id="cb32-21" data-line-number="21">  <span class="dt">dist =</span> <span class="kw">c</span>(<span class="st">&#39;max.dist&#39;</span>,  <span class="st">&#39;centroids.dist&#39;</span>, <span class="st">&#39;mahalanobis.dist&#39;</span>),</a>
 <a class="sourceLine" id="cb32-22" data-line-number="22">  <span class="dt">progressBar =</span> F</a>
 <a class="sourceLine" id="cb32-23" data-line-number="23">)</a>
 <a class="sourceLine" id="cb32-24" data-line-number="24">end.time =<span class="st"> </span><span class="kw">Sys.time</span>()</a>
 <a class="sourceLine" id="cb32-25" data-line-number="25"><span class="co">## see how long it takes to find the optimum number of variables:</span></a>
 <a class="sourceLine" id="cb32-26" data-line-number="26">run.time =<span class="st">  </span>end.time <span class="op">-</span><span class="st"> </span>start.time</a></code></pre></div>
-<p>It took less than 6 minutes to evaluate the chosen test set of variables using a 2.6 GHz Dual-core Intel Core i5 processor (8GB RAM). It is always more practical to look into a coarse grid at first and then refine it when the right neighbourhood is found. We now look at the optimum number of components chosen and their corresponding Balanced Error Rate:</p>
+<p>It took less than 3 minutes to evaluate the chosen test set of variables using a 2.6 GHz Dual-core Intel Core i5 processor (8GB RAM). It is always more practical to look into a coarse grid at first and then refine it when the right neighbourhood is found. We now look at the optimum number of components chosen and their corresponding Balanced Error Rate:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co">## look at the optimal selected variables for each PC</span></a>
 <a class="sourceLine" id="cb33-2" data-line-number="2">tune.mint.c2<span class="op">$</span>choice.keepX</a></code></pre></div>
 <pre><code>## comp 1 comp 2 
@@ -794,42 +794,43 @@ Figure 1.16: MINT sPLS-DA components for each individual protocol coloured by ce
 ## [19] BiocGenerics_0.27.1         knitr_1.20                 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] viridis_0.5.1             dynamicTreeCut_1.63-1    
-##  [3] edgeR_3.23.7              tidyr_0.8.2              
-##  [5] viridisLite_0.3.0         DelayedMatrixStats_1.3.11
-##  [7] ellipse_0.4.1             assertthat_0.2.0         
-##  [9] statmod_1.4.30            highr_0.7                
-## [11] vipor_0.4.5               GenomeInfoDbData_1.2.0   
-## [13] yaml_2.2.0                pillar_1.3.0             
-## [15] backports_1.1.2           glue_1.3.0               
-## [17] limma_3.37.10             digest_0.6.18            
-## [19] RColorBrewer_1.1-2        XVector_0.21.4           
-## [21] colorspace_1.3-2          htmltools_0.3.6          
-## [23] Matrix_1.2-15             plyr_1.8.4               
-## [25] pkgconfig_2.0.2           bookdown_0.7             
-## [27] zlibbioc_1.27.0           purrr_0.2.5              
-## [29] corpcor_1.6.9             scales_1.0.0             
-## [31] HDF5Array_1.9.19          RSpectra_0.13-1          
-## [33] withr_2.1.2               lazyeval_0.2.1           
-## [35] magrittr_1.5              crayon_1.3.4             
-## [37] evaluate_0.12             beeswarm_0.2.3           
-## [39] tools_3.5.0               scater_1.9.24            
-## [41] formatR_1.5               stringr_1.3.1            
-## [43] Rhdf5lib_1.3.3            munsell_0.5.0            
-## [45] locfit_1.5-9.1            lambda.r_1.2.3           
-## [47] bindrcpp_0.2.2            compiler_3.5.0           
-## [49] rlang_0.3.0.1             rhdf5_2.25.11            
-## [51] RCurl_1.95-4.11           BiocNeighbors_0.99.22    
-## [53] rstudioapi_0.8            igraph_1.2.2             
-## [55] labeling_0.3              bitops_1.0-6             
-## [57] rmarkdown_1.10            codetools_0.2-15         
-## [59] gtable_0.2.0              rARPACK_0.11-0           
-## [61] reshape2_1.4.3            R6_2.3.0                 
-## [63] gridExtra_2.3             dplyr_0.7.8              
-## [65] bindr_0.1.1               rprojroot_1.3-2          
-## [67] futile.options_1.0.1      ggbeeswarm_0.6.0         
-## [69] stringi_1.2.4             Rcpp_1.0.0               
-## [71] tidyselect_0.2.5          xfun_0.4</code></pre>
+##  [1] bitops_1.0-6              RColorBrewer_1.1-2       
+##  [3] rprojroot_1.3-2           dynamicTreeCut_1.63-1    
+##  [5] tools_3.5.0               backports_1.1.2          
+##  [7] R6_2.3.0                  HDF5Array_1.9.19         
+##  [9] vipor_0.4.5               lazyeval_0.2.1           
+## [11] colorspace_1.3-2          withr_2.1.2              
+## [13] tidyselect_0.2.5          gridExtra_2.3            
+## [15] compiler_3.5.0            BiocNeighbors_0.99.22    
+## [17] formatR_1.5               labeling_0.3             
+## [19] bookdown_0.7              scales_1.0.0             
+## [21] stringr_1.3.1             digest_0.6.18            
+## [23] rmarkdown_1.10            XVector_0.21.4           
+## [25] scater_1.9.24             pkgconfig_2.0.2          
+## [27] htmltools_0.3.6           limma_3.37.10            
+## [29] highr_0.7                 rlang_0.3.0.1            
+## [31] rstudioapi_0.8            DelayedMatrixStats_1.3.11
+## [33] bindr_0.1.1               dplyr_0.7.8              
+## [35] RCurl_1.95-4.11           magrittr_1.5             
+## [37] GenomeInfoDbData_1.2.0    Matrix_1.2-15            
+## [39] Rcpp_1.0.0                ggbeeswarm_0.6.0         
+## [41] munsell_0.5.0             Rhdf5lib_1.3.3           
+## [43] viridis_0.5.1             stringi_1.2.4            
+## [45] yaml_2.2.0                edgeR_3.23.7             
+## [47] zlibbioc_1.27.0           rhdf5_2.25.11            
+## [49] plyr_1.8.4                crayon_1.3.4             
+## [51] locfit_1.5-9.1            pillar_1.3.0             
+## [53] igraph_1.2.2              corpcor_1.6.9            
+## [55] reshape2_1.4.3            codetools_0.2-15         
+## [57] futile.options_1.0.1      glue_1.3.0               
+## [59] evaluate_0.12             lambda.r_1.2.3           
+## [61] BiocManager_1.30.4        gtable_0.2.0             
+## [63] purrr_0.2.5               tidyr_0.8.2              
+## [65] assertthat_0.2.0          xfun_0.4                 
+## [67] RSpectra_0.13-1           viridisLite_0.3.0        
+## [69] rARPACK_0.11-0            beeswarm_0.2.3           
+## [71] ellipse_0.4.1             bindrcpp_0.2.2           
+## [73] statmod_1.4.30</code></pre>
 </div>
 <div id="troubleshoots" class="section level2">
 <h2><span class="header-section-number">1.12</span> troubleshoots</h2>
@@ -864,7 +865,7 @@ Ensure you have the <a href="https://www.xquartz.org/">latest version of XQuartz
 <p>Tian, Luyi, and Shian Su. 2018. <em>ScPipe: Pipeline for Single Cell Rna-Seq Data Analysis</em>. <a href="https://github.com/LuyiTian/scPipe">https://github.com/LuyiTian/scPipe</a>.</p>
 </div>
 <div id="ref-scnorm">
-<p>Lun, Aaron T. L., Karsten Bach, and John C. Marionib. 2016. <em>Pooling Across Cells to Normalize Single-Cell Rna Sequencing Data with Many Zero Counts</em>. <em>Genome Biology 17.1</em>. <a href="https://doi.org/10.1186/s13059-016-0947-7">https://doi.org/10.1186/s13059-016-0947-7</a>.</p>
+<p>Lun, Aaron T. L., Karsten Bach, and John C. Marioni. 2016. <em>Pooling Across Cells to Normalize Single-Cell Rna Sequencing Data with Many Zero Counts</em>. <em>Genome Biology 17.1</em>. <a href="https://doi.org/10.1186/s13059-016-0947-7">https://doi.org/10.1186/s13059-016-0947-7</a>.</p>
 </div>
 <div id="ref-pca">
 <p>Jolliffe, I. T. 1986. <em>Principal Component Analysis and Factor Analysis</em>. <a href=" https://doi.org/10.1007/978-1-4757-1904-8_7">https://doi.org/10.1007/978-1-4757-1904-8_7</a>.</p>

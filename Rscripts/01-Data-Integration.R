@@ -54,6 +54,7 @@ if (isFALSE(io$local.input)){
   DataURL='https://tinyurl.com/sincell-with-class-RData-LuyiT'
   load(url(DataURL))
 } else {
+  stopifnot(dir.exists(io$local.input))
   load(file.path(io$local.input, 'sincell_with_class.RData'))
 }
 ## make a summary of QC'ed cell line data processed by each protocol
@@ -231,8 +232,8 @@ start.time = Sys.time()
 ## component 1
 tune.mint.c1 = tune(
   X = data.combined, Y = Y, study = study, ncomp = 1,
-  ## assess numbers 5,10,15...50,60,70,...100:
-  test.keepX = c(seq(5,35,5),seq(40,70,10), 100), method = 'mint.splsda',
+  ## assess numbers 5,10,15...35:
+  test.keepX = seq(5,35,5), method = 'mint.splsda',
   ## use all distances to estimate the classification error rate
   dist = c('max.dist',  'centroids.dist', 'mahalanobis.dist'),
   progressBar = F
@@ -242,7 +243,7 @@ tune.mint.c2 = tune(
   X = data.combined, Y = Y, study = study, ncomp = 2,
   ## already tuned component 1
   already.tested.X = tune.mint.c1$choice.keepX,
-  test.keepX = c(seq(5,35,5),seq(40,70,10), 100), method = 'mint.splsda',
+  test.keepX = seq(5,35,5), method = 'mint.splsda',
   dist = c('max.dist',  'centroids.dist', 'mahalanobis.dist'),
   progressBar = F
 )

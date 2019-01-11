@@ -526,7 +526,7 @@ The clusters are now more refined compared to the non-sparse method. The effects
 
 ### choice of parameters
 
-Previously, we chose 50 variables for a sparse analysis. The optimal number of the variables can be determined for each component using the *tune* function. The *test.keepX* argument specifies a vector of the candidate numbers of variables in each PLS-DA component to be evaluated. We will try 5,10,...,35,40,...,70 and 100 variables, and also record the runtime. We will separately tune each component for better visualisation but tuning can be done in one step for all components.
+Previously, we chose 50 variables for a sparse analysis. The optimal number of the variables can be determined for each component using the *tune* function. The *test.keepX* argument specifies a vector of the candidate numbers of variables in each PLS-DA component to be evaluated. Here, we will only try 5,10,...,35 variables to save on time, and also record the runtime. It is recommended to use a coarse and wide grid first (e.g. seq(10,300,10)) and refine it once the right neighbourhood is known.  We will separately tune each component for better visualisation but tuning can be done in one step for all components.
 
 ```{r}
 ## tune MINT for component 1 and then 2 and record the run time
@@ -537,8 +537,8 @@ start.time = Sys.time()
 ## component 1
 tune.mint.c1 = tune(
   X = data.combined, Y = Y, study = study, ncomp = 1,
-  ## assess numbers 5,10,15...50,60,70,...100:
-  test.keepX = c(seq(5,35,5),seq(40,70,10), 100), method = 'mint.splsda',
+  ## assess numbers 5,10,15...35:
+  test.keepX = seq(5,35,5), method = 'mint.splsda',
   ## use all distances to estimate the classification error rate
   dist = c('max.dist',  'centroids.dist', 'mahalanobis.dist'),
   progressBar = F
@@ -548,7 +548,7 @@ tune.mint.c2 = tune(
   X = data.combined, Y = Y, study = study, ncomp = 2,
   ## already tuned component 1
   already.tested.X = tune.mint.c1$choice.keepX,
-  test.keepX = c(seq(5,35,5),seq(40,70,10), 100), method = 'mint.splsda',
+  test.keepX = seq(5,35,5), method = 'mint.splsda',
   dist = c('max.dist',  'centroids.dist', 'mahalanobis.dist'),
   progressBar = F
 )

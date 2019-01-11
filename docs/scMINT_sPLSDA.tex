@@ -127,7 +127,7 @@ The University of Melbourne}
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-01-10}
+    \date{2019-01-11}
 
 \usepackage{booktabs}
 
@@ -1039,10 +1039,12 @@ Previously, we chose 50 variables for a sparse analysis. The optimal
 number of the variables can be determined for each component using the
 \emph{tune} function. The \emph{test.keepX} argument specifies a vector
 of the candidate numbers of variables in each PLS-DA component to be
-evaluated. We will try 5,10,\ldots{},35,40,\ldots{},70 and 100
-variables, and also record the runtime. We will separately tune each
-component for better visualisation but tuning can be done in one step
-for all components.
+evaluated. Here, we will only try 5,10,\ldots{},35 variables to save on
+time, and also record the runtime. It is recommended to use a coarse and
+wide grid first (e.g.~seq(10,300,10)) and refine it once the right
+neighbourhood is known. We will separately tune each component for
+better visualisation but tuning can be done in one step for all
+components.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1054,8 +1056,8 @@ for all components.
 \CommentTok{## component 1}
 \NormalTok{tune.mint.c1 =}\StringTok{ }\KeywordTok{tune}\NormalTok{(}
   \DataTypeTok{X =}\NormalTok{ data.combined, }\DataTypeTok{Y =}\NormalTok{ Y, }\DataTypeTok{study =}\NormalTok{ study, }\DataTypeTok{ncomp =} \DecValTok{1}\NormalTok{,}
-  \CommentTok{## assess numbers 5,10,15...50,60,70,...100:}
-  \DataTypeTok{test.keepX =} \KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{5}\NormalTok{),}\KeywordTok{seq}\NormalTok{(}\DecValTok{40}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{10}\NormalTok{), }\DecValTok{100}\NormalTok{), }\DataTypeTok{method =} \StringTok{'mint.splsda'}\NormalTok{,}
+  \CommentTok{## assess numbers 5,10,15...35:}
+  \DataTypeTok{test.keepX =} \KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{5}\NormalTok{), }\DataTypeTok{method =} \StringTok{'mint.splsda'}\NormalTok{,}
   \CommentTok{## use all distances to estimate the classification error rate}
   \DataTypeTok{dist =} \KeywordTok{c}\NormalTok{(}\StringTok{'max.dist'}\NormalTok{,  }\StringTok{'centroids.dist'}\NormalTok{, }\StringTok{'mahalanobis.dist'}\NormalTok{),}
   \DataTypeTok{progressBar =}\NormalTok{ F}
@@ -1065,7 +1067,7 @@ for all components.
   \DataTypeTok{X =}\NormalTok{ data.combined, }\DataTypeTok{Y =}\NormalTok{ Y, }\DataTypeTok{study =}\NormalTok{ study, }\DataTypeTok{ncomp =} \DecValTok{2}\NormalTok{,}
   \CommentTok{## already tuned component 1}
   \DataTypeTok{already.tested.X =}\NormalTok{ tune.mint.c1}\OperatorTok{$}\NormalTok{choice.keepX,}
-  \DataTypeTok{test.keepX =} \KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{5}\NormalTok{),}\KeywordTok{seq}\NormalTok{(}\DecValTok{40}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{10}\NormalTok{), }\DecValTok{100}\NormalTok{), }\DataTypeTok{method =} \StringTok{'mint.splsda'}\NormalTok{,}
+  \DataTypeTok{test.keepX =} \KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{5}\NormalTok{), }\DataTypeTok{method =} \StringTok{'mint.splsda'}\NormalTok{,}
   \DataTypeTok{dist =} \KeywordTok{c}\NormalTok{(}\StringTok{'max.dist'}\NormalTok{,  }\StringTok{'centroids.dist'}\NormalTok{, }\StringTok{'mahalanobis.dist'}\NormalTok{),}
   \DataTypeTok{progressBar =}\NormalTok{ F}
 \NormalTok{)}
@@ -1075,7 +1077,7 @@ for all components.
 \end{Highlighting}
 \end{Shaded}
 
-It took less than 4 minutes to evaluate the chosen test set of variables
+It took less than 3 minutes to evaluate the chosen test set of variables
 using a 2.6 GHz Dual-core Intel Core i5 processor (8GB RAM). It is
 always more practical to look into a coarse grid at first and then
 refine it when the right neighbourhood is found. We now look at the

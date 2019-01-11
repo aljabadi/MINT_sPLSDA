@@ -72,7 +72,7 @@ if (io$recalc){
   sccel.norm =  normalize(sccel.norm)
 } else {
   ## load locally - change to your own
-  load(file.path(io$output.data,'sce.norm.RData'))
+  load('../output/sce.norm.RData')
 }
 ## find the intersect of the genes
 list.intersect = Reduce(intersect, list(
@@ -197,7 +197,7 @@ if (io$recalc){
                                 study = study, ncomp = 2,  
                                 keepX = c(35,10)) ## change for your own dataset
 } else { ## if already saved
-  load(file.path(io$output.data,'mint.splsda.tuned.res.RData'))
+  load(file.path('../output/mint.splsda.tuned.res.RData'))
 }
 ## Loading Plots
 ## 10X
