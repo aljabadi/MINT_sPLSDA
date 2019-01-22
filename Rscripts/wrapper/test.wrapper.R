@@ -1,14 +1,14 @@
 library(testthat)
-library(mixOmics)
+library(mixOmics) # make sure you upload the latest version of mixOmics on gitHub: library('devtools'); install_github("mixOmicsTeam/mixOmics")
 library(SingleCellExperiment)
 
 ## load a combined sce with batch data 
 sce = readRDS("~/Documents/Projects/MINT_Wrapper/RNAmix_combined_scran_norm.Rds")
 
-# ## subset by hvgs
+# ## subset data with Highly Variable Genes only
 # sce.hvg = sce[rowData(sce)$hi_var,]
 
-################ no tuning
+################ Basic run
 system.time({ # 3 sec - RNA mix all genes
 sce.mint = mixOmics_mint(sce)
 })
@@ -21,7 +21,7 @@ expect_output(str(sce.mint), "mint.markers")
 
 
 
-################ tune tests
+################ With tuning
 system.time({ # 110 sec - RNA mix all genes
 sce.mint.tuned = mixOmics_mint(sce, tune.hps = T)
 })
@@ -32,7 +32,7 @@ expect_output(str(sce.mint.tuned), "mint.markers")
 
 expect(isTRUE(sum(rowData(sce.mint.tuned)$mint.markers)>0) , failure_message = "No signatures were chosen")
 
-################ optimum ncomp tests
+################ Tuning the optimal ncomp 
 keepX = c(50,40,30)
 system.time({ # 16 sec - RNA mix all genes
 sce.mint.opt.comp = mixOmics_mint(sce, optimum.ncomp = T, ncomp = 3L, keepX = keepX)
@@ -42,7 +42,7 @@ expect_output(str(sce.mint.opt.comp), "mint_variates")
 expect_output(str(sce.mint.opt.comp), "mint.markers")
 
 
-################ variate plots
+################ component plots
 
 mint.ggplot = function(sce.mint=sce.mint, comps = c(1,2), colData.class = 'mix'){
   variates =as.data.frame(reducedDim(sce.mint))
@@ -56,12 +56,12 @@ mint.ggplot = function(sce.mint=sce.mint, comps = c(1,2), colData.class = 'mix')
   return(p)
 }
 
-## plot the untuned one
+## plot the basic model
 mint.ggplot(sce.mint, comps=c(1,2), colData.class = 'mix')
   ## other components
   mint.ggplot(sce.mint, comps=c(2,3), colData.class = 'mix')
   
-## plot the tuned one
+## plot the tuned model
 mint.ggplot(sce.mint.tuned, comps=c(1,2), colData.class = 'mix')
 
 
