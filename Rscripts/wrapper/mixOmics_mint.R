@@ -4,19 +4,17 @@ file.create(log_file)
 cat(paste(format(Sys.time(), "%a %b %d %X %Y"), "start preprocessing...\n"), file = log_file, append = TRUE)
 
 #########################  Wrapper
-mixOmics_mint = function(sce = sce, ## a combined sce with batch info in sce$batch 
-                         colData.class = "mix", ## name of the colData that includes the biological groups
-                         use.hvgs = F, ## whether to use HVGs in rowData(sce)$hi_var (T) or all genes (F)
-                         ######### below can be left to default
-                         ncomp = 3L, ## integer: good rule of thumb: number of biological groups - 1
-                         keepX = c(50,40,30), ## number of genes to select on each of the ncomp components - length of at least ncomp
-                         tune.hps = F, ## whether to tune the number of genes on each component (T) or use keepX (F)
-                         tune.keepX = seq(10,100,10), ##  if tune.hps=T: span of number of genes on each component to explore for tuning
-                         optimum.ncomp = F, ## whether to find the optimum number of sPLSDA components (T) or use given ncomp (F)
-                         dist = "max.dist", ## if tune.hps: distance(s) to use for classification error rate.
-                         ## subset of c("min.distance", "centroids.dist","mahalanobis.dist" ); or "all"
-
-                         measure = "BER" # if tune.hps=T: measure to use for classification error rate; one of c("overall","BER")
+mixOmics_mint = function(sce = sce,             ## sce object including batch information in sce$batch 
+                         colData.class = "mix", ## name of the colData that inform known cell type
+                         use.hvgs = FALSE,      ## if TRUE use of HVGs in rowData(sce)$hi_var, otherwise all genes
+                         ######### additional parameters for advanced users
+                         ncomp = 3,                 ## integer: number of components for dimension reduction (usually nlevels(colData.class) - 1
+                         keepX = c(50,40,30),       ## numeric vector of length ncomp indicating the number of genes to select on each component
+                         tune.hps = FALSE,          ## if TRUE tuning to choose the optimal keepX based on classification error rate, otherwise input keepX is used(F)
+                         tune.keepX = seq(10,100,10), ##  if tune.hps=T: grid of keepX values to assess during tuning
+                         optimum.ncomp = FALSE,      ## if TRUE tunes the optimal number of components, otherwise ncomp value is used
+                         dist = "max.dist",          ## if tune.hps = TRUE, type of distance to use to calculate prediction, choose between "max.distance", "centroids.dist", "mahalanobis.dist" or "all"
+                         measure = "BER"             ## if tune.hps = TRUE, type of measure to calculate classification error rate; choose between "overall" (balanced classes) or "BER" (balanced)
 ){
   tp = system.time({
     try_res = try({
