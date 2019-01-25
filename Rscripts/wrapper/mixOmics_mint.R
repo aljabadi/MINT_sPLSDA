@@ -1,24 +1,27 @@
 #########################  Create a log file
-log_file =file.path("../Rscripts/wrapper/log", paste("mint.wrapper.run",format(Sys.time(), "%y_%m_%d"),"txt",sep = "."))
-file.create(log_file)
-cat(paste(format(Sys.time(), "%a %b %d %X %Y"), "start preprocessing...\n"), file = log_file, append = TRUE)
+# change to your own
+# log_file =file.path("../Rscripts/wrapper/log", paste("mint.wrapper.run",format(Sys.time(), "%y_%m_%d"),"txt",sep = "."))
+# file.create(log_file)
+# cat(paste(format(Sys.time(), "%a %b %d %X %Y"), "start preprocessing...\n"), file = log_file, append = TRUE)
 
 #########################  Wrapper
-mixOmics_mint = function(sce = sce,             ## sce object including batch information in sce$batch 
-                         colData.class = "mix", ## name of the colData that inform known cell type
-                         use.hvgs = FALSE,      ## if TRUE use of HVGs in rowData(sce)$hi_var, otherwise all genes
-                         ######### additional parameters for advanced users
-                         ncomp = 3,                 ## integer: number of components for dimension reduction (usually nlevels(colData.class) - 1
-                         keepX = c(50,40,30),       ## numeric vector of length ncomp indicating the number of genes to select on each component
-                         tune.hps = FALSE,          ## if TRUE tuning to choose the optimal keepX based on classification error rate, otherwise input keepX is used(F)
-                         tune.keepX = seq(10,100,10), ##  if tune.hps=T: grid of keepX values to assess during tuning
-                         optimum.ncomp = FALSE,      ## if TRUE tunes the optimal number of components, otherwise ncomp value is used
-                         dist = "max.dist",          ## if tune.hps = TRUE, type of distance to use to calculate prediction, choose between "max.distance", "centroids.dist", "mahalanobis.dist" or "all"
-                         measure = "BER"             ## if tune.hps = TRUE, type of measure to calculate classification error rate; choose between "overall" (balanced classes) or "BER" (balanced)
-){
+mixOmics_mint = function(
+  sce=sce,                          ## sce object including batch information in sce$batch
+  colData.batch = "batch",      ## name of the colData that inform known cell batch
+  colData.class = "mix",        ## name of the colData that inform known cell type
+  hvgs = NULL,                  ## one of rowData(sce) containing logical vector of highly variable genes (hvgs) to use, or NULL to use all genes, or a string vector of hvgs
+  ######### additional parameters for advanced users
+  ncomp = 3,                    ## integer: number of components for dimension reduction (usually nlevels(colData.class) - 1)
+  keepX = c(50,50,50),          ## numeric vector of length ncomp indicating the number of genes to select on each component
+  tune.keepX = NULL,   ## grid of number of genes to assess on each component during tuning (e.g. seq(10,100,10)), or NULL if tuning not required
+  output = "sce", ## c("sce", "both") sce: returns sce with updated rowData and reducedDims. both: return a list of sce and mint.splsda object
+  print.log = FALSE
+  ){  
   tp = system.time({
     try_res = try({
-      
+      ######################### defaults
+      dist = "mahalanobis.dist"  ## type of distance to use to calculate prediction, "max.distance", "centroids.dist", "mahalanobis.dist" or "all"
+      measure = "BER"            ## type of measure to calculate classification error rate. One of "overall" (balanced classes) or "BER" (balanced)
       #########################  the t.test.process fuction for optimisation 
       t.test.process = function(mat.error.rate, alpha = 0.01)
       {
@@ -64,40 +67,74 @@ mixOmics_mint = function(sce = sce,             ## sce object including batch in
       }
       
       #########################  entry checks 
+      ## return is valid
+      if(inherits(try(output),"try-error" ))
+        stop("output must be one of c('sce', 'both'")
+      if(!output %in% c("sce", "both"))
+        stop("output must be one of c('sce', 'both'")
       
-      Y = as.factor(colData(sce)[[colData.class]]) ## biological groups (e.g. cell types)
-      batch = as.factor(sce$batch) ## factor for batches
-      {
-      ## length of keepX is at least ncomp
-      if (length(keepX)<ncomp)
-        stop ("The length of keepX should be at least ncomp")
-      
-      ## if ncomp optimisation is required, ncomp>1
-      if(optimum.ncomp & !isTRUE(ncomp>1))
-        stop("ncomp must be an integer greater than 1 for optimisation")
       
       ## object is a sce
-      if(class(sce)!="SingleCellExperiment") ## make sure it is SCE object
-        stop("sce must be a SingleCellExperiment object with batch metadata")
+      if(!inherits(try(sce),"SingleCellExperiment"))
+        stop("sce must be a SingleCellExperiment object")
       
-      ## batches exist and are more than one
-      if(is.null(batch)){
-        stop("$batch data do not exist in rowData(sce)")
-      } else if(!isTRUE(length(unique(batch))>1)){
-        stop("there must be more than one batch in the data to use mint.splsda")
+      ## colData.batch is valid
+      if(inherits(try(colData(sce)[[colData.batch]]), "try-error"))
+        stop("colData.batch must be a string or number pertaining to one of colData(sce) ")
+      ## colData.class is valid
+      if(inherits(try(colData(sce)[[colData.class]]), "try-error"))
+        stop("colData.class must be a string or number pertaining to one of colData(sce) ")
+      
+      ## hvgs valid
+      if(inherits(try(hvgs), "try-error"))
+        stop("invalid hvgs argument, please read the argument's description")
+      
+      if(!is.null(hvgs)){ ## if hvgs is not null, check and reduce sce
+        if(!inherits(try(hvgs), "character"))
+          stop("invalid hvgs input, please read the argument's descriptions")
+        if(length(hvgs)>1 & !all(hvgs %in% rownames(sce))){ ## all given genes exist
+          stop("some of the given hgvs do not exist in the sce")
+        } else if (length(hvgs)==1) { ## if rowData given
+          ## make sure it exists
+          if(is.null(rowData(sce)[[hvgs]]))
+            stop("hvgs does not correspond to a valid colData")
+        }
+          
+        ## if hvgs is the name of rowData, get the string vector
+        if (length(hvgs)==1){
+          hvgs = rownames(sce)[rowData(sce)[[hvgs]]]
+        }
+        sce = sce[hvgs,]
       }
       
-      ## there are biological groups to discriminate
-      if(is.null(Y)){
-        stop("cell type data do not exist in colData(sce)")
-      } else if(!isTRUE(length(unique(Y))>1)){
-        stop("there must be more than one cell type in the data to use mint.splsda")
+      batch = as.factor(colData(sce)[[colData.batch]])  ## factor for batches
+      Y =     as.factor(colData(sce)[[colData.class]]) ## biological groups (e.g. cell types)
+      
+      {
+        ## batch checks
+        if(nlevels(batch)==0) ## if it's an invalid string
+          stop("colData.batch does not correspond to a valid colData")
+        if(nlevels(batch)==1) ## if there is one batch only
+          stop("there must be more than one batch in the data to perform mint.splsda")
+        
+        ## Y (class) checks
+        if(nlevels(Y)==0) ## if it's an invalid string
+          stop("colData.class does not correspond to a valid  colData")
+        if(nlevels(Y)==1) ## if there is one cell type only
+          stop("there must be more than one cell type in the data to perform mint.splsda")
       }
+
       
-      ## logical entries are actually logical
-      if(!all(is.logical(use.hvgs),is.logical(tune.hps), is.logical(optimum.ncomp)))
-        stop("use.hvgs, tune.hps and optimum.ncomp must be logical")
-      
+      {
+        if (is.null(tune.keepX)){
+          ## length of keepX is at least ncomp
+          if (length(keepX)<ncomp)
+            stop ("The length of keepX should be at least ncomp")
+          ## if it is more, warn the user and keep ncomp elements
+          if(length(keepX)>ncomp)
+            warning("length(keepX) > ncomp - only ncomp elements retained ...")
+        }
+
       ## ensure there are no duplicate cell names
       if(any(duplicated(colnames(sce)))){
         stop("There are duplicate cell names - change to make them unique")
@@ -108,34 +145,18 @@ mixOmics_mint = function(sce = sce,             ## sce object including batch in
         stop("There are duplicate gene names - change to make them unique")
       }
       
-      ## if use.hvgs =T, hi_var exist
-      if(use.hvgs&is.null(rowData(sce)$hi_var)){
-        message("HVGs are not specified in rowData(sce)$hi_var - continuing with all genes")
-      }
-      
-      if(optimum.ncomp & nlevels(batch)<3)
-        warning("The number of components cannot be reliably optimised
-                since there are less than 3 batches.
-                Regard the results with care.
-                Refer to mixOmics documentation for details.")
-      
-      ## MINT checker checks the rest
-      
-      ######################### < /entry checks >
-      
+      ## get the log of counts if they already are not logged
       if (max(logcounts(sce))>100){
         logcounts(sce) = log2(logcounts(sce)+1)
+        }
+        
+      ## MINT checker checks the rest
       }
-      
-      ## reduce sce if only HVGs are needed
-      if(use.hvgs){
-        sce = sce[rowData(sce)$hi_var,]
-      }
-      }
+
       ###################################### MINT sPLSDA
       
       ## check if it need to be tuned or optimised:
-      if(tune.hps){
+      if(!is.null(tune.keepX)){
         ## tune the number of markers
         mint.tune = tune.mint.splsda(
           X = t(logcounts(sce)),
@@ -152,31 +173,10 @@ mixOmics_mint = function(sce = sce,             ## sce object including batch in
         
         ## change keepX to the tuned vector
         keepX = mint.tune$choice.keepX
-        ## choose the optimum ncomp if required
-        if(optimum.ncomp){
-          ncomp = t.test.process(mint.tune$error.rate)
-        }
-      }
-      
-      ## if only ncomp is to be optimised
-      if(optimum.ncomp&!tune.hps){
-        
-        ## get the tuned unoptimised sparse MINT
-        mint.res= mint.splsda(X=t(logcounts(sce)),
-                              Y = Y,
-                              study = batch,
-                              ncomp = ncomp,
-                              keepX = keepX
-        )
-        
-        ## evaluate method's performance at different no. of components
-        mint.performance = perf(mint.res, progressBar = F)
-        # use a t-test to find the optimum no. of components
-        ncomp = t.test.process(mint.performance$global.error$error.rate.class[[dist]])
       }
       
       
-      ## final model using tuned/optimum parameters
+      ## perform mint.splsda
       mint.res = mint.splsda(
         X = t(logcounts(sce)),
         Y = Y,
@@ -193,15 +193,14 @@ mixOmics_mint = function(sce = sce,             ## sce object including batch in
         comp = comp+1
       }
       ## add a logical rowData as to whether the gene is a marker
-      rowData(sce)$mint.markers <- row.names(sce) %in% markers
+      rowData(sce)$mint_marker <- rownames(sce) %in% markers
       ## add the sPLSDA variates for visualisation to reducedDim(sce)
       reducedDim(sce, "mint_variates") = mint.res$variates$X
 
-      
     })
     ###################################### outputs
     
-    if (class(try_res) == "try-error") {
+    if (class(try_res) == "try-error" & print.log) {
       cat(paste(format(Sys.time(), "%a %b %d %X %Y. ERROR: "), print(try_res),"\n"), file = log_file, append = TRUE)
     }
   })
@@ -213,5 +212,14 @@ mixOmics_mint = function(sce = sce,             ## sce object including batch in
   }else{
     metadata(sce)$running_time = data.frame(method=method_name,method_type=method_type,time=unname(tp)[1])
   }
-  return(sce)
+  
+  out = sce
+  if (output == "both" & !(class(try_res) == "try-error")){
+    mint_out = list("splsda" = mint.res)
+    if(!is.null(tune.keepX)){
+      mint_out$tune = mint.tune
+    }
+    out = list("sce"=sce, "mint" = mint_out)
+  }
+  return(out)
 }
