@@ -31,50 +31,6 @@ mixOmics_mint = function(
       ######################### defaults
       dist = "mahalanobis.dist"  ## type of distance to use to calculate prediction, "max.distance", "centroids.dist", "mahalanobis.dist" or "all"
       measure = "BER"            ## type of measure to calculate classification error rate. One of "overall" (balanced classes) or "BER" (balanced)
-      #########################  the t.test.process fuction for optimisation 
-      t.test.process = function(mat.error.rate, alpha = 0.01)
-      {
-        ## mat.error.rate has nrep rows and ncomp columns
-        ## we test successively whether adding a component improves the results
-        
-        max = ncol(mat.error.rate) ## number max of components included
-        pval = NULL
-        opt = 1 ## initialise the first optimal number of components
-        for(opt in 1:max)
-        {
-          j=opt+1
-          ## t.test of "is adding X comp improves the overall results"
-          temp = try(t.test(mat.error.rate[,opt],mat.error.rate[,j],alternative="greater")$p.value, silent= TRUE)
-          ## temp can be NaN when error.keepX is constant
-          if(any(class(temp) == "try-error") || is.na(temp)) 
-          {
-            pval = 1
-          } else {
-            pval = temp
-          }
-          
-          while(pval> (alpha) & j<max)
-          {
-            j=j+1
-            ## t.test of "is adding X comp improves the overall results"
-            temp = try(t.test(mat.error.rate[,opt],mat.error.rate[,j],alternative="greater")$p.value, silent= TRUE)
-            ## temp can be NaN when error.keepX is constant
-            if(any(class(temp) == "try-error") || is.na(temp))
-            {
-              pval = 1
-            } else {
-              pval = temp
-            }
-          }
-          ## if all p-values were greater than alpha, then we do not increase opt and get out of the loop
-          if( (pval> (alpha)))
-            break
-        }
-        ncomp_opt = opt
-        
-        return(ncomp_opt)
-      }
-      
       #########################  entry checks 
       ## return is valid
       if(inherits(try(output),"try-error" ))
