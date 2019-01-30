@@ -1,3 +1,12 @@
+## Wrapper for mixOmics' MINT toolkit
+## see the https://github.com/AJABADI/MINT_sPLSDA/tree/master/Rscripts/wrapper/quickstart for examples
+
+######################### Wrapper output
+## when   output = "sce": A SCE object with 1. MINT markers in rowData(sce)$mint_markers and 
+##                                          2. MINT global components in reducedDim(sce)$mint_comps_global
+
+## when   output = "both":  In addition to the above-mentioned SCE, the final mint.splsda object in the $mint slot as a list
+
 #########################  Create a log file
 # change to your own
 # log_file =file.path("../Rscripts/wrapper/log", paste("mint.wrapper.run",format(Sys.time(), "%y_%m_%d"),"txt",sep = "."))
@@ -35,7 +44,7 @@ mixOmics_mint = function(
         {
           j=opt+1
           ## t.test of "is adding X comp improves the overall results"
-          temp = try(t.test(mat.error.rate[,opt],mat.error.rate[,j],alternative="greater")$p.value, silent=T)
+          temp = try(t.test(mat.error.rate[,opt],mat.error.rate[,j],alternative="greater")$p.value, silent= TRUE)
           ## temp can be NaN when error.keepX is constant
           if(any(class(temp) == "try-error") || is.na(temp)) 
           {
@@ -48,7 +57,7 @@ mixOmics_mint = function(
           {
             j=j+1
             ## t.test of "is adding X comp improves the overall results"
-            temp = try(t.test(mat.error.rate[,opt],mat.error.rate[,j],alternative="greater")$p.value, silent=T)
+            temp = try(t.test(mat.error.rate[,opt],mat.error.rate[,j],alternative="greater")$p.value, silent= TRUE)
             ## temp can be NaN when error.keepX is constant
             if(any(class(temp) == "try-error") || is.na(temp))
             {
@@ -80,10 +89,10 @@ mixOmics_mint = function(
       
       ## colData.batch is valid
       if(inherits(try(colData(sce)[[colData.batch]]), "try-error"))
-        stop("colData.batch must be a string or number pertaining to one of colData(sce) ")
+        stop("colData.batch must be a string or number corresponding to one of colData(sce) ")
       ## colData.class is valid
       if(inherits(try(colData(sce)[[colData.class]]), "try-error"))
-        stop("colData.class must be a string or number pertaining to one of colData(sce) ")
+        stop("colData.class must be a string or number corresponding to one of colData(sce) ")
       
       ## hvgs valid
       if(inherits(try(hvgs), "try-error"))
@@ -119,7 +128,7 @@ mixOmics_mint = function(
         
         ## Y (class) checks
         if(nlevels(Y)==0) ## if it's an invalid string
-          stop("colData.class does not correspond to a valid  colData")
+          stop("colData.class does not correspond to a valid colData")
         if(nlevels(Y)==1) ## if there is one cell type only
           stop("there must be more than one cell type in the data to perform mint.splsda")
       }
@@ -128,11 +137,8 @@ mixOmics_mint = function(
       {
         if (is.null(tune.keepX)){
           ## length of keepX is at least ncomp
-          if (length(keepX)<ncomp)
-            stop ("The length of keepX should be at least ncomp")
-          ## if it is more, warn the user and keep ncomp elements
-          if(length(keepX)>ncomp)
-            warning("length(keepX) > ncomp - only ncomp elements retained ...")
+          if (length(keepX)!=ncomp)
+            stop ("The length of keepX should be ncomp")
         }
 
       ## ensure there are no duplicate cell names
@@ -155,7 +161,7 @@ mixOmics_mint = function(
 
       ###################################### MINT sPLSDA
       
-      ## check if it need to be tuned or optimised:
+      ## check if it needs to be tuned or optimised:
       if(!is.null(tune.keepX)){
         ## tune the number of markers
         mint.tune = tune.mint.splsda(
@@ -169,7 +175,7 @@ mixOmics_mint = function(
           ## use dist to estimate the classification error rate
           dist = dist,
           measure=measure,
-          progressBar = F)
+          progressBar = TRUE)
         
         ## change keepX to the tuned vector
         keepX = mint.tune$choice.keepX
@@ -194,9 +200,8 @@ mixOmics_mint = function(
       }
       ## add a logical rowData as to whether the gene is a marker
       rowData(sce)$mint_marker <- rownames(sce) %in% markers
-      ## add the sPLSDA variates for visualisation to reducedDim(sce)
-      reducedDim(sce, "mint_variates") = mint.res$variates$X
-
+      ## add the global and per-study sPLSDA variates for visualisation to reducedDim(sce)
+      reducedDim(sce, "mint_comps_global") = mint.res$variates$X ## a matrix containing the global variates
     })
     ###################################### outputs
     
