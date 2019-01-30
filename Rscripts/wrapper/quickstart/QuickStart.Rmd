@@ -3,10 +3,10 @@ title: "MINT wrapper examples"
 output: html_document
 ---
 
-```{r, include=F, purl=F}
+```{r, include=FALSE, purl=FALSE}
 library(knitr)
-knitr::opts_chunk$set(warning=F, message=F, cache=T,
-                      cache.comments=F, out.width = '70%', 
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=TRUE,
+                      cache.comments=FALSE, out.width = '70%', 
                       fig.align='center', fig.pos = 'ht')
 ```
 
@@ -15,7 +15,7 @@ library(mixOmics)
 library(scMerge) ## for combing sce's
 ```
 
-```{r}
+```{r, eval = TRUE}
 ## load the CellBench data from GitHub
 data = "https://github.com/LuyiTian/CellBench_data/blob/master/data/sincell_with_class.RData?raw=true"
 load(url(data))
@@ -30,11 +30,18 @@ sce = scMerge::sce_cbind(sce_list = sce.list, cut_off_batch = 0,
                          colData_names = "cell_line")
 ```
 
+```{r, eval = FALSE, echo=FALSE, purl=FALSE}
+## or load local directory if saved
+# save(sce, file="sce.RData")
+load("sce.RData")
+```
+
+
 ## Default model
 
 ```{r}
-## load the wrapper function
-source("mixOmics_mint.R")
+## load the wrapper function - change to your rown directory
+source("../../wrapper/mixOmics_mint.R")
 ## check if there are duplicate cell names
 sum(duplicated(colnames(sce)))
 ## ensure there are no duplicate cell names
@@ -42,7 +49,7 @@ colnames(sce)  = make.unique(colnames(sce))
 
 ## run the wrapper and get both sce and mint.splsda outputs
 sce.mint = mixOmics_mint(sce, colData.batch = "batch", colData.class = "cell_line",
-                            keepX = c(50,50),  ncomp = 2, output = "both", print.log = F)
+                            keepX = c(50,50),  ncomp = 2, output = "both", print.log = FALSE)
 ## get the mint object
 mint = sce.mint$mint
 ```
@@ -66,14 +73,20 @@ plotIndiv(mint$splsda, title = "All Studies",
           legend = TRUE, legend.title = "Cell Line", study = "all.partial")
 ```
 
-## Tune the wrapper
+## Tuned model
 
-```{r}
+```{r, eval = TRUE, results='hide', cache.comments=FALSE, cache = TRUE}
 ## takes ~ 90 sec
 ## run the wrapper and get both tuned sce and mint.splsda outputs - start with a coarse grid
 sce.mint.tuned = mixOmics_mint(sce, colData.batch = "batch", colData.class = "cell_line",
-                         ncomp = 2, tune.keepX = seq(5,75,20), output = "both")
+                         ncomp = 2, tune.keepX = seq(5,65,20), output = "both")
 ```
+```{r, eval = FALSE, echo=FALSE, purl=FALSE}
+## or load local directory if saved
+# save(sce.mint.tuned, file="sce.mint.tuned.RData")
+load("sce.mint.tuned.RData")
+```
+
 
 ```{r}
 ## get the tuner outputs
@@ -87,23 +100,27 @@ tuned_mint$tune$choice.keepX
 
 ### refine the search grid
 
-```{r, eval=F}
-fine.keepX = c(seq(35,45,2), ## for comp 1
-               seq(15,25, 2)) ## for comp 2
+```{r, eval = TRUE}
+fine.keepX = c(seq(35,47,3), ## for comp 1
+               seq(15,27, 3)) ## for comp 2
 
 ## run the wrapper with and tune over the fine grid
-sce.mint.tuned = mixOmics_mint(sce, colData.batch = "batch", colData.class = "cell_line",
+sce.mint.fine.tuned = mixOmics_mint(sce, colData.batch = "batch", colData.class = "cell_line",
                          ncomp = 2, tune.keepX = fine.keepX, output = "both")
 ```
 
+```{r, eval = FALSE, echo=FALSE, purl=FALSE}
+## or load local directory if saved
+# save(sce.mint.fine.tuned, file="sce.mint.fine.tuned.RData")
+load("sce.mint.fine.tuned.RData")
+```
 
 ## More visualisations
-
 
 ```{r}
 ## clustered image map
 cim(mint$splsda, comp = c(1,2), margins=c(10,5), 
-    row.sideColors = color.mixo(as.numeric(mint$splsda$Y)), row.names = F,
+    row.sideColors = color.mixo(as.numeric(mint$splsda$Y)), row.names = FALSE,
     title = 'MINT sPLS-DA', save = "png", name.save = "heatmap")
 knitr::include_graphics("heatmap.png")
 ```
@@ -111,16 +128,19 @@ knitr::include_graphics("heatmap.png")
 ```{r}
 ## loadings for each signature genes in each study
 plotLoadings(mint$splsda, contrib='max', method = 'mean', comp=2, 
-             study='all.partial', legend=F, title=NULL, 
+             study='all.partial', legend=FALSE, title=NULL, 
              subtitle = unique(mint$splsda$study) )
 ```
-```{r}
+```{r, fig.asp=1}
 ## correlation circle plot
 plotVar(mint$splsda, cex = 3)
 ```
 ```{r}
 ## roc curves for each batch
 auroc(mint$splsda, roc.comp = 1, roc.study='CELseq2')
+```
+```{r, echo=FALSE, eval=FALSE, purl=FALSE}
+knitr::purl("QuickStart.Rmd", documentation = 0)
 ```
 
 
