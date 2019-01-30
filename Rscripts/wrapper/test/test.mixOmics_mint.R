@@ -21,7 +21,7 @@ source("../Rscripts/wrapper/mixOmics_mint.R")
 sce_sanity = function(sce){
   test_that("outputs SCE object",inherits(sce, "SingleCellExperiment"))
   test_that("MINT markers are in rowData", sum(rowData(sce)$mint_marker)>0)
-  test_that("MINT variates are in reducedDims", !is.null(reducedDims(sce)$mint_variates))
+  test_that("MINT components are in reducedDim", !is.null(reducedDims(sce)$mint_comps_global))
 }
                        
 ##########  run with default parameters
@@ -69,12 +69,12 @@ sce_sanity(test_class)
 ## errors cannot be checked routinely using testthat
 
 ######### invalid sce creates error
-mint_tester(sce = "non-sce")
-mint_tester(sce = something)
+mixOmics_mint(sce = "non-sce")
+mixOmics_mint(sce = something)
 
 ############ batch test
 ## colData.batch must be a string or number pertaining to one of colData(sce)
-mint_tester(sce = sce, colData.batch = sth)
+mixOmics_mint(sce = sce, colData.batch = sth)
 ## colData.class does not correspond to a valid  colData
 mixOmics_mint(sce, colData.batch = "nonbatch")
 ## there must be more than one batch in the data to perform mint.splsda
