@@ -63,3 +63,20 @@ plotLoadings(mint$splsda, contrib='max', method = 'mean', comp=2,
 plotVar(mint$splsda, cex = 3)
 ## roc curves for each batch
 auroc(mint$splsda, roc.comp = 1, roc.study='CELseq2')
+## visualise the global components from sce object
+df.global = as.data.frame(reducedDim(sce.mint$sce,"mint_comps_global"))
+ggplot(df.global, aes(x=df.global[,1], y=df.global[,2],
+                      col = colData(sce.mint$sce)[["cell_line"]])) + geom_point() +
+  labs(x = "Component 1", y = "Component 2",title = "MINT components for all cells") + guides(col=guide_legend(title="Cell Line"))
+## visualise each batch's components from sce object
+
+## see all available reducedDims
+reducedDims(sce.mint$sce)
+## we will choose the mint_comps_Dropseq
+df.dropseq = as.data.frame(reducedDim(sce.mint$sce,"mint_comps_Dropseq"))
+## their respective cell lines
+ggplot(df.dropseq, aes(x=df.dropseq[,1], y=df.dropseq[,2],
+                      col = colData(sce.mint$sce)[["cell_line"]])) + geom_point(na.rm = TRUE) +
+  labs(x = "Component 1", y = "Component 2", title = "MINT components for Drop-seq cells") + guides(col=guide_legend(title="Cell Line"))
+## look at marker genes
+rownames(sce.mint$sce)[rowData(sce.mint$sce)[["mint_marker"]]]
