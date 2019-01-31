@@ -2,10 +2,12 @@
 ## see the https://github.com/AJABADI/MINT_sPLSDA/tree/master/Rscripts/wrapper/quickstart for examples
 
 ######################### Wrapper output
-## when   output = "sce": A SCE object with 1. MINT markers in rowData(sce)$mint_markers and 
-##                                          2. MINT global components in reducedDim(sce)$mint_comps_global
+## when   output = "sce": A SCE object with 1: MINT markers in rowData(sce)$mint_markers and 
+##                                          2: MINT global components in reducedDim(sce)$mint_comps_global
+##                                          3: MINT per-batch components in reducedDim(sce)$mint_comps_{name-of-batch}
 
 ## when   output = "both":  In addition to the above-mentioned SCE, the final mint.splsda object in the $mint slot as a list
+## refer to quickstart for examples on how to visualise the mint.splsda object
 
 #########################  Create a log file
 # change to your own
@@ -14,6 +16,10 @@
 # cat(paste(format(Sys.time(), "%a %b %d %X %Y"), "start preprocessing...\n"), file = log_file, append = TRUE)
 
 #########################  Wrapper
+library(mixOmics)
+library(SingleCellExperiment)
+library(magrittr)
+
 mixOmics_mint = function(
   sce=sce,                          ## sce object including batch information in sce$batch
   colData.batch = "batch",      ## name of the colData that inform known cell batch
@@ -25,7 +31,7 @@ mixOmics_mint = function(
   tune.keepX = NULL,   ## grid of number of genes to assess on each component during tuning (e.g. seq(10,100,10)), or NULL if tuning not required
   output = "sce", ## c("sce", "both") sce: returns sce with updated rowData and reducedDims. both: return a list of sce and mint.splsda object
   print.log = FALSE
-  ){  
+){  
   tp = system.time({
     try_res = try({
       ######################### defaults
@@ -64,7 +70,7 @@ mixOmics_mint = function(
           if(is.null(rowData(sce)[[hvgs]]))
             stop("hvgs does not correspond to a valid colData")
         }
-          
+        
         ## if hvgs is the name of rowData, get the string vector
         if (length(hvgs)==1){
           hvgs = rownames(sce)[rowData(sce)[[hvgs]]]
@@ -88,7 +94,7 @@ mixOmics_mint = function(
         if(nlevels(Y)==1) ## if there is one cell type only
           stop("there must be more than one cell type in the data to perform mint.splsda")
       }
-
+      
       
       {
         if (is.null(tune.keepX)){
@@ -96,25 +102,25 @@ mixOmics_mint = function(
           if (length(keepX)!=ncomp)
             stop ("The length of keepX should be ncomp")
         }
-
-      ## ensure there are no duplicate cell names
-      if(any(duplicated(colnames(sce)))){
-        stop("There are duplicate cell names - change to make them unique")
-      }
         
-      ## ensure there are no duplicate gene names
-      if(any(duplicated(rownames(sce)))){
-        stop("There are duplicate gene names - change to make them unique")
-      }
-      
-      ## get the log of counts if they already are not logged
-      if (max(logcounts(sce))>100){
-        logcounts(sce) = log2(logcounts(sce)+1)
+        ## ensure there are no duplicate cell names
+        if(any(duplicated(colnames(sce)))){
+          stop("There are duplicate cell names - change to make them unique")
         }
         
-      ## MINT checker checks the rest
+        ## ensure there are no duplicate gene names
+        if(any(duplicated(rownames(sce)))){
+          stop("There are duplicate gene names - change to make them unique")
+        }
+        
+        ## get the log of counts if they already are not logged
+        if (max(logcounts(sce))>100){
+          logcounts(sce) = log2(logcounts(sce)+1)
+        }
+        
+        ## MINT checker checks the rest
       }
-
+      
       ###################################### MINT sPLSDA
       
       ## check if it needs to be tuned or optimised:
@@ -156,8 +162,22 @@ mixOmics_mint = function(
       }
       ## add a logical rowData as to whether the gene is a marker
       rowData(sce)$mint_marker <- rownames(sce) %in% markers
-      ## add the global and per-study sPLSDA variates for visualisation to reducedDim(sce)
-      reducedDim(sce, "mint_comps_global") = mint.res$variates$X ## a matrix containing the global variates
+      ## add the global and per-study sPLSDA components for visualisation to reducedDim(sce)
+      reducedDim(sce, "mint_comps_global") = mint.res$variates$X ## a matrix containing the global components
+      
+      ## add per-batch components in a loop
+      for (i in levels(batch)){
+        ## initialise it as the same dimensions and col/row names as global
+        reducedDim(sce, paste0("mint_comps_",i)) = mint.res$variates$X
+        ## make all NA
+        reducedDim(sce, paste0("mint_comps_",i))[
+          is.numeric(reducedDim(sce, paste0("mint_comps_",i)))] = NA
+        
+        ## replace the values for cells from batch i
+        batch.cells = rownames(mint.res$variates.partial$X[[i]])
+        reducedDim(sce, paste0("mint_comps_",i))[batch.cells,] = mint.res$variates.partial$X[[i]]
+      }
+      
     })
     ###################################### outputs
     
