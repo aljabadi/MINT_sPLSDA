@@ -1,10 +1,10 @@
-## Wrapper for mixOmics' MINT toolkit
+## Wrapper for mixOmics' MINT method to integrate batches or protocols when cell types are known
 ## see the https://github.com/AJABADI/MINT_sPLSDA/tree/master/Rscripts/wrapper/quickstart for examples
 
 ######################### Wrapper output
 ## when   output = "sce": A SCE object with 1: MINT markers in rowData(sce)$mint_markers and 
 ##                                          2: MINT global components in reducedDim(sce)$mint_comps_global
-##                                          3: MINT per-batch components in reducedDim(sce)$mint_comps_{name-of-batch}
+##                                          3: MINT per-batch / protocol components in reducedDim(sce)$mint_comps_{name-of-batch}
 
 ## when   output = "both":  In addition to the above-mentioned SCE, the final mint.splsda object in the $mint slot as a list
 ## refer to quickstart for examples on how to visualise the mint.splsda object
@@ -21,22 +21,22 @@ library(SingleCellExperiment)
 library(magrittr)
 
 mixOmics_mint = function(
-  sce=sce,                          ## sce object including batch information in sce$batch
-  colData.batch = "batch",      ## name of the colData that inform known cell batch
-  colData.class = "mix",        ## name of the colData that inform known cell type
-  hvgs = NULL,                  ## one of rowData(sce) containing logical vector of highly variable genes (hvgs) to use, or NULL to use all genes, or a string vector of hvgs
+  sce = sce,                    ## sce object including batch information in sce$batch
+  colData.batch = "batch",      ## name of the colData that inform known cell batch information
+  colData.class = "mix",        ## name of the colData that inform known cell type information
+  hvgs = NULL,                  ## one of rowData(sce) indicating whether to use highly variable genes. If NULL: use all genes, otherwise specify a string vector of hvgs
   ######### additional parameters for advanced users
-  ncomp = 3,                    ## integer: number of components for dimension reduction (usually nlevels(colData.class) - 1)
+  ncomp = 3,                    ## integer: number of components for dimension reduction (we advise nlevels(colData.class) - 1)
   keepX = c(50,50,50),          ## numeric vector of length ncomp indicating the number of genes to select on each component
-  tune.keepX = NULL,   ## grid of number of genes to assess on each component during tuning (e.g. seq(10,100,10)), or NULL if tuning not required
-  output = "sce", ## c("sce", "both") sce: returns sce with updated rowData and reducedDims. both: return a list of sce and mint.splsda object
+  tune.keepX = NULL,            ## grid of number of genes to select and assess on each component during tuning (e.g. seq(10,100,10)), if NULL: tuning step not performed
+  output = "sce",               ## c("sce", "both") If sce: returns sce with updated rowData and reducedDims. If both: returns a list of sce and mint.splsda object
   print.log = FALSE
 ){  
   tp = system.time({
     try_res = try({
       ######################### defaults
-      dist = "mahalanobis.dist"  ## type of distance to use to calculate prediction, "max.distance", "centroids.dist", "mahalanobis.dist" or "all"
-      measure = "BER"            ## type of measure to calculate classification error rate. One of "overall" (balanced classes) or "BER" (balanced)
+      dist = "mahalanobis.dist"  ## type of distance to use to calculate prediction, by default here set to  "mahalanobis.dist" but could use "max.distance", "centroids.dist", or "all"
+      measure = "BER"            ## type of measure to calculate classification error rate. By default BER = Balanced error rate for unbalanced number of cells per cell type. 
       #########################  entry checks 
       ## return is valid
       if(inherits(try(output),"try-error" ))
@@ -86,13 +86,13 @@ mixOmics_mint = function(
         if(nlevels(batch)==0) ## if it's an invalid string
           stop("colData.batch does not correspond to a valid colData")
         if(nlevels(batch)==1) ## if there is one batch only
-          stop("there must be more than one batch in the data to perform mint.splsda")
+          stop("there must be more than one batch in the data to run MINT")
         
         ## Y (class) checks
         if(nlevels(Y)==0) ## if it's an invalid string
           stop("colData.class does not correspond to a valid colData")
         if(nlevels(Y)==1) ## if there is one cell type only
-          stop("there must be more than one cell type in the data to perform mint.splsda")
+          stop("there must be more than one cell type in the data to run MINT")
       }
       
       
@@ -144,7 +144,7 @@ mixOmics_mint = function(
       }
       
       
-      ## perform mint.splsda
+      ## Run mint.splsda
       mint.res = mint.splsda(
         X = t(logcounts(sce)),
         Y = Y,
